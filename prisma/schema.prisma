@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+// Model User
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// END Model User
+
+// Danh mục sản phẩm (Ví dụ: Lốp, Dây curoa, Phụ tùng máy...)
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  slug     String    @unique
+  products Product[]
+}
+
+// Hãng xe (Isuzu, Hino, Hyundai...)
+model Brand {
+  id     Int        @id @default(autoincrement())
+  name   String     @unique
+  models CarModel[]
+}
+
+// Dòng/Đời xe (QKR, NQR, FRR...)
+model CarModel {
+  id       Int       @id @default(autoincrement())
+  brandId  Int
+  brand    Brand     @relation(fields: [brandId], references: [id])
+  name     String // Ví dụ: QKR 270, NQR 550
+  year     String? // Khoảng năm sản xuất hoặc đời xe
+  products Product[] @relation("ProductFitment")
+}
+
+// Sản phẩm
+model Product {
+  id         Int      @id @default(autoincrement())
+  slug       String   @unique // Mã phụ tùng (cực kỳ quan trọng)
+  name       String
+  price      Decimal
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  // Quan hệ: Sản phẩm này lắp vừa cho những dòng xe nào?
+  fitments CarModel[] @relation("ProductFitment")
+  posts    Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Banner {
+  id        Int     @id @default(autoincrement())
+  title     String? // Tiêu đề banner (hỗ trợ SEO)
+  imageUrl  String // Đường dẫn ảnh
+  link      String?
+  isActive  Boolean @default(true)
+  sortOrder Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PostCategory {
+  id    Int    @id @default(autoincrement())
+  name  String
+  slug  String @unique
+  posts Post[]
+}
+
+model Post {
+  id        Int     @id @default(autoincrement())
+  title     String
+  slug      String  @unique
+  content   String  @db.Text // Nội dung chi tiết
+  excerpt   String? // Đoạn trích hiển thị ngoài trang chủ
+  thumbnail String? // Ảnh đại diện bài viết
+
+  // Trạng thái xuất bản
+  status      PostStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  // SEO Meta
+  metaTitle String?
+  metaDesc  String?
+
+  // Quan hệ
+  authorId       Int
+  postCategoryId Int? // Danh mục bài viết (VD: Kinh nghiệm, Tin tức, Hướng dẫn)
+  category       PostCategory? @relation(fields: [postCategoryId], references: [id])
+
+  // Gắn bài viết với sản phẩm liên quan (Rất quan trọng cho eCommerce)
+  // Bài viết hướng dẫn "Thay lốp cho Isuzu QKR" thì nên link trực tiếp tới sản phẩm "Lốp xe QKR"
+  relatedProducts Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
