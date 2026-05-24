@@ -1,16 +1,16 @@
 import type { NextRequest } from "next/server";
-import { authService } from "@/src/server/services/auth.service";
+import { authService } from "@/server/services/auth.service";
 import {
   clearAccessTokenCookie,
   getAccessTokenCookie,
   setAccessTokenCookie,
-} from "@/src/server/auth/cookies";
+} from "@/server/auth/cookies";
 import {
   emptySuccessResponse,
   handleApiError,
   successResponse,
-} from "@/src/server/http/api-response";
-import { loginSchema, registerSchema } from "@/src/validations/auth.schema";
+} from "@/server/http/api-response";
+import { loginSchema, registerSchema } from "@/validations/auth.schema";
 
 export const authController = {
   register: async (request: NextRequest) => {
@@ -52,7 +52,9 @@ export const authController = {
 
   me: async (request: NextRequest) => {
     try {
-      const session = await authService.getSession(getAccessTokenCookie(request));
+      const session = await authService.getSession(
+        getAccessTokenCookie(request),
+      );
 
       return successResponse("Authenticated user retrieved.", session);
     } catch (error) {

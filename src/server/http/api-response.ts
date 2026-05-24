@@ -1,18 +1,14 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { isAppError } from "./app-error";
+import type { ApiResponse } from "@/types";
+// type ApiResponse<T> = {
+//   success: boolean;
+//   message: string;
+//   data: T | null;
+// };
 
-type ApiResponse<T> = {
-  success: boolean;
-  message: string;
-  data: T | null;
-};
-
-export const successResponse = <T>(
-  message: string,
-  data: T,
-  status = 200,
-) =>
+export const successResponse = <T>(message: string, data: T, status = 200) =>
   NextResponse.json<ApiResponse<T>>(
     {
       success: true,

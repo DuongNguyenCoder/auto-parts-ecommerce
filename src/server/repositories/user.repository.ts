@@ -1,4 +1,4 @@
-import { prisma } from "@/src/server/prisma";
+import { prisma } from "../prisma";
 
 const publicUserSelect = {
   id: true,

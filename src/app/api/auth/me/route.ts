@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { authController } from "@/src/server/controllers/auth.controller";
+import { authController } from "@/server/controllers/auth.controller";
 
 export const runtime = "nodejs";
 

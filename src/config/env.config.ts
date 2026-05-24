@@ -1,32 +1,20 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  DATABASE_URL: z.string().url(),
-  JWT_ACCESS_SECRET: z.string().min(32).optional(),
-  JWT_ACCESS_EXPIRES_IN: z.string().default("7d"),
-  NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+  NEXT_PUBLIC_APP_URL: z.string().url(),
+
+  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().optional(),
+  NEXT_PUBLIC_CLOUDINARY_API_KEY: z.string().optional(),
 });
 
 const parsedEnv = envSchema.parse({
-  DATABASE_URL: process.env.DATABASE_URL,
-  JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET,
-  JWT_ACCESS_EXPIRES_IN: process.env.JWT_ACCESS_EXPIRES_IN,
-  NODE_ENV: process.env.NODE_ENV,
+  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+
+  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  NEXT_PUBLIC_CLOUDINARY_API_KEY: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
 });
 
-export const env = {
+export const envClient = {
   ...parsedEnv,
-  IS_PRODUCTION: parsedEnv.NODE_ENV === "production",
-};
-
-export const getJwtAccessSecret = () => {
-  if (env.JWT_ACCESS_SECRET) {
-    return env.JWT_ACCESS_SECRET;
-  }
-
-  if (env.IS_PRODUCTION) {
-    throw new Error("JWT_ACCESS_SECRET is required in production.");
-  }
-
-  return "development-only-auth-secret-change-before-production";
 };

@@ -1,0 +1,51 @@
+import { prisma } from "../prisma";
+
+const publicSelect = {
+  id: true,
+  name: true,
+} as const;
+
+export type BrandRecord = Awaited<ReturnType<typeof brandRepository.findById>>;
+
+export const brandRepository = {
+  findById: (id: number) =>
+    prisma.brand.findUnique({
+      where: { id },
+      select: publicSelect,
+    }),
+
+  findMany: (
+    where?: { name?: string },
+    pagination?: { take?: number; skip?: number },
+  ) =>
+    prisma.brand.findMany({
+      where: {
+        name: where?.name
+          ? { contains: where.name, mode: "insensitive" }
+          : undefined,
+      },
+      select: publicSelect,
+      take: pagination?.take,
+      skip: pagination?.skip,
+      orderBy: { name: "asc" },
+    }),
+
+  create: (data: { name: string }) =>
+    prisma.brand.create({
+      data,
+      select: publicSelect,
+    }),
+
+  update: (id: number, data: { name?: string }) =>
+    prisma.brand.update({
+      where: { id },
+      data,
+      select: publicSelect,
+    }),
+
+  delete: (id: number) =>
+    prisma.brand.delete({
+      where: { id },
+      select: publicSelect,
+    }),
+};

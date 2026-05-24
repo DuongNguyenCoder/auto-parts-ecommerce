@@ -1,9 +1,9 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { AuthSession } from "@/src/types/auth";
-import type { LoginInput, RegisterInput } from "@/src/validations/auth.schema";
-import { AUTH_ENDPOINTS } from "@/src/features/auth/constants/auth-endpoints";
+import type { AuthSession } from "@/types/auth";
+import type { LoginInput, RegisterInput } from "@/validations/auth.schema";
+import { AUTH_ENDPOINTS } from "@/features/auth/constants/auth-endpoints";
 
 type ApiResponse<T> = {
   success: boolean;

@@ -1,11 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { loginSchema, type LoginInput } from "@/src/validations/auth.schema";
-import { useAuth } from "@/src/features/auth/hooks/use-auth";
+import { loginSchema, type LoginInput } from "@/validations/auth.schema";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 
 export const LoginForm = () => {
+  const router = useRouter();
   const { login, isLoggingIn, authError } = useAuth();
   const {
     register,
@@ -20,7 +22,18 @@ export const LoginForm = () => {
   });
 
   const onSubmit = async (values: LoginInput) => {
-    await login(values);
+    const session = await login(values);
+    const searchParams = new URLSearchParams(window.location.search);
+    const nextPath = searchParams.get("next");
+    const safeNextPath =
+      nextPath?.startsWith("/") && !nextPath.startsWith("//") ? nextPath : "/";
+
+    if (safeNextPath.startsWith("/admin") && session.user.role !== "ADMIN") {
+      router.replace("/");
+      return;
+    }
+
+    router.replace(safeNextPath);
   };
 
   return (

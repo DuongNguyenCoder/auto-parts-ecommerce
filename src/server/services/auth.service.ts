@@ -1,13 +1,13 @@
-import type { AuthSession, AuthUser } from "@/src/types/auth";
-import type { LoginInput, RegisterInput } from "@/src/validations/auth.schema";
+import type { AuthSession, AuthUser } from "@/types/auth";
+import type { LoginInput, RegisterInput } from "@/validations/auth.schema";
 import {
   type AccessTokenPayload,
   signAccessToken,
   verifyAccessToken,
-} from "@/src/server/auth/jwt";
-import { hashPassword, verifyPassword } from "@/src/server/auth/password";
-import { AppError } from "@/src/server/http/app-error";
-import { userRepository } from "@/src/server/repositories/user.repository";
+} from "@/server/auth/jwt";
+import { hashPassword, verifyPassword } from "@/server/auth/password";
+import { AppError } from "@/server/http/app-error";
+import { userRepository } from "@/server/repositories/user.repository";
 
 type UserRecord = {
   id: string;

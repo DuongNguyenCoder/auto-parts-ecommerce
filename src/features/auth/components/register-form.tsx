@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import {
   registerSchema,
   type RegisterInput,
-} from "@/src/validations/auth.schema";
-import { useAuth } from "@/src/features/auth/hooks/use-auth";
+} from "@/validations/auth.schema";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 
 export const RegisterForm = () => {
   const { register: registerAccount, isRegistering, authError } = useAuth();

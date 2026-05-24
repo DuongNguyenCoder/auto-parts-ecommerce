@@ -1,9 +1,10 @@
 import type { NextRequest, NextResponse } from "next/server";
-import { env } from "@/src/config/env.config";
+import { parseExpiresIn } from "./jwt";
+import { envServer as env } from "@/config/env.server";
 
-export const ACCESS_TOKEN_COOKIE = "access_token";
+export const ACCESS_TOKEN_COOKIE = env.ACCESS_TOKEN_COOKIE;
 
-const maxAgeInSeconds = 7 * 24 * 60 * 60;
+const accessTokenMaxAge = parseExpiresIn(env.JWT_ACCESS_EXPIRES_IN);
 
 export const getAccessTokenCookie = (request: NextRequest) =>
   request.cookies.get(ACCESS_TOKEN_COOKIE)?.value ?? null;
@@ -14,10 +15,10 @@ export const setAccessTokenCookie = (
 ) => {
   response.cookies.set(ACCESS_TOKEN_COOKIE, accessToken, {
     httpOnly: true,
-    secure: true,
+    secure: env.IS_PRODUCTION,
     sameSite: "strict",
     path: "/",
-    maxAge: maxAgeInSeconds,
+    maxAge: accessTokenMaxAge,
   });
 
   return response;
@@ -26,7 +27,7 @@ export const setAccessTokenCookie = (
 export const clearAccessTokenCookie = (response: NextResponse) => {
   response.cookies.set(ACCESS_TOKEN_COOKIE, "", {
     httpOnly: true,
-    secure: true,
+    secure: env.IS_PRODUCTION,
     sameSite: "strict",
     path: "/",
     maxAge: 0,
@@ -37,7 +38,7 @@ export const clearAccessTokenCookie = (response: NextResponse) => {
 };
 
 export const authCookieRuntime = {
-  secure: true,
+  secure: env.IS_PRODUCTION,
   sameSite: "strict",
   httpOnly: true,
   isProduction: env.IS_PRODUCTION,

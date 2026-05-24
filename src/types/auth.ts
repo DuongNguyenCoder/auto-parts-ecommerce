@@ -1,10 +1,10 @@
-export type AuthRole = "USER" | "ADMIN";
+import type { Role } from "@/../prisma/generated/prisma";
 
 export type AuthUser = {
   id: string;
   email: string;
-  role: AuthRole;
-  createdAt: string;
+  role: Role;
+  createdAt?: string;
 };
 
 export type AuthSession = {
