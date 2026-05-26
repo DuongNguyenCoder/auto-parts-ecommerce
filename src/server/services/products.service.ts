@@ -2,6 +2,7 @@ import { AppError } from "@/server/http/app-error";
 import { carModelRepository } from "@/server/repositories/car-models.repository";
 import { categoryRepository } from "@/server/repositories/categories.repository";
 import { productRepository } from "@/server/repositories/products.repository";
+import { buildPagination } from "@/server/utils/pagination";
 import type {
   CreateProductDTO,
   UpdateProductDTO,
@@ -40,7 +41,18 @@ export const productService = {
     filters?: { name?: string; categoryId?: number; carModelId?: number },
     pagination?: { take?: number; skip?: number },
   ) => {
-    return productRepository.findMany(filters, pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      productRepository.findMany(filters, { take, skip }),
+      productRepository.count(filters),
+    ]);
+
+    return {
+      items,
+      pagination: buildPagination(total, take, skip),
+    };
   },
 
   create: async (data: CreateProductDTO) => {

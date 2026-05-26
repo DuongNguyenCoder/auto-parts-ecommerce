@@ -39,6 +39,15 @@ export const categoryRepository = {
       // orderBy: { createdAt: "desc" },
     }),
 
+  count: (where?: { name?: string }) =>
+    prisma.category.count({
+      where: {
+        name: where?.name
+          ? { contains: where.name, mode: "insensitive" }
+          : undefined,
+      },
+    }),
+
   create: (data: { name: string; slug: string }) =>
     prisma.category.create({
       data,

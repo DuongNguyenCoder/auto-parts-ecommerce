@@ -3,6 +3,12 @@ import { prisma } from "../prisma";
 const publicSelect = {
   id: true,
   brandId: true,
+  brand: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
   name: true,
   year: true,
 } as const;
@@ -51,6 +57,16 @@ export const carModelRepository = {
       take: pagination?.take,
       skip: pagination?.skip,
       orderBy: { name: "asc" },
+    }),
+
+  count: (where?: { brandId?: number; name?: string }) =>
+    prisma.carModel.count({
+      where: {
+        brandId: where?.brandId,
+        name: where?.name
+          ? { contains: where.name, mode: "insensitive" }
+          : undefined,
+      },
     }),
 
   create: (data: { brandId: number; name: string; year?: string }) =>

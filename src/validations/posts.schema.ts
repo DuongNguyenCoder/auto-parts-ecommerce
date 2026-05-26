@@ -13,7 +13,7 @@ export const createPostSchema = z.object({
   metaTitle: z.string().trim().max(255).optional(),
   metaDesc: z.string().trim().max(500).optional(),
   postCategoryId: z.number().int().positive().optional(),
-  relatedProductIds: z.array(z.number().int().positive()).optional(),
+  relatedProductIds: z.array(z.number().int().positive()).default([]),
 });
 
 export const updatePostSchema = createPostSchema.partial();

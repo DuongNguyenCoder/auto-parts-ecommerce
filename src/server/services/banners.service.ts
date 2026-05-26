@@ -1,6 +1,7 @@
 import { CreateBannerDTO, UpdateBannerDTO } from "@/validations/banners.schema";
 import { AppError } from "../http/app-error";
 import { bannerRepository } from "../repositories/banners.repository";
+import { buildPagination } from "@/server/utils/pagination";
 
 export const bannerService = {
   getById: async (id: number) => {
@@ -10,14 +11,30 @@ export const bannerService = {
   },
 
   getActive: async (pagination?: { take?: number; skip?: number }) => {
-    return bannerRepository.findActive(pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      bannerRepository.findActive({ take, skip }),
+      bannerRepository.count({ isActive: true }),
+    ]);
+
+    return { items, pagination: buildPagination(total, take, skip) };
   },
 
   list: async (
     filters?: { isActive?: boolean },
     pagination?: { take?: number; skip?: number },
   ) => {
-    return bannerRepository.findMany(filters, pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      bannerRepository.findMany(filters, { take, skip }),
+      bannerRepository.count(filters),
+    ]);
+
+    return { items, pagination: buildPagination(total, take, skip) };
   },
 
   create: async (data: CreateBannerDTO) => {

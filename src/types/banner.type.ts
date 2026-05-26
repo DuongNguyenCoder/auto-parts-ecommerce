@@ -1,11 +1,11 @@
 export type Banner = {
   id: number;
 
-  title: string | null;
+  title: string | undefined;
 
   imageUrl: string;
 
-  link: string | null;
+  link: string | undefined;
 
   isActive: boolean;
 

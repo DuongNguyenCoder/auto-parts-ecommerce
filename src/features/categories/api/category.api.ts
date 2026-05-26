@@ -4,10 +4,25 @@ import type {
   UpdateCategoryDTO,
 } from "@/validations/categories.schema";
 import { getBaseUrl } from "@/lib/getBaseUrl";
-import { ApiResponse, Category, CategoryListQuery } from "@/types";
+import {
+  ApiResponse,
+  Category,
+  CategoryListQuery,
+  PaginatedData,
+} from "@/types";
+
+const parseResponse = async <T>(response: Response) => {
+  const data = (await response.json()) as ApiResponse<T>;
+  if (!response.ok || !data?.success) {
+    throw new Error(data?.message ?? "Unable to process request.");
+  }
+  return data;
+};
 
 export const categoryApi = {
-  getAll: async (query?: CategoryListQuery): Promise<ApiResponse<Category[]>> => {
+  getAll: async (
+    query?: CategoryListQuery,
+  ): Promise<ApiResponse<PaginatedData<Category>>> => {
     const params = createSearchParams(query);
     const response = await fetch(
       `${getBaseUrl()}/api/categories?${params.toString()}`,
@@ -20,7 +35,7 @@ export const categoryApi = {
       },
     );
 
-    return response.json();
+    return parseResponse<PaginatedData<Category>>(response);
   },
 
   getById: async (id: number): Promise<ApiResponse<Category>> => {
@@ -32,7 +47,7 @@ export const categoryApi = {
       },
     });
 
-    return response.json();
+    return parseResponse<Category>(response);
   },
 
   create: async (payload: CreateCategoryDTO) => {
@@ -42,24 +57,30 @@ export const categoryApi = {
       body: JSON.stringify(payload),
     });
 
-    return response.json();
+    return parseResponse<Category>(response);
   },
 
   update: async (id: number, payload: UpdateCategoryDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/categories/${id}/update`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const response = await fetch(
+      `${getBaseUrl()}/api/categories/${id}/update`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      },
+    );
 
-    return response.json();
+    return parseResponse<Category>(response);
   },
 
   delete: async (id: number) => {
-    const response = await fetch(`${getBaseUrl()}/api/categories/${id}/delete`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${getBaseUrl()}/api/categories/${id}/delete`,
+      {
+        method: "DELETE",
+      },
+    );
 
-    return response.json();
+    return parseResponse<Category>(response);
   },
 };

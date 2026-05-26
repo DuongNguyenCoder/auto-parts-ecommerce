@@ -38,9 +38,10 @@ model Category {
 
 // Hãng xe (Isuzu, Hino, Hyundai...)
 model Brand {
-  id     Int        @id @default(autoincrement())
-  name   String     @unique
-  models CarModel[]
+  id       Int        @id @default(autoincrement())
+  name     String     @unique
+  imageUrl String?
+  models   CarModel[]
 }
 
 // Dòng/Đời xe (QKR, NQR, FRR...)
@@ -49,6 +50,7 @@ model CarModel {
   brandId  Int
   brand    Brand     @relation(fields: [brandId], references: [id])
   name     String // Ví dụ: QKR 270, NQR 550
+  imageUrl String?
   year     String? // Khoảng năm sản xuất hoặc đời xe
   products Product[] @relation("ProductFitment")
 }
@@ -56,9 +58,10 @@ model CarModel {
 // Sản phẩm
 model Product {
   id         Int      @id @default(autoincrement())
-  slug       String   @unique // Mã phụ tùng (cực kỳ quan trọng)
+  slug       String   @unique
   name       String
   price      Decimal
+  imageUrl   String?
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
 
@@ -68,6 +71,8 @@ model Product {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([slug])
 }
 
 model Banner {

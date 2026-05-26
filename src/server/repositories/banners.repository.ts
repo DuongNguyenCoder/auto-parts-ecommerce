@@ -7,6 +7,8 @@ const publicSelect = {
   link: true,
   isActive: true,
   sortOrder: true,
+  createdAt: true,
+  updatedAt: true,
 } as const;
 
 export type BannerRecord = Awaited<
@@ -40,6 +42,9 @@ export const bannerRepository = {
       skip: pagination?.skip,
       orderBy: { sortOrder: "asc" },
     }),
+
+  count: (where?: { isActive?: boolean }) =>
+    prisma.banner.count({ where: { isActive: where?.isActive } }),
 
   create: (data: {
     title?: string;

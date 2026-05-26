@@ -7,5 +7,5 @@ export type CarModel = {
   brand: Brand;
 
   name: string;
-  year: string | null;
+  year: string | undefined;
 };

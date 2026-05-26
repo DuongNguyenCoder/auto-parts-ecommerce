@@ -117,6 +117,23 @@ export const postRepository = {
       orderBy: { createdAt: "desc" },
     }),
 
+  count: (where?: {
+    title?: string;
+    status?: PostStatus;
+    postCategoryId?: number;
+    authorId?: string;
+  }) =>
+    prisma.post.count({
+      where: {
+        title: where?.title
+          ? { contains: where.title, mode: "insensitive" }
+          : undefined,
+        status: where?.status,
+        postCategoryId: where?.postCategoryId,
+        authorId: where?.authorId,
+      },
+    }),
+
   create: (data: PostWriteData) =>
     prisma.post.create({
       data: toPostCreateData(data),

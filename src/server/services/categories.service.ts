@@ -1,5 +1,6 @@
 import { AppError } from "@/server/http/app-error";
 import { categoryRepository } from "@/server/repositories/categories.repository";
+import { buildPagination } from "@/server/utils/pagination";
 import type {
   CreateCategoryDTO,
   UpdateCategoryDTO,
@@ -22,7 +23,15 @@ export const categoryService = {
     filters?: { name?: string },
     pagination?: { take?: number; skip?: number },
   ) => {
-    return categoryRepository.findMany(filters, pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      categoryRepository.findMany(filters, { take, skip }),
+      categoryRepository.count(filters),
+    ]);
+
+    return { items, pagination: buildPagination(total, take, skip) };
   },
 
   create: async (data: CreateCategoryDTO) => {

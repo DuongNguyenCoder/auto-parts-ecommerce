@@ -137,13 +137,15 @@ exports.Prisma.CategoryScalarFieldEnum = {
 
 exports.Prisma.BrandScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  imageUrl: 'imageUrl'
 };
 
 exports.Prisma.CarModelScalarFieldEnum = {
   id: 'id',
   brandId: 'brandId',
   name: 'name',
+  imageUrl: 'imageUrl',
   year: 'year'
 };
 
@@ -152,6 +154,7 @@ exports.Prisma.ProductScalarFieldEnum = {
   slug: 'slug',
   name: 'name',
   price: 'price',
+  imageUrl: 'imageUrl',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

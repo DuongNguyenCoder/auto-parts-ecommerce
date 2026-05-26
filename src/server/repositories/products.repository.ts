@@ -4,6 +4,7 @@ const publicSelect = {
   id: true,
   slug: true,
   name: true,
+  imageUrl: true,
   price: true,
   categoryId: true,
   category: {
@@ -28,6 +29,7 @@ const publicSelect = {
 type ProductWriteData = {
   slug: string;
   name: string;
+  imageUrl: string;
   price: number;
   categoryId: number;
   fitmentIds?: number[];
@@ -102,6 +104,23 @@ export const productRepository = {
       take: pagination?.take,
       skip: pagination?.skip,
       orderBy: { createdAt: "desc" },
+    }),
+
+  count: (where?: {
+    name?: string;
+    categoryId?: number;
+    carModelId?: number;
+  }) =>
+    prisma.product.count({
+      where: {
+        name: where?.name
+          ? { contains: where.name, mode: "insensitive" }
+          : undefined,
+        categoryId: where?.categoryId,
+        fitments: where?.carModelId
+          ? { some: { id: where.carModelId } }
+          : undefined,
+      },
     }),
 
   create: (data: ProductWriteData) =>

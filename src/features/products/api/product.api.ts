@@ -4,10 +4,22 @@ import type {
   UpdateProductDTO,
 } from "@/validations/products.schema";
 import { getBaseUrl } from "@/lib/getBaseUrl";
-import { ApiResponse, ProductListQuery, Product } from "@/types";
+import { ApiResponse, ProductListQuery, Product, PaginatedData } from "@/types";
+
+const parseResponse = async <T>(response: Response) => {
+  const data = (await response.json()) as ApiResponse<T>;
+
+  if (!response.ok || !data?.success) {
+    throw new Error(data?.message ?? "Unable to process request.");
+  }
+
+  return data;
+};
 
 export const productApi = {
-  getAll: async (query?: ProductListQuery): Promise<ApiResponse<Product[]>> => {
+  getAll: async (
+    query?: ProductListQuery,
+  ): Promise<ApiResponse<PaginatedData<Product>>> => {
     const params = createSearchParams(query);
     const response = await fetch(
       `${getBaseUrl()}/api/products?${params.toString()}`,
@@ -20,7 +32,7 @@ export const productApi = {
       },
     );
 
-    return response.json();
+    return parseResponse<PaginatedData<Product>>(response);
   },
 
   getById: async (id: number): Promise<ApiResponse<Product>> => {
@@ -32,7 +44,7 @@ export const productApi = {
       },
     });
 
-    return response.json();
+    return parseResponse<Product>(response);
   },
 
   create: async (payload: CreateProductDTO) => {
@@ -42,7 +54,7 @@ export const productApi = {
       body: JSON.stringify(payload),
     });
 
-    return response.json();
+    return parseResponse<Product>(response);
   },
 
   update: async (id: number, payload: UpdateProductDTO) => {
@@ -52,7 +64,7 @@ export const productApi = {
       body: JSON.stringify(payload),
     });
 
-    return response.json();
+    return parseResponse<Product>(response);
   },
 
   delete: async (id: number) => {
@@ -60,6 +72,6 @@ export const productApi = {
       method: "DELETE",
     });
 
-    return response.json();
+    return parseResponse<null>(response);
   },
 };

@@ -1,42 +1,37 @@
+import { createSearchParams } from "@/lib/create-search-params";
+import { getBaseUrl } from "@/lib/getBaseUrl";
 import type { CreatePostDTO, UpdatePostDTO } from "@/validations/posts.schema";
+import { ApiResponse, PaginatedData, Post, PostListQuery } from "@/types";
 
-type PostQuery = {
-  take?: number;
-  skip?: number;
-  title?: string;
-  status?: "DRAFT" | "PUBLISHED" | "ARCHIVED";
-  postCategoryId?: number;
-  authorId?: string;
-};
-
-const toSearchParams = (query?: PostQuery) => {
-  const params = new URLSearchParams();
-
-  if (!query) return params;
-
-  Object.entries(query).forEach(([key, value]) => {
-    if (value !== undefined) params.set(key, String(value));
-  });
-
-  return params;
+const parseResponse = async <T>(response: Response) => {
+  const data = (await response.json()) as ApiResponse<T>;
+  if (!response.ok || !data?.success) {
+    throw new Error(data?.message ?? "Unable to process request.");
+  }
+  return data;
 };
 
 export const postApi = {
-  getAll: async (query?: PostQuery) => {
-    const params = toSearchParams(query);
-    const response = await fetch(`/api/posts?${params.toString()}`, {
-      method: "GET",
-      next: {
-        revalidate: 300,
-        tags: ["posts"],
+  getAll: async (
+    query?: PostListQuery,
+  ): Promise<ApiResponse<PaginatedData<Post>>> => {
+    const params = createSearchParams(query);
+    const response = await fetch(
+      `${getBaseUrl()}/api/posts?${params.toString()}`,
+      {
+        method: "GET",
+        next: {
+          revalidate: 300,
+          tags: ["posts"],
+        },
       },
-    });
+    );
 
-    return response.json();
+    return parseResponse<PaginatedData<Post>>(response);
   },
 
-  getBySlug: async (slug: string) => {
-    const response = await fetch(`/api/posts/${slug}`, {
+  getBySlug: async (slug: string): Promise<ApiResponse<Post>> => {
+    const response = await fetch(`${getBaseUrl()}/api/posts/${slug}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -44,34 +39,34 @@ export const postApi = {
       },
     });
 
-    return response.json();
+    return parseResponse<Post>(response);
   },
 
   create: async (payload: CreatePostDTO) => {
-    const response = await fetch("/api/posts", {
+    const response = await fetch(`${getBaseUrl()}/api/posts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
-    return response.json();
+    return parseResponse<Post>(response);
   },
 
   update: async (slug: string, payload: UpdatePostDTO) => {
-    const response = await fetch(`/api/posts/${slug}/update`, {
+    const response = await fetch(`${getBaseUrl()}/api/posts/${slug}/update`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
-    return response.json();
+    return parseResponse<Post>(response);
   },
 
   delete: async (slug: string) => {
-    const response = await fetch(`/api/posts/${slug}/delete`, {
+    const response = await fetch(`${getBaseUrl()}/api/posts/${slug}/delete`, {
       method: "DELETE",
     });
 
-    return response.json();
+    return parseResponse<Post>(response);
   },
 };

@@ -1,6 +1,7 @@
 import { AppError } from "@/server/http/app-error";
 import { postCategoryRepository } from "@/server/repositories/post-categories.repository";
 import { postRepository } from "@/server/repositories/posts.repository";
+import { buildPagination } from "@/server/utils/pagination";
 import { productRepository } from "@/server/repositories/products.repository";
 import type { CreatePostDTO, UpdatePostDTO } from "@/validations/posts.schema";
 import type { PostStatus } from "../../../prisma/generated/prisma/client";
@@ -39,7 +40,15 @@ export const postService = {
     },
     pagination?: { take?: number; skip?: number },
   ) => {
-    return postRepository.findMany(filters, pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      postRepository.findMany(filters, { take, skip }),
+      postRepository.count(filters),
+    ]);
+
+    return { items, pagination: buildPagination(total, take, skip) };
   },
 
   create: async (authorId: string, data: CreatePostDTO) => {

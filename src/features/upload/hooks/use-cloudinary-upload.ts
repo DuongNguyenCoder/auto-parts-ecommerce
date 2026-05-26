@@ -1,13 +1,17 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
-type UseCloudinaryUploadOptions = {
+import { uploadToCloudinary } from "@/server/services/cloudinary-upload.service";
+
+type Options = {
   folder?: string;
-  resourceType?: "image" | "video" | "raw" | "auto";
 };
 
-export function useCloudinaryUpload(options?: UseCloudinaryUploadOptions) {
+export function useCloudinaryUpload(options?: Options) {
+  const [isUploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
   const generateSignature = useCallback(
     async (paramsToSign: Record<string, string | number>) => {
       const response = await fetch("/api/sign-cloudinary-params", {
@@ -24,13 +28,43 @@ export function useCloudinaryUpload(options?: UseCloudinaryUploadOptions) {
       });
 
       const data = await response.json();
-
+      setProgress(45);
       return data.signature;
     },
     [options?.folder],
   );
 
+  const upload = useCallback(
+    async (file: File) => {
+      setProgress(70);
+      try {
+        setUploading(true);
+        setProgress(15);
+
+        const timestamp = Math.floor(Date.now() / 1000);
+
+        const signature = await generateSignature({
+          timestamp,
+        });
+
+        setProgress(100);
+        return await uploadToCloudinary({
+          file,
+          timestamp,
+          signature,
+          folder: options?.folder,
+        });
+      } finally {
+        setUploading(false);
+        setProgress(0);
+      }
+    },
+    [generateSignature, options?.folder],
+  );
+
   return {
-    generateSignature,
+    upload,
+    isUploading,
+    progress,
   };
 }

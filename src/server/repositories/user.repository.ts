@@ -1,4 +1,5 @@
 import { prisma } from "../prisma";
+import type { Role } from "@/../prisma/generated/prisma";
 
 const publicUserSelect = {
   id: true,
@@ -38,9 +39,58 @@ export const userRepository = {
       select: authUserSelect,
     }),
 
-  create: (data: { email: string; password: string }) =>
+  create: (data: { email: string; password: string; role?: Role }) =>
     prisma.user.create({
       data,
       select: publicUserSelect,
+    }),
+
+  findById: (id: string) =>
+    prisma.user.findUnique({
+      where: { id },
+      select: publicUserSelect,
+    }),
+
+  findMany: (
+    filters?: { email?: string; role?: Role },
+    pagination?: { take?: number; skip?: number },
+  ) =>
+    prisma.user.findMany({
+      where: {
+        email: filters?.email
+          ? { contains: filters.email, mode: "insensitive" }
+          : undefined,
+        role: filters?.role,
+      },
+      orderBy: { createdAt: "desc" },
+      take: pagination?.take,
+      skip: pagination?.skip,
+      select: publicUserSelect,
+    }),
+
+  update: (
+    id: string,
+    data: { email?: string; password?: string; role?: Role },
+  ) =>
+    prisma.user.update({
+      where: { id },
+      data,
+      select: publicUserSelect,
+    }),
+
+  delete: (id: string) =>
+    prisma.user.delete({
+      where: { id },
+      select: publicUserSelect,
+    }),
+
+  count: (where?: { email?: string; role?: Role }) =>
+    prisma.user.count({
+      where: {
+        email: where?.email
+          ? { contains: where.email, mode: "insensitive" }
+          : undefined,
+        role: where?.role,
+      },
     }),
 };

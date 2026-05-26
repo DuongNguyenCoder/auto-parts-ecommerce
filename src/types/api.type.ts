@@ -9,6 +9,8 @@ export type Pagination = {
   take: number;
   skip: number;
   hasMore: boolean;
+  page: number;
+  totalPages: number;
 };
 
 export type PaginatedData<T> = {

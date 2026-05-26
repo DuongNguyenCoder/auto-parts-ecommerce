@@ -14,9 +14,9 @@ type Props = {
 };
 
 export function CloudinaryUploadWidget({ folder, onSuccess, children }: Props) {
-  const { generateSignature } = useCloudinaryUpload({
-    folder,
-  });
+  // const { generateSignature } = useCloudinaryUpload({
+  //   folder,
+  // });
 
   return (
     <CldUploadWidget

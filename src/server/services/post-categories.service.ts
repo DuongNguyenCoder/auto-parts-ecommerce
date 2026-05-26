@@ -1,5 +1,6 @@
 import { AppError } from "@/server/http/app-error";
 import { postCategoryRepository } from "@/server/repositories/post-categories.repository";
+import { buildPagination } from "@/server/utils/pagination";
 import type {
   CreatePostCategoryDTO,
   UpdatePostCategoryDTO,
@@ -22,7 +23,15 @@ export const postCategoryService = {
     filters?: { name?: string },
     pagination?: { take?: number; skip?: number },
   ) => {
-    return postCategoryRepository.findMany(filters, pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      postCategoryRepository.findMany(filters, { take, skip }),
+      postCategoryRepository.count(filters),
+    ]);
+
+    return { items, pagination: buildPagination(total, take, skip) };
   },
 
   create: async (data: CreatePostCategoryDTO) => {
@@ -37,7 +46,8 @@ export const postCategoryService = {
 
     if (data.slug && data.slug !== category.slug) {
       const existing = await postCategoryRepository.findBySlug(data.slug);
-      if (existing) throw new AppError("Post category slug already exists", 409);
+      if (existing)
+        throw new AppError("Post category slug already exists", 409);
     }
 
     return postCategoryRepository.update(id, data);

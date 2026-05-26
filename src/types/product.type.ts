@@ -6,6 +6,7 @@ export type Product = {
 
   slug: string;
   name: string;
+  imageUrl?: string;
 
   price: number;
 

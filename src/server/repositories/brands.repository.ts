@@ -30,6 +30,15 @@ export const brandRepository = {
       orderBy: { name: "asc" },
     }),
 
+  count: (where?: { name?: string }) =>
+    prisma.brand.count({
+      where: {
+        name: where?.name
+          ? { contains: where.name, mode: "insensitive" }
+          : undefined,
+      },
+    }),
+
   create: (data: { name: string }) =>
     prisma.brand.create({
       data,

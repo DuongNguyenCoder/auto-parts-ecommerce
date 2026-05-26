@@ -6,7 +6,11 @@ export const createSearchParams = (query?: Record<string, QueryValue>) => {
   if (!query) return params;
 
   Object.entries(query).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
+    if (
+      value !== undefined &&
+      value !== null &&
+      !(typeof value === "number" && Number.isNaN(value))
+    ) {
       params.set(key, String(value));
     }
   });

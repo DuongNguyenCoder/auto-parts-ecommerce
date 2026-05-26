@@ -1,11 +1,9 @@
-"use client";
-
 import { productApi } from "@/features/products/api/product.api";
+import { ProductForm } from "@/features/products/components/product-form";
 
-export default function AdminPage() {
-  const getProducts = productApi.getAll().then((data) => {
-    console.log("Products: ", data);
-  });
+export default async function AdminPage() {
+  const getProducts = await productApi.getAll();
+  console.log("GET PRODUCTS ==> ", getProducts);
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-6 px-6 py-10">

@@ -1,6 +1,7 @@
 import { CreateBrandDTO, UpdateBrandDTO } from "@/validations/brands.schema";
 import { AppError } from "../http/app-error";
 import { brandRepository } from "../repositories/brands.repository";
+import { buildPagination } from "@/server/utils/pagination";
 
 export const brandService = {
   getById: async (id: number) => {
@@ -13,7 +14,15 @@ export const brandService = {
     filters?: { name?: string },
     pagination?: { take?: number; skip?: number },
   ) => {
-    return brandRepository.findMany(filters, pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      brandRepository.findMany(filters, { take, skip }),
+      brandRepository.count(filters),
+    ]);
+
+    return { items, pagination: buildPagination(total, take, skip) };
   },
 
   create: async (data: CreateBrandDTO) => {

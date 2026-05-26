@@ -1,14 +1,29 @@
 import { createSearchParams } from "@/lib/create-search-params";
 import { getBaseUrl } from "@/lib/getBaseUrl";
-import { ApiResponse, Post, PostListQuery } from "@/types";
+import {
+  ApiResponse,
+  PaginatedData,
+  PostCategory,
+  PostCategoryListQuery,
+} from "@/types";
 
 import type {
   CreatePostCategoryDTO,
   UpdatePostCategoryDTO,
 } from "@/validations/post-categories.schema";
 
+const parseResponse = async <T>(response: Response) => {
+  const data = (await response.json()) as ApiResponse<T>;
+  if (!response.ok || !data?.success) {
+    throw new Error(data?.message ?? "Unable to process request.");
+  }
+  return data;
+};
+
 export const postCategoryApi = {
-  getAll: async (query?: PostListQuery): Promise<ApiResponse<Post[]>> => {
+  getAll: async (
+    query?: PostCategoryListQuery,
+  ): Promise<ApiResponse<PaginatedData<PostCategory>>> => {
     const params = createSearchParams(query);
     const response = await fetch(
       `${getBaseUrl()}/api/post-categories?${params.toString()}`,
@@ -21,10 +36,10 @@ export const postCategoryApi = {
       },
     );
 
-    return response.json();
+    return parseResponse<PaginatedData<PostCategory>>(response);
   },
 
-  getById: async (id: number): Promise<ApiResponse<Post>> => {
+  getById: async (id: number): Promise<ApiResponse<PostCategory>> => {
     const response = await fetch(`${getBaseUrl()}/api/post-categories/${id}`, {
       method: "GET",
       next: {
@@ -33,7 +48,7 @@ export const postCategoryApi = {
       },
     });
 
-    return response.json();
+    return parseResponse<PostCategory>(response);
   },
 
   create: async (payload: CreatePostCategoryDTO) => {
@@ -43,7 +58,7 @@ export const postCategoryApi = {
       body: JSON.stringify(payload),
     });
 
-    return response.json();
+    return parseResponse<PostCategory>(response);
   },
 
   update: async (id: number, payload: UpdatePostCategoryDTO) => {
@@ -56,7 +71,7 @@ export const postCategoryApi = {
       },
     );
 
-    return response.json();
+    return parseResponse<PostCategory>(response);
   },
 
   delete: async (id: number) => {
@@ -67,6 +82,6 @@ export const postCategoryApi = {
       },
     );
 
-    return response.json();
+    return parseResponse<PostCategory>(response);
   },
 };

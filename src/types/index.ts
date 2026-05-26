@@ -16,4 +16,6 @@ export type { PostCategory } from "./post-category.type";
 
 export type { Post } from "./post.type";
 
+export type { User } from "./user.type";
+
 export * from "./query";

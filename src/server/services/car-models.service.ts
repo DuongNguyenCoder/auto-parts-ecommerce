@@ -5,6 +5,7 @@ import {
 import { AppError } from "../http/app-error";
 import { brandRepository } from "../repositories/brands.repository";
 import { carModelRepository } from "../repositories/car-models.repository";
+import { buildPagination } from "@/server/utils/pagination";
 
 export const carModelService = {
   getById: async (id: number) => {
@@ -19,14 +20,30 @@ export const carModelService = {
   ) => {
     const brand = await brandRepository.findById(brandId);
     if (!brand) throw new AppError("Brand not found", 404);
-    return carModelRepository.findByBrand(brandId, pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      carModelRepository.findByBrand(brandId, { take, skip }),
+      carModelRepository.count({ brandId }),
+    ]);
+
+    return { items, pagination: buildPagination(total, take, skip) };
   },
 
   list: async (
     filters?: { brandId?: number; name?: string },
     pagination?: { take?: number; skip?: number },
   ) => {
-    return carModelRepository.findMany(filters, pagination);
+    const take = pagination?.take ?? 10;
+    const skip = pagination?.skip ?? 0;
+
+    const [items, total] = await Promise.all([
+      carModelRepository.findMany(filters, { take, skip }),
+      carModelRepository.count(filters),
+    ]);
+
+    return { items, pagination: buildPagination(total, take, skip) };
   },
 
   create: async (data: CreateCarModelDTO) => {

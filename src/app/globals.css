@@ -128,3 +128,11 @@
     @apply font-sans;
   }
 }
+
+.tox-tinymce-aux,
+.tox-dialog,
+.tox-menu,
+.tox-pop,
+.tox-notifications-container {
+  z-index: 999999 !important;
+}

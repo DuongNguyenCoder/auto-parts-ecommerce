@@ -39,6 +39,15 @@ export const postCategoryRepository = {
       orderBy: { name: "asc" },
     }),
 
+  count: (where?: { name?: string }) =>
+    prisma.postCategory.count({
+      where: {
+        name: where?.name
+          ? { contains: where.name, mode: "insensitive" }
+          : undefined,
+      },
+    }),
+
   create: (data: { name: string; slug: string }) =>
     prisma.postCategory.create({
       data,

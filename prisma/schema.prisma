@@ -38,9 +38,10 @@ model Category {
 
 // Hãng xe (Isuzu, Hino, Hyundai...)
 model Brand {
-  id     Int        @id @default(autoincrement())
-  name   String     @unique
-  models CarModel[]
+  id       Int        @id @default(autoincrement())
+  name     String     @unique
+  imageUrl String?
+  models   CarModel[]
 }
 
 // Dòng/Đời xe (QKR, NQR, FRR...)
@@ -49,6 +50,7 @@ model CarModel {
   brandId  Int
   brand    Brand     @relation(fields: [brandId], references: [id])
   name     String // Ví dụ: QKR 270, NQR 550
+  imageUrl String?
   year     String? // Khoảng năm sản xuất hoặc đời xe
   products Product[] @relation("ProductFitment")
 }
@@ -59,6 +61,7 @@ model Product {
   slug       String   @unique
   name       String
   price      Decimal
+  imageUrl   String?
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
 
@@ -106,7 +109,7 @@ model Post {
   metaDesc  String?
 
   authorId       String
-  author         User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author         User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
   postCategoryId Int?
   category       PostCategory? @relation(fields: [postCategoryId], references: [id], onDelete: SetNull)
 

@@ -12,21 +12,21 @@ export type Post = {
 
   content: string;
 
-  excerpt: string | null;
-  thumbnail: string | null;
+  excerpt: string | undefined;
+  thumbnail: string | undefined;
 
   status: PostStatus;
 
-  publishedAt: string | null;
+  publishedAt: string | undefined;
 
-  metaTitle: string | null;
-  metaDesc: string | null;
+  metaTitle: string | undefined;
+  metaDesc: string | undefined;
 
   authorId: string;
   author: Pick<AuthUser, "id" | "email" | "role">;
 
-  postCategoryId: number | null;
-  category: PostCategory | null;
+  postCategoryId: number | undefined;
+  category: PostCategory | undefined;
 
   relatedProducts: Product[];
 
