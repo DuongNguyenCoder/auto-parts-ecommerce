@@ -3,6 +3,16 @@ import { prisma } from "../prisma";
 const publicSelect = {
   id: true,
   name: true,
+  slug: true,
+  imageUrl: true,
+  models: {
+    select: {
+      id: true,
+      name: true,
+      year: true,
+      slug: true,
+    },
+  },
 } as const;
 
 export type BrandRecord = Awaited<ReturnType<typeof brandRepository.findById>>;
@@ -11,6 +21,12 @@ export const brandRepository = {
   findById: (id: number) =>
     prisma.brand.findUnique({
       where: { id },
+      select: publicSelect,
+    }),
+
+  findBySlug: (slug: string) =>
+    prisma.brand.findUnique({
+      where: { slug },
       select: publicSelect,
     }),
 

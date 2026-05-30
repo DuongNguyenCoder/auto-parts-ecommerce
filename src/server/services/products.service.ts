@@ -40,12 +40,20 @@ export const productService = {
   list: async (
     filters?: { name?: string; categoryId?: number; carModelId?: number },
     pagination?: { take?: number; skip?: number },
+    sort?: { sortBy?: string; orderBy?: "asc" | "desc" },
   ) => {
     const take = pagination?.take ?? 10;
     const skip = pagination?.skip ?? 0;
 
+    const validSortFields = ["name", "price", "createdAt", "updatedAt"];
+    const sortBy =
+      sort?.sortBy && validSortFields.includes(sort.sortBy)
+        ? (sort.sortBy as "name" | "price" | "createdAt" | "updatedAt")
+        : undefined;
+    const orderBy = sort?.orderBy ?? "desc";
+
     const [items, total] = await Promise.all([
-      productRepository.findMany(filters, { take, skip }),
+      productRepository.findMany(filters, { take, skip }, { sortBy, orderBy }),
       productRepository.count(filters),
     ]);
 

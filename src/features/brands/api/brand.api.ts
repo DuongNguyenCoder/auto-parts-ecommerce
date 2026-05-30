@@ -45,6 +45,18 @@ export const brandApi = {
     return parseResponse<Brand>(response);
   },
 
+  getBySlug: async (slug: string): Promise<ApiResponse<Brand>> => {
+    const response = await fetch(`${getBaseUrl()}/api/brands/slug/${slug}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["brands", `brand-slug-${slug}`],
+      },
+    });
+
+    return parseResponse<Brand>(response);
+  },
+
   create: async (payload: CreateBrandDTO) => {
     const response = await fetch(`${getBaseUrl()}/api/brands`, {
       method: "POST",

@@ -51,6 +51,21 @@ export const postCategoryApi = {
     return parseResponse<PostCategory>(response);
   },
 
+  getBySlug: async (slug: string): Promise<ApiResponse<PostCategory>> => {
+    const response = await fetch(
+      `${getBaseUrl()}/api/post-categories/slug/${slug}`,
+      {
+        method: "GET",
+        next: {
+          revalidate: 300,
+          tags: ["post-categories", `post-category-${slug}`],
+        },
+      },
+    );
+
+    return parseResponse<PostCategory>(response);
+  },
+
   create: async (payload: CreatePostCategoryDTO) => {
     const response = await fetch(`${getBaseUrl()}/api/post-categories`, {
       method: "POST",

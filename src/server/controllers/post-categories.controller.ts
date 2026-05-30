@@ -44,6 +44,15 @@ export const postCategoryController = {
     }
   },
 
+  getBySlug: async (request: NextRequest, { slug }: { slug: string }) => {
+    try {
+      const result = await postCategoryService.getBySlug(slug);
+      return successResponse("Post category retrieved successfully", result);
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
   update: async (request: NextRequest, { id }: { id: string }) => {
     try {
       const payload = updatePostCategorySchema.parse(await request.json());

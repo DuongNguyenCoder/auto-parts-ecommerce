@@ -102,8 +102,8 @@ export const UserForm = ({
         <Input type="password" {...register("password")} />
         <span className="text-xs text-zinc-500">
           {isEdit
-            ? "Leave blank to keep the current password."
-            : "A password is required for new users."}
+            ? "Để trống để giữ mật khẩu hiện tại."
+            : "Yêu cầu mật khẩu đối với người dùng mới."}
         </span>
         {errors.password ? (
           <span className="text-sm font-normal text-red-600">

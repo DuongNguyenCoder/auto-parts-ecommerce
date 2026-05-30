@@ -7,8 +7,19 @@ const publicSelect = {
     select: {
       id: true,
       name: true,
+      slug: true,
     },
   },
+  // products: {
+  //   select: {
+  //     id: true,
+  //     name: true,
+  //     slug: true,
+  //     imageUrl: true,
+  //     price: true,
+  //   },
+  // },
+  slug: true,
   name: true,
   year: true,
 } as const;
@@ -21,6 +32,12 @@ export const carModelRepository = {
   findById: (id: number) =>
     prisma.carModel.findUnique({
       where: { id },
+      select: publicSelect,
+    }),
+
+  findBySlug: (slug: string) =>
+    prisma.carModel.findUnique({
+      where: { slug },
       select: publicSelect,
     }),
 

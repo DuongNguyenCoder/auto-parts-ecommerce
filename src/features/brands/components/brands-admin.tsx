@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { PaginationCustom } from "@/components/ui/pagination-custom";
 import { BrandForm } from "@/features/brands/components/brand-form";
-import { brandApi } from "@/features/brands/api/brand.api";
+import { brandApi } from "@/features/brands/api";
 import type {
   ApiResponse,
   Brand,

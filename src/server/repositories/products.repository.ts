@@ -1,4 +1,10 @@
+import { buildOrderBy } from "@/lib/server/buildOrderBy";
 import { prisma } from "@/server/prisma";
+import { SortOrder } from "@/types";
+import {
+  PRODUCT_SORT_FIELDS,
+  ProductSortField,
+} from "@/types/query/product-query.type";
 
 const publicSelect = {
   id: true,
@@ -89,6 +95,7 @@ export const productRepository = {
   findMany: (
     where?: { name?: string; categoryId?: number; carModelId?: number },
     pagination?: { take?: number; skip?: number },
+    sort?: { sortBy?: ProductSortField; orderBy?: SortOrder },
   ) =>
     prisma.product.findMany({
       where: {
@@ -103,7 +110,7 @@ export const productRepository = {
       select: publicSelect,
       take: pagination?.take,
       skip: pagination?.skip,
-      orderBy: { createdAt: "desc" },
+      orderBy: buildOrderBy(PRODUCT_SORT_FIELDS, sort?.sortBy, sort?.orderBy),
     }),
 
   count: (where?: {

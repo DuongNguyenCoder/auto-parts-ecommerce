@@ -77,8 +77,7 @@ export function PaginationCustom({
               page === 1 ? "pointer-events-none opacity-50" : "hover:bg-muted",
             )}
           >
-            <ChevronLeft className="size-4" />
-            Prev
+            <ChevronLeft className="size-4 shrink-0" />
           </button>
         </PaginationItem>
 
@@ -97,7 +96,7 @@ export function PaginationCustom({
               <PaginationLink
                 isActive={page === item}
                 onClick={() => handleChange(item)}
-                className="cursor-pointer"
+                className="cursor-pointer rounded-2xl"
               >
                 {item}
               </PaginationLink>
@@ -117,8 +116,7 @@ export function PaginationCustom({
                 : "hover:bg-muted",
             )}
           >
-            Next
-            <ChevronRight className="size-4" />
+            <ChevronRight className="size-4 shrink-0" />
           </button>
         </PaginationItem>
       </PaginationContent>

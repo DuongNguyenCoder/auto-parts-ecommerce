@@ -1,5 +1,8 @@
 import { prisma } from "@/server/prisma";
 import type { PostStatus } from "../../../prisma/generated/prisma/client";
+import { POST_SORT_FIELDS, PostSortField } from "@/types/query/post-query.type";
+import { SortOrder } from "@/types";
+import { buildOrderBy } from "@/lib/server/buildOrderBy";
 
 const publicSelect = {
   id: true,
@@ -101,6 +104,7 @@ export const postRepository = {
       authorId?: string;
     },
     pagination?: { take?: number; skip?: number },
+    sort?: { sortBy?: PostSortField; orderBy?: SortOrder },
   ) =>
     prisma.post.findMany({
       where: {
@@ -114,7 +118,7 @@ export const postRepository = {
       select: publicSelect,
       take: pagination?.take,
       skip: pagination?.skip,
-      orderBy: { createdAt: "desc" },
+      orderBy: buildOrderBy(POST_SORT_FIELDS, sort?.sortBy, sort?.orderBy),
     }),
 
   count: (where?: {

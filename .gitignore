@@ -41,3 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
+
+CART_PAGE_GUIDE.md
+CART_WISHLIST_SYNC_SUMMARY.md
+
+QUICK_REFERENCE.md

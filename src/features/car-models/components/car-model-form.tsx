@@ -17,6 +17,8 @@ import {
   type UpdateCarModelDTO,
 } from "@/validations/car-models.schema";
 import type { Brand } from "@/types";
+import FormSection, { FormField } from "@/components/forms/form-custom";
+import { cn, inputCls, inputErrorCls } from "@/lib/utils";
 
 const brandOptions = (brands: Brand[]) =>
   brands.map((brand) => ({ id: brand.id, label: `${brand.name}` }));
@@ -49,6 +51,7 @@ export const CarModelForm = ({
       brandId: initialData?.brandId ?? undefined,
       name: initialData?.name ?? "",
       year: initialData?.year ?? "",
+      slug: initialData?.slug ?? "",
     },
   });
 
@@ -64,55 +67,56 @@ export const CarModelForm = ({
         </p>
       </div>
 
-      <Controller
-        control={control}
-        name="brandId"
-        render={({ field }) => (
-          <div className="flex flex-col gap-2 text-sm font-medium text-zinc-800">
-            <span>Brand</span>
-            <Select
-              value={field.value ? String(field.value) : ""}
-              onValueChange={(value) => field.onChange(Number(value))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select brand" />
-              </SelectTrigger>
-              <SelectContent>
-                {brandOptions(brands).map((brand) => (
-                  <SelectItem key={brand.id} value={String(brand.id)}>
-                    {brand.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.brandId ? (
-              <span className="text-sm font-normal text-red-600">
-                {errors.brandId.message}
-              </span>
-            ) : null}
-          </div>
-        )}
-      />
+      <FormSection badge="Thông tin cơ bản">
+        <FormField label="Tên mẫu xe" error={errors.name?.message}>
+          <Input
+            {...register("name")}
+            className={cn(inputCls, errors.name && inputErrorCls)}
+          />
+        </FormField>
 
-      <label className="flex flex-col gap-2 text-sm font-medium text-zinc-800">
-        Model name
-        <Input {...register("name")} />
-        {errors.name ? (
-          <span className="text-sm font-normal text-red-600">
-            {errors.name.message}
-          </span>
-        ) : null}
-      </label>
+        <FormField label="slug" error={errors.slug?.message}>
+          <Input
+            {...register("slug")}
+            placeholder="ví dụ: suzuki-500kg-mau-1"
+            className={cn(inputCls, errors.slug && inputErrorCls)}
+          />
+        </FormField>
 
-      <label className="flex flex-col gap-2 text-sm font-medium text-zinc-800">
-        Year
-        <Input {...register("year")} />
-        {errors.year ? (
-          <span className="text-sm font-normal text-red-600">
-            {errors.year.message}
-          </span>
-        ) : null}
-      </label>
+        <FormField label="Năm sản xuất" error={errors.year?.message}>
+          <Input
+            {...register("year")}
+            placeholder="2010"
+            className={cn(inputCls, errors.year && inputErrorCls)}
+          />
+        </FormField>
+
+        <FormField label="Hãng xe" error={errors.brandId?.message}>
+          <Controller
+            control={control}
+            name="brandId"
+            render={({ field }) => (
+              <div className="flex flex-col gap-2 text-sm font-medium text-zinc-800">
+                <Select
+                  value={field.value ? String(field.value) : ""}
+                  onValueChange={(value) => field.onChange(Number(value))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select brand" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {brandOptions(brands).map((brand) => (
+                      <SelectItem key={brand.id} value={String(brand.id)}>
+                        {brand.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+          />
+        </FormField>
+      </FormSection>
 
       <Button type="submit" disabled={isSubmitting} className="w-fit">
         {isSubmitting ? "Saving..." : submitLabel}

@@ -7,19 +7,8 @@ import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
 import { UploadDropzone } from "./upload-dropzone";
-
 import { UploadPreview } from "./upload-preview";
-
 import { UploadProgress } from "./upload-progress";
 
 import { useCloudinaryUpload } from "../hooks/use-cloudinary-upload";
@@ -28,6 +17,7 @@ import type {
   CloudinaryUploadResult,
   UploadImageDialogProps,
 } from "../types/upload.types";
+import { Modal } from "@/components/ui/modal";
 
 export function UploadImageDialog({
   open = false,
@@ -51,16 +41,21 @@ export function UploadImageDialog({
     folder,
   });
 
+  /**
+   * cleanup state
+   */
   const resetState = useCallback(() => {
     if (previewUrl) {
       URL.revokeObjectURL(previewUrl);
     }
 
     setFile(null);
-
     setPreviewUrl(null);
   }, [previewUrl]);
 
+  /**
+   * close dialog
+   */
   const handleClose = useCallback(() => {
     if (isUploading) return;
 
@@ -69,6 +64,9 @@ export function UploadImageDialog({
     onOpenChange?.(false);
   }, [isUploading, resetState, onOpenChange]);
 
+  /**
+   * choose file
+   */
   const handleFileSelect = useCallback(
     (selectedFile: File) => {
       if (previewUrl) {
@@ -84,10 +82,16 @@ export function UploadImageDialog({
     [previewUrl],
   );
 
+  /**
+   * remove selected file
+   */
   const handleRemove = useCallback(() => {
     resetState();
   }, [resetState]);
 
+  /**
+   * upload
+   */
   const handleUpload = useCallback(async () => {
     if (!file) return;
 
@@ -106,6 +110,9 @@ export function UploadImageDialog({
     }
   }, [file, upload, resetState, onSuccess, onOpenChange]);
 
+  /**
+   * cleanup preview url
+   */
   useEffect(() => {
     return () => {
       if (previewUrl) {
@@ -115,34 +122,17 @@ export function UploadImageDialog({
   }, [previewUrl]);
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-xl rounded-[2rem] p-0 overflow-hidden">
-        <DialogHeader className="space-y-2 border-b p-6">
-          <DialogTitle className="text-xl">{title}</DialogTitle>
-
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-
-        <div className="space-y-5 p-6">
-          {!file ? (
-            <UploadDropzone
-              disabled={isUploading}
-              maxSizeMB={maxSizeMB}
-              onFileSelect={handleFileSelect}
-              onError={(message) => toast.error(message)}
-            />
-          ) : (
-            <UploadPreview
-              file={file}
-              previewUrl={previewUrl!}
-              onRemove={handleRemove}
-            />
-          )}
-
-          {isUploading && <UploadProgress progress={progress} />}
-        </div>
-
-        <DialogFooter className="border-t bg-muted/20 px-6 py-5">
+    <Modal
+      open={open}
+      onOpenChange={handleClose}
+      title={title}
+      description={description}
+      maxWidth="xl"
+      loading={isUploading}
+      preventClose={isUploading}
+      badge="Media Upload"
+      actions={
+        <>
           <Button
             variant="outline"
             onClick={handleClose}
@@ -161,8 +151,27 @@ export function UploadImageDialog({
               "Xác nhận"
             )}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    >
+      <div className="space-y-5">
+        {!file ? (
+          <UploadDropzone
+            disabled={isUploading}
+            maxSizeMB={maxSizeMB}
+            onFileSelect={handleFileSelect}
+            onError={(message) => toast.error(message)}
+          />
+        ) : (
+          <UploadPreview
+            file={file}
+            previewUrl={previewUrl!}
+            onRemove={handleRemove}
+          />
+        )}
+
+        {isUploading && <UploadProgress progress={progress} />}
+      </div>
+    </Modal>
   );
 }

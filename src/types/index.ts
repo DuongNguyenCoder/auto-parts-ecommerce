@@ -16,6 +16,19 @@ export type { PostCategory } from "./post-category.type";
 
 export type { Post } from "./post.type";
 
+export type { Cart, CartItem } from "./cart.type";
+
+export type { WishlistItem } from "./wishlist.type";
+
 export type { User } from "./user.type";
+
+export type {
+  Order,
+  OrderProduct,
+  ShippingMethod,
+  PaymentMethod,
+  PaymentStatus,
+  OrderStatus,
+} from "./order.type";
 
 export * from "./query";

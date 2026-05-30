@@ -6,6 +6,9 @@ export type CarModel = {
   brandId: number;
   brand: Brand;
 
+  imageUrl: string;
+
+  slug: string;
   name: string;
   year: string | undefined;
 };

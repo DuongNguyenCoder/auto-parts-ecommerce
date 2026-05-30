@@ -59,13 +59,13 @@ export const authService = {
     const user = await userRepository.findAuthByEmail(input.email);
 
     if (!user) {
-      throw new AppError("Invalid email or password.", 401);
+      throw new AppError("Tài khoản hoặc mật khẩu không chính xác", 401);
     }
 
     const isPasswordValid = await verifyPassword(input.password, user.password);
 
     if (!isPasswordValid) {
-      throw new AppError("Invalid email or password.", 401);
+      throw new AppError("Tài khoản hoặc mật khẩu không chính xác.", 401);
     }
 
     return createSession(user);

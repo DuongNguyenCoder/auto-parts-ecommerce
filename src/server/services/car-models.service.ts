@@ -14,6 +14,12 @@ export const carModelService = {
     return model;
   },
 
+  getBySlug: async (slug: string) => {
+    const model = await carModelRepository.findBySlug(slug);
+    if (!model) throw new AppError("Car model not found", 404);
+    return model;
+  },
+
   getByBrand: async (
     brandId: number,
     pagination?: { take?: number; skip?: number },

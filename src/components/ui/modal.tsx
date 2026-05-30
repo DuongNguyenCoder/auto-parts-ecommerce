@@ -101,15 +101,10 @@ export function Modal({
           if (preventClose || loading) event.preventDefault();
         }}
         className={cn(
-          // Shape & overflow
-          "gap-0 overflow-hidden p-0",
-          "rounded-[28px]",
-          "max-h-[90vh]",
-          // Border: soft sky instead of hard zinc
+          "flex max-h-[90vh] flex-col overflow-hidden p-0",
+          "gap-0 rounded-[28px]",
           "border border-sky-100/80",
-          // Background: white/glass
           "bg-white/95 backdrop-blur-2xl",
-          // Shadow: soft blue elevation
           "shadow-[0_24px_64px_rgba(56,189,248,0.12),0_4px_16px_rgba(148,163,184,0.10)]",
           modalWidthMap[maxWidth],
           className,
@@ -167,9 +162,7 @@ export function Modal({
         {/* ── Content ────────────────────────────────────────────────────── */}
         <div
           className={cn(
-            "overflow-y-auto px-6 py-6",
-            "max-h-[calc(90vh-160px)]",
-            // Custom scrollbar to match soft theme
+            "min-h-0 flex-1 overflow-y-auto px-6 py-6",
             "[&::-webkit-scrollbar]:w-1.5",
             "[&::-webkit-scrollbar-track]:bg-transparent",
             "[&::-webkit-scrollbar-thumb]:rounded-full",

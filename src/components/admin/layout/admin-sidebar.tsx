@@ -12,7 +12,7 @@ export function AdminSidebar() {
     <aside className="hidden w-64 border-r bg-background lg:block">
       <div className="flex h-16 items-center border-b px-6">
         <Link href="/admin" className="text-lg font-bold tracking-tight">
-          MINH DENTAL CMS
+          AUTO THỌ XUÂN CMS
         </Link>
       </div>
 

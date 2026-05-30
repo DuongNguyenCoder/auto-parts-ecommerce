@@ -20,3 +20,5 @@ export type { PostCategoryListQuery } from "./post-category-query.type";
 export type { PostListQuery } from "./post-query.type";
 
 export type { UserListQuery } from "./user-query.type";
+
+export type { OrderListQuery, OrderSortField } from "./order-query.type";

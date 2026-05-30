@@ -1,10 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
-import Image from "next/image";
 import { cn, inputCls, inputErrorCls } from "@/lib/utils";
 import {
   createProductSchema,
@@ -12,16 +11,14 @@ import {
   type UpdateProductDTO,
 } from "@/validations/products.schema";
 import type { Category, CarModel } from "@/types";
-import { UploadImageDialog } from "@/features/upload/components";
 import FormSection, { FormField } from "@/components/forms/form-custom";
 import BuilderUploadImage from "@/components/common/upload-image-main";
+import { EntityPickerField } from "@/components/shared/picker";
+import { carModelApi } from "@/features/car-models/api/car-model.api";
 
 // ─── Schema ──────────────────────────────────────────────────────────────────
 
-const productFormSchema = createProductSchema
-  .omit({ fitmentIds: true })
-  .extend({ fitmentIdsInput: z.string().optional() });
-
+const productFormSchema = createProductSchema;
 type ProductFormValues = z.input<typeof productFormSchema>;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -39,125 +36,6 @@ type ProductFormProps = {
   subtitle?: string;
 };
 
-type FitmentOption = { id: number; label: string };
-
-type MultipleSelectorProps<T> = {
-  options: T[];
-  selected: number[];
-  onChange: (ids: number[]) => void;
-  placeholder?: string;
-  hasError?: boolean;
-};
-
-function MultipleSelector({
-  options,
-  selected,
-  onChange,
-  placeholder = "Chọn một hoặc nhiều ...",
-  hasError,
-}: MultipleSelectorProps<FitmentOption>) {
-  const [query, setQuery] = useState("");
-  const [open, setOpen] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const filtered = options.filter(
-    (o) =>
-      !selected.includes(o.id) &&
-      o.label.toLowerCase().includes(query.toLowerCase()),
-  );
-
-  const selectedOptions = options.filter((o) => selected.includes(o.id));
-
-  const addId = (id: number) => {
-    onChange([...selected, id]);
-    setQuery("");
-    inputRef.current?.focus();
-  };
-
-  const removeId = (id: number) => {
-    onChange(selected.filter((s) => s !== id));
-  };
-
-  return (
-    <div className="relative">
-      {/* Tag container */}
-      <div
-        className={cn(
-          "min-h-[44px] cursor-text rounded-2xl border-[1.5px] border-sky-100 bg-slate-50 p-2 transition-all duration-200",
-          "focus-within:border-sky-400 focus-within:bg-white focus-within:ring-4 focus-within:ring-sky-100/70",
-          "hover:border-sky-200",
-          hasError && inputErrorCls,
-        )}
-        onClick={() => inputRef.current?.focus()}
-      >
-        <div className="flex flex-wrap items-center gap-1.5">
-          {selectedOptions.map((opt) => (
-            <span
-              key={opt.id}
-              className="inline-flex items-center gap-1 rounded-xl border border-sky-200 bg-sky-50 px-2.5 py-1 text-[12px] font-medium text-sky-700"
-            >
-              {opt.label}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeId(opt.id);
-                }}
-                className="ml-0.5 rounded-full text-sky-400 transition-colors hover:text-sky-700"
-                aria-label={`Remove ${opt.label}`}
-              >
-                <svg className="h-3 w-3" viewBox="0 0 12 12" fill="none">
-                  <path
-                    d="M2 2l8 8M10 2l-8 8"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-            </span>
-          ))}
-
-          <input
-            ref={inputRef}
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setOpen(true);
-            }}
-            onFocus={() => setOpen(true)}
-            onBlur={() => setTimeout(() => setOpen(false), 150)}
-            placeholder={selected.length === 0 ? placeholder : ""}
-            className="min-w-[140px] flex-1 bg-transparent px-1 py-0.5 text-[13.5px] text-slate-900 placeholder:text-slate-400 outline-none"
-          />
-        </div>
-      </div>
-
-      {/* Dropdown */}
-      {open && filtered.length > 0 && (
-        <div className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-2xl border border-sky-100 bg-white/95 shadow-[0_8px_24px_rgba(56,189,248,0.14)] backdrop-blur-xl">
-          <ul className="max-h-52 overflow-y-auto py-1.5">
-            {filtered.map((opt) => (
-              <li key={opt.id}>
-                <button
-                  type="button"
-                  onMouseDown={() => addId(opt.id)}
-                  className="flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-[13px] text-slate-700 transition-colors hover:bg-sky-50 hover:text-sky-700"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-sky-300" />
-                  {opt.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─── Main Form ────────────────────────────────────────────────────────────────
-
 export const ProductForm = ({
   initialData,
   categories = [],
@@ -168,15 +46,22 @@ export const ProductForm = ({
   title = "Product details",
   subtitle = "Manage pricing, media and compatibility.",
 }: ProductFormProps) => {
-  // Parse initial fitment IDs
-  const initialFitmentIds = useMemo(
-    () => initialData?.fitmentIds?.filter((id) => id > 0) ?? [],
-    [],
-  );
+  // Normalize initial fitment ids: accept either `fitmentIds: number[]` or `fitments: CarModel[]`
+  const initialFitmentIds = useMemo(() => {
+    if (Array.isArray(initialData?.fitmentIds)) {
+      return (initialData?.fitmentIds ?? []) as number[];
+    }
 
-  const [selectedFitmentIds, setSelectedFitmentIds] =
-    useState<number[]>(initialFitmentIds);
-  const [openUploadDialog, setOpenUploadDialog] = useState(false);
+    const fitmentsFromInitial = (initialData as { fitments?: CarModel[] })
+      ?.fitments;
+    if (Array.isArray(fitmentsFromInitial)) {
+      return fitmentsFromInitial
+        .map((f: CarModel) => Number(f.id))
+        .filter((id: number) => Number.isFinite(id) && id > 0);
+    }
+
+    return [] as number[];
+  }, [initialData]);
 
   const {
     register,
@@ -192,9 +77,23 @@ export const ProductForm = ({
       imageUrl: initialData?.imageUrl ?? "",
       price: initialData?.price ? Number(initialData.price) : undefined,
       categoryId: initialData?.categoryId ?? undefined,
-      fitmentIdsInput: initialData?.fitmentIds?.join(",") ?? "",
+      fitmentIds: initialFitmentIds,
     },
   });
+
+  // Keep form value in sync if `initialData` changes while the form is mounted
+  useEffect(() => {
+    setValue("fitmentIds", initialFitmentIds, {
+      shouldDirty: false,
+      shouldValidate: true,
+    });
+  }, [initialFitmentIds, setValue]);
+
+  const fitmentIds =
+    useWatch({
+      control,
+      name: "fitmentIds",
+    }) ?? [];
 
   const imageUrl = useWatch({ control, name: "imageUrl" }) ?? "";
 
@@ -206,11 +105,14 @@ export const ProductForm = ({
       })),
     [fitments],
   );
+  console.log("errrot state: ", initialData);
 
-  const handleFitmentsChange = (ids: number[]) => {
-    setSelectedFitmentIds(ids);
-    setValue("fitmentIdsInput", ids.join(","), { shouldValidate: true });
-    console.log("selected fitment ids: ", ids);
+  const normalizeIds = (ids: unknown): number[] => {
+    if (!Array.isArray(ids)) return [];
+
+    return ids
+      .map((id) => Number(id))
+      .filter((id) => Number.isFinite(id) && id > 0);
   };
 
   const handleFormSubmit = async (values: ProductFormValues) => {
@@ -220,8 +122,7 @@ export const ProductForm = ({
       imageUrl: values.imageUrl,
       price: Number(values.price),
       categoryId: values.categoryId,
-      fitmentIds:
-        selectedFitmentIds.length > 0 ? selectedFitmentIds : undefined,
+      fitmentIds: normalizeIds(values.fitmentIds),
     };
 
     await onSubmit?.(payload);
@@ -473,23 +374,31 @@ export const ProductForm = ({
           }
           description="Chọn các loại xe mà sản phẩm này tương thích để khách hàng có thể lọc sản phẩm dựa trên loại xe của họ."
         >
-          {/* Hidden input for RHF validation */}
-          <input type="hidden" {...register("fitmentIdsInput")} />
-
-          <FormField
-            label="Loại xe"
-            hint={
-              selectedFitmentIds.length > 0
-                ? `${selectedFitmentIds.length} vehicle${selectedFitmentIds.length > 1 ? "s" : ""} selected · submits as number[]`
-                : "Chọn các loại xe mà sản phẩm này tương thích"
-            }
-            error={errors.fitmentIdsInput?.message}
-          >
-            <MultipleSelector
-              options={fitmentOptions}
-              selected={selectedFitmentIds}
-              onChange={handleFitmentsChange}
-              hasError={!!errors.fitmentIdsInput}
+          <FormField label="Loại xe" error={errors.fitmentIds?.message}>
+            <EntityPickerField<{
+              id: number;
+              name: string;
+            }>
+              value={fitmentIds}
+              onChange={(ids) => {
+                setValue("fitmentIds", ids, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                });
+              }}
+              fetcher={async (keyword) => {
+                const res = await carModelApi.getAll({ name: keyword });
+                const items = res.data?.items ?? [];
+                return (
+                  items?.map((f) => ({
+                    id: f.id,
+                    name: `Hãng: ${f.brand?.name ?? ""} --- Dòng: ${f.name}`,
+                  })) ?? []
+                );
+              }}
+              // getLabel={(f) => `${f?.brand?.name ?? ""} ${f.name}`}
+              label=""
+              hint=""
             />
           </FormField>
 

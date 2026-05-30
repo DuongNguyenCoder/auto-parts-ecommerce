@@ -138,6 +138,7 @@ exports.Prisma.CategoryScalarFieldEnum = {
 exports.Prisma.BrandScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  slug: 'slug',
   imageUrl: 'imageUrl'
 };
 
@@ -145,6 +146,7 @@ exports.Prisma.CarModelScalarFieldEnum = {
   id: 'id',
   brandId: 'brandId',
   name: 'name',
+  slug: 'slug',
   imageUrl: 'imageUrl',
   year: 'year'
 };
@@ -194,6 +196,52 @@ exports.Prisma.PostScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CartScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CartItemScalarFieldEnum = {
+  id: 'id',
+  cartId: 'cartId',
+  productId: 'productId',
+  slug: 'slug',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WishlistItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  orderNumber: 'orderNumber',
+  userId: 'userId',
+  status: 'status',
+  paymentStatus: 'paymentStatus',
+  paymentMethod: 'paymentMethod',
+  shippingMethod: 'shippingMethod',
+  total: 'total',
+  shippingFee: 'shippingFee',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderProductScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  productId: 'productId',
+  quantity: 'quantity'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -219,6 +267,33 @@ exports.PostStatus = exports.$Enums.PostStatus = {
   ARCHIVED: 'ARCHIVED'
 };
 
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
+};
+
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  CASH_ON_DELIVERY: 'CASH_ON_DELIVERY',
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  CREDIT_CARD: 'CREDIT_CARD',
+  E_WALLET: 'E_WALLET'
+};
+
+exports.ShippingMethod = exports.$Enums.ShippingMethod = {
+  DELIVERY: 'DELIVERY',
+  PICKUP: 'PICKUP'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Category: 'Category',
@@ -227,7 +302,12 @@ exports.Prisma.ModelName = {
   Product: 'Product',
   Banner: 'Banner',
   PostCategory: 'PostCategory',
-  Post: 'Post'
+  Post: 'Post',
+  Cart: 'Cart',
+  CartItem: 'CartItem',
+  WishlistItem: 'WishlistItem',
+  Order: 'Order',
+  OrderProduct: 'OrderProduct'
 };
 
 /**

@@ -8,6 +8,8 @@ import {
   Image,
   Tags,
   Users,
+  RectangleEllipsis,
+  ShoppingBag,
 } from "lucide-react";
 
 export type AdminNavItem = {
@@ -38,6 +40,11 @@ export const ADMIN_NAVIGATION: AdminNavItem[] = [
     icon: Car,
   },
   {
+    title: "Dòng xe",
+    href: "/admin/car-models",
+    icon: RectangleEllipsis,
+  },
+  {
     title: "Bài viết",
     href: "/admin/posts",
     icon: Newspaper,
@@ -51,6 +58,11 @@ export const ADMIN_NAVIGATION: AdminNavItem[] = [
     title: "Banner",
     href: "/admin/banners",
     icon: Image,
+  },
+  {
+    title: "Đơn đặt hàng",
+    href: "/admin/orders",
+    icon: ShoppingBag,
   },
   {
     title: "Người dùng",

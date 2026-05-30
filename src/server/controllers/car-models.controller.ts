@@ -50,6 +50,15 @@ export const carModelController = {
     }
   },
 
+  getBySlug: async (request: NextRequest, { slug }: { slug: string }) => {
+    try {
+      const result = await carModelService.getBySlug(slug);
+      return successResponse("Car model retrieved successfully", result);
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
   update: async (request: NextRequest, { id }: { id: string }) => {
     try {
       const payload = updateCarModelSchema.parse(await request.json());

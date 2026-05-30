@@ -14,13 +14,16 @@ generator client {
 
 // Model User
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  posts     Post[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String         @id @default(cuid())
+  email         String         @unique
+  password      String
+  role          Role           @default(USER)
+  posts         Post[]
+  carts         Cart[]
+  wishlistItems WishlistItem[]
+  orders        Order[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 enum Role {
@@ -34,14 +37,19 @@ model Category {
   name     String
   slug     String    @unique
   products Product[]
+
+  @@index([slug])
 }
 
 // Hãng xe (Isuzu, Hino, Hyundai...)
 model Brand {
   id       Int        @id @default(autoincrement())
   name     String     @unique
+  slug     String?    @unique
   imageUrl String?
   models   CarModel[]
+
+  @@index([slug])
 }
 
 // Dòng/Đời xe (QKR, NQR, FRR...)
@@ -50,9 +58,12 @@ model CarModel {
   brandId  Int
   brand    Brand     @relation(fields: [brandId], references: [id])
   name     String // Ví dụ: QKR 270, NQR 550
+  slug     String?   @unique
   imageUrl String?
   year     String? // Khoảng năm sản xuất hoặc đời xe
   products Product[] @relation("ProductFitment")
+
+  @@index([slug])
 }
 
 // Sản phẩm
@@ -66,8 +77,11 @@ model Product {
   category   Category @relation(fields: [categoryId], references: [id])
 
   // Quan hệ: Sản phẩm này lắp vừa cho những dòng xe nào?
-  fitments CarModel[] @relation("ProductFitment")
-  posts    Post[]
+  fitments      CarModel[]     @relation("ProductFitment")
+  posts         Post[]
+  cartItems     CartItem[]
+  wishlistItem  WishlistItem[]
+  orderProducts OrderProduct[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -126,4 +140,115 @@ enum PostStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+}
+
+model Cart {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  id Int @id @default(autoincrement())
+
+  cartId    String
+  productId Int
+  slug      String?
+
+  quantity Int
+
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId, slug])
+}
+
+model WishlistItem {
+  id String @id @default(cuid())
+
+  userId    String
+  productId Int
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  BANK_TRANSFER
+  CREDIT_CARD
+  E_WALLET
+}
+
+enum ShippingMethod {
+  DELIVERY
+  PICKUP
+}
+
+model Order {
+  id             String        @id @default(cuid())
+  orderNumber    String        @unique
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  products       OrderProduct[]
+
+  status         OrderStatus   @default(PENDING)
+  paymentStatus  PaymentStatus @default(PENDING)
+  paymentMethod  PaymentMethod @default(CASH_ON_DELIVERY)
+  shippingMethod ShippingMethod @default(DELIVERY)
+
+  total          Decimal
+  shippingFee    Decimal       @default(0)
+  note           String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderNumber])
+  @@index([userId])
+  @@index([status])
+  @@index([paymentStatus])
+}
+
+model OrderProduct {
+  id         Int     @id @default(autoincrement())
+  orderId    String
+  productId  Int
+  quantity   Int     @default(1)
+
+  order      Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product    Product @relation(fields: [productId], references: [id])
+
+  @@unique([orderId, productId])
+  @@index([orderId])
+  @@index([productId])
 }

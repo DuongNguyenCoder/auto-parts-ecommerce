@@ -44,6 +44,15 @@ export const brandController = {
     }
   },
 
+  getBySlug: async (request: NextRequest, { slug }: { slug: string }) => {
+    try {
+      const result = await brandService.getBySlug(slug);
+      return successResponse("Brand retrieved successfully", result);
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
   update: async (request: NextRequest, { id }: { id: string }) => {
     try {
       const payload = updateBrandSchema.parse(await request.json());

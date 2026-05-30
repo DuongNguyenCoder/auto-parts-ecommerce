@@ -70,7 +70,7 @@ export function ProductsAdmin() {
     queryFn: () => carModelApi.getAll({ take: 200 }),
   });
 
-  console.log("Products Fitments ===> ", fitmentsQuery.data);
+  console.log("Products Fitments ===> ", productsQuery.data);
 
   const createMutation = useMutation({
     mutationFn: (payload: CreateProductDTO) => productApi.create(payload),
@@ -131,8 +131,8 @@ export function ProductsAdmin() {
     },
   });
 
-  const products = productsQuery.data?.data?.items ?? [];
-  const pagination = productsQuery.data?.data?.pagination;
+  const products = productsQuery.data?.data ?? [];
+  const pagination = productsQuery.data?.pagination;
 
   const categories = categoriesQuery.data?.data?.items ?? [];
   const fitments = fitmentsQuery.data?.data?.items ?? [];
@@ -309,6 +309,7 @@ export function ProductsAdmin() {
                         <Button
                           type="button"
                           variant="destructive"
+                          className="bg-red-400/90 hover:bg-red-500/90"
                           size="sm"
                           onClick={() => handleDelete(product)}
                         >

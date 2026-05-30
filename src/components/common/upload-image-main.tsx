@@ -23,7 +23,7 @@ export default function BuilderUploadImage({
       {imageUrl ? (
         /* Uploaded state */
         <div className="group relative overflow-hidden rounded-2xl border border-sky-100 bg-slate-50">
-          <div className="relative aspect-[16/10] w-full">
+          <div className="relative aspect-video w-full">
             <Image
               src={imageUrl}
               alt="Product preview"

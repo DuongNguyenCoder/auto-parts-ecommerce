@@ -50,6 +50,21 @@ export const carModelApi = {
     return parseResponse<CarModel>(response);
   },
 
+  getBySlug: async (slug: string): Promise<ApiResponse<CarModel>> => {
+    const response = await fetch(
+      `${getBaseUrl()}/api/car-models/slug/${slug}`,
+      {
+        method: "GET",
+        next: {
+          revalidate: 300,
+          tags: ["car-models", `car-model-slug-${slug}`],
+        },
+      },
+    );
+
+    return parseResponse<CarModel>(response);
+  },
+
   create: async (payload: CreateCarModelDTO) => {
     const response = await fetch(`${getBaseUrl()}/api/car-models`, {
       method: "POST",

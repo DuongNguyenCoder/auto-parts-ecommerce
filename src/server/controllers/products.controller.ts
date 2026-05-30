@@ -33,10 +33,16 @@ export const productController = {
       const carModelId = url.searchParams.get("carModelId")
         ? parseInt(url.searchParams.get("carModelId")!)
         : undefined;
+      const sortBy = url.searchParams.get("sortBy") || undefined;
+      const orderBy = url.searchParams.get("orderBy") as
+        | "asc"
+        | "desc"
+        | undefined;
 
       const result = await productService.list(
         { name, categoryId, carModelId },
         { take, skip },
+        { sortBy, orderBy },
       );
       return successResponse("Products retrieved successfully", result);
     } catch (error) {
@@ -47,6 +53,15 @@ export const productController = {
   getById: async (request: NextRequest, { id }: { id: string }) => {
     try {
       const result = await productService.getById(parseInt(id));
+      return successResponse("Product retrieved successfully", result);
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
+  getBySlug: async (request: NextRequest, { slug }: { slug: string }) => {
+    try {
+      const result = await productService.getBySlug(slug);
       return successResponse("Product retrieved successfully", result);
     } catch (error) {
       return handleApiError(error);

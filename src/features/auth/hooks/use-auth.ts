@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { AuthSession } from "@/types/auth";
 import type { LoginInput, RegisterInput } from "@/validations/auth.schema";
 import { AUTH_ENDPOINTS } from "@/features/auth/constants/auth-endpoints";
+import { getBaseUrl } from "@/lib/getBaseUrl";
 
 type ApiResponse<T> = {
   success: boolean;
@@ -52,12 +53,15 @@ export const useAuth = () => {
     queryKey: authQueryKey,
     queryFn: getSession,
     retry: false,
-    staleTime: 60_000,
+    staleTime: 60000,
   });
 
   const registerMutation = useMutation({
     mutationFn: (input: RegisterInput) =>
-      postAuth<RegisterInput, AuthSession>(AUTH_ENDPOINTS.register, input),
+      postAuth<RegisterInput, AuthSession>(
+        `${getBaseUrl()}${AUTH_ENDPOINTS.register}`,
+        input,
+      ),
     onSuccess: (session) => {
       queryClient.setQueryData(authQueryKey, session);
     },

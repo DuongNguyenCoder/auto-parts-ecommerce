@@ -228,7 +228,7 @@ export function CarModelsAdmin() {
               <SelectValue placeholder="All brands" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All brands</SelectItem>
+              <SelectItem value="none">All brands</SelectItem>
               {brands.map((brand) => (
                 <SelectItem key={brand.id} value={String(brand.id)}>
                   {brand.name}

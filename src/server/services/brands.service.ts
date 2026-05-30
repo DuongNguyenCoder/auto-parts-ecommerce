@@ -10,6 +10,12 @@ export const brandService = {
     return brand;
   },
 
+  getBySlug: async (slug: string) => {
+    const brand = await brandRepository.findBySlug(slug);
+    if (!brand) throw new AppError("Brand not found", 404);
+    return brand;
+  },
+
   list: async (
     filters?: { name?: string },
     pagination?: { take?: number; skip?: number },
