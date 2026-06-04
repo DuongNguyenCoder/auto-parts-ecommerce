@@ -36,6 +36,7 @@ ARG NEXT_PUBLIC_CLOUDINARY_API_KEY
 ENV NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 ENV NEXT_PUBLIC_CLOUDINARY_API_KEY=$NEXT_PUBLIC_CLOUDINARY_API_KEY
 
+RUN npx prisma generate
 RUN npm run build
 
 
@@ -49,8 +50,9 @@ RUN apk add --no-cache libc6-compat openssl wget
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3000
+
+RUN addgroup -S nodejs
+RUN adduser -S nextjs -G nodejs
 
 COPY --from=builder /app/public ./public
 
@@ -59,6 +61,8 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
 COPY --from=builder /app/prisma ./prisma
+
+USER nextjs
 
 EXPOSE 3000
 

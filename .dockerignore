@@ -9,3 +9,7 @@ README.md
 npm-debug.log
 pnpm-debug.log
 docker-compose.yml
+CART_WISHLIST_SYNC_SUMMARY.md
+CART_PAGE_GUIDE.md
+API_CONVENTION.md
+DESIGN_SYSTEM.md
