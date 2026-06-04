@@ -43,7 +43,7 @@ export const useWishlistSync = () => {
           })),
         };
 
-        const response = await fetch(`${getBaseUrl()}/api/wishlist/sync`, {
+        const response = await fetch(`/api/wishlist/sync`, {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },

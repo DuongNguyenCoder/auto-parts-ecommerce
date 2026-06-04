@@ -5,6 +5,9 @@ import { Car, ChevronDown, LayoutGrid, Newspaper } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { SidebarSection } from "@/components/blog/sidebar-section";
+import { postCategoryService } from "@/server/services/post-categories.service";
+import { categoryService } from "@/server/services/categories.service";
+import { brandService } from "@/server/services/brands.service";
 
 interface SidebarItem {
   label: string;
@@ -14,15 +17,18 @@ interface SidebarItem {
 }
 
 export default async function BlogSidebar() {
-  const [postCategoriesRes, brandsRes, categoriesRes] = await Promise.all([
-    postCategoryApi.getAll({ take: 100 }),
-    brandApi.getAll({ take: 100 }),
-    categoryApi.getAll({ take: 100 }),
-  ]);
+  // const [postCategoriesRes, brandsRes, categoriesRes] = await Promise.all([
+  //   postCategoryApi.getAll({ take: 100 }),
+  //   brandApi.getAll({ take: 100 }),
+  //   categoryApi.getAll({ take: 100 }),
+  // ]);
+  const postCategoriesRes = await postCategoryService.list({}, { take: 100 });
+  const categoriesRes = await categoryService.list({}, { take: 100 });
+  const brandsRes = await brandService.list({}, { take: 100 });
 
-  const postCategories = postCategoriesRes.data?.items ?? [];
-  const brands = brandsRes.data?.items ?? [];
-  const categories = categoriesRes.data?.items ?? [];
+  const postCategories = postCategoriesRes?.items ?? [];
+  const brands = brandsRes?.items ?? [];
+  const categories = categoriesRes?.items ?? [];
 
   const postCategoryItems: SidebarItem[] = postCategories.map(
     (category: PostCategory) => ({
@@ -31,10 +37,10 @@ export default async function BlogSidebar() {
     }),
   );
 
-  const brandItems: SidebarItem[] = brands.map((brand: Brand) => ({
-    label: brand.name,
+  const brandItems: SidebarItem[] = brands.map((brand: any) => ({
+    label: brand?.name,
     href: `/hang-xe/${brand.slug}`,
-    child: brand?.models?.map((model) => ({
+    child: brand?.models?.map((model: any) => ({
       label: model.name,
       href: `/dong-xe/${model.slug}`,
     })),

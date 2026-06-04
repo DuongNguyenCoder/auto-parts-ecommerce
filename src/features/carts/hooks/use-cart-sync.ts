@@ -47,7 +47,7 @@ export const useCartSync = () => {
           })),
         };
 
-        const response = await fetch(`${getBaseUrl()}/api/carts/sync`, {
+        const response = await fetch(`/api/carts/sync`, {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },

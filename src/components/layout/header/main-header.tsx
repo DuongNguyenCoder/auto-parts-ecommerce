@@ -30,7 +30,7 @@ import Image from "next/image";
 
 type MainHeaderProps = {
   wishlistCount?: number;
-  brands: Brand[];
+  brands: any[];
   categories: Category[];
 };
 

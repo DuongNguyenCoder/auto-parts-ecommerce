@@ -4,10 +4,11 @@ import { cn } from "@/lib/utils";
 
 import { PostCard } from "./post-card";
 
-import type { Post } from "@/types";
+import type { PaginatedData, Post, PostCategoryListQuery } from "@/types";
+// import { PostTest } from "@/types/post.type";
 
 type Props = {
-  posts: Post[];
+  posts: any[];
   className?: string;
 };
 
@@ -32,7 +33,7 @@ export function PostGrid({ posts, className }: Props) {
         className,
       )}
     >
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
     </div>

@@ -2,6 +2,7 @@ import {
   PostFormFields,
   PostFormOutput,
 } from "@/features/posts/components/post-form.types";
+import { formatDate } from "@/lib/format-date";
 import { Post } from "@/types";
 import { CreatePostDTO, UpdatePostDTO } from "@/validations/posts.schema";
 
@@ -30,14 +31,15 @@ export const mapPostToFormValues = (post?: Post): PostFormFields => {
     thumbnail: post.thumbnail ?? "",
     status: post.status ?? "DRAFT",
 
-    publishedAt: post.publishedAt ? post.publishedAt.split("T")[0] : "",
+    publishedAt: post.publishedAt ? formatDate(post.publishedAt) : "",
 
     metaTitle: post.metaTitle ?? "",
     metaDesc: post.metaDesc ?? "",
 
     postCategoryId: post.postCategoryId ?? undefined,
 
-    relatedProductIds: post.relatedProducts?.map((product) => product.id) ?? [],
+    relatedProductIds:
+      post.relatedProducts?.map((product: any) => product.id) ?? [],
   };
 };
 

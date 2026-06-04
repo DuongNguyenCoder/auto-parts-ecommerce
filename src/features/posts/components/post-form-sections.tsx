@@ -42,6 +42,7 @@ import {
   ScrollArea,
   Badge,
 } from "@/components/ui";
+import { ProductToPost } from "@/types/post.type";
 
 export const PostFormBasicGroup = ({
   register,
@@ -129,7 +130,8 @@ export const PostFormPublishGroup = ({
   errors: FieldErrors<PostFormFields>;
   setValue: UseFormSetValue<PostFormFields>;
   postCategories: PostCategory[];
-  initialProducts?: Product[];
+  // initialProducts?: ProductToPost[];
+  initialProducts?: any[];
 }) => {
   const statusOptions = ["DRAFT", "PUBLISHED", "ARCHIVED"] as const;
 
@@ -150,7 +152,7 @@ export const PostFormPublishGroup = ({
   }, [initialProducts]);
 
   const [productMap, setProductMap] =
-    useState<Record<number, Product>>(initialProductMap);
+    useState<Record<number, ProductToPost>>(initialProductMap);
 
   const debouncedKeyword = useDebounce(keyword, 400);
 
@@ -169,7 +171,7 @@ export const PostFormPublishGroup = ({
     gcTime: 1000 * 60 * 5, // 5 minutes
   });
 
-  const products: Product[] = productsQuery.data?.data ?? [];
+  const products: ProductToPost[] = productsQuery.data?.data ?? [];
 
   useEffect(() => {
     setProductMap((prev) => ({
@@ -181,14 +183,14 @@ export const PostFormPublishGroup = ({
   const selectedProducts = useMemo(() => {
     return relatedProductIds
       .map((id) => productMap[id])
-      .filter((product): product is Product => Boolean(product));
+      .filter((product): product is ProductToPost => Boolean(product));
   }, [relatedProductIds, productMap]);
 
   const selectedIdSet = useMemo(() => {
     return new Set(relatedProductIds);
   }, [relatedProductIds]);
 
-  const handleSelect = (product: Product) => {
+  const handleSelect = (product: ProductToPost) => {
     const exists = relatedProductIds.includes(product.id);
 
     if (exists) return;

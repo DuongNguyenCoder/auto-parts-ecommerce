@@ -8,7 +8,7 @@ type Key = string;
 
 interface Params {
   brandId: number;
-  initialCarModelId: number;
+  initialCarModelId: number | undefined;
   initialCategoryId: number;
 }
 

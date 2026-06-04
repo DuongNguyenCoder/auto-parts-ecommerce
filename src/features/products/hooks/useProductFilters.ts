@@ -28,7 +28,9 @@ export function useProductFilters() {
 
       name: params.get("name") ?? undefined,
 
-      sortBy: (params.get("sort") as ProductListQuery["orderBy"]) ?? "newest",
+      sortBy: (params.get("sortBy") as ProductListQuery["sortBy"]) ?? undefined,
+
+      orderBy: (params.get("orderBy") as "asc" | "desc" | undefined) ?? undefined,
 
       page: toNumber(params.get("page")),
     }),
@@ -51,12 +53,13 @@ export function useProductFilters() {
       "categoryId" in next ||
       "carModelId" in next ||
       "name" in next ||
+      "sortBy" in next ||
       "orderBy" in next
     ) {
       newParams.delete("page");
     }
 
-    router.push(`${pathname}?${newParams.toString()}`);
+    router.push(`${pathname}?${newParams.toString()}`, { scroll: false });
   };
 
   const setFilters = (next: Partial<ProductListQuery>) => {

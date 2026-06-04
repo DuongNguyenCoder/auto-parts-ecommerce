@@ -14,7 +14,7 @@ import { HEADER_CATEGORIES, HEADER_NAV_ITEMS } from "./constants";
 import { MegaMenuContent } from "./mega-menu-content";
 import { NavMenuItem } from "./nav-menu-item";
 import { Brand } from "@/types";
-export async function NavHeader({ brands }: { brands: Brand[] }) {
+export async function NavHeader({ brands }: { brands: any[] }) {
   // const brandsRes = await brandApi.getAll({ take: 100 });
   // const brands = brandsRes.data?.items || [];
 

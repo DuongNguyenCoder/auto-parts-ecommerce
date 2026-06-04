@@ -5,7 +5,7 @@ import { Brand } from "@/types";
 import BrandCard from "./brand-card";
 
 type Props = {
-  brands: Brand[];
+  brands: any[];
 };
 
 export function BrandGrid({ brands }: Props) {

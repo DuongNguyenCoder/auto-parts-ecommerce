@@ -1,7 +1,8 @@
 import { BrandSlider } from "@/components/client/brand-carModel-category/brand-slider";
 import { BrandSectionContainer } from "@/components/client/product/brand-product-container";
-import { brandApi, categoryApi } from "@/features/api";
 import { cn } from "@/lib/utils";
+import { brandService } from "@/server/services/brands.service";
+import { categoryService } from "@/server/services/categories.service";
 
 type CombinedSectionProps = {
   className?: string;
@@ -10,13 +11,14 @@ type CombinedSectionProps = {
 export default async function CombinedSection({
   className,
 }: CombinedSectionProps) {
-  const [brandsRes, categoriesRes] = await Promise.all([
-    brandApi.getAll(),
-    categoryApi.getAll(),
-  ]);
-
-  const brands = brandsRes.data?.items ?? [];
-  const categories = categoriesRes.data?.items ?? [];
+  // const [brandsRes, categoriesRes] = await Promise.all([
+  //   brandApi.getAll(),
+  //   categoryApi.getAll(),
+  // ]);
+  const brandsRes = await brandService.list({}, { take: 100 });
+  const categoriesRes = await categoryService.list({}, { take: 100 });
+  const brands = brandsRes?.items ?? [];
+  const categories = categoriesRes?.items ?? [];
 
   return (
     <div

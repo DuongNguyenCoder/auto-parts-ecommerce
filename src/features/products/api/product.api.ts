@@ -34,16 +34,13 @@ export const productApi = {
 
     const params = createSearchParams(paramsObj);
 
-    const response = await fetch(
-      `${getBaseUrl()}/api/products?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["products"],
-        },
+    const response = await fetch(`/api/products?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["products"],
       },
-    );
+    });
 
     const parsed = await parseResponse<any>(response);
 
@@ -70,7 +67,7 @@ export const productApi = {
   },
 
   getById: async (id: number): Promise<ApiResponse<Product>> => {
-    const response = await fetch(`${getBaseUrl()}/api/products/${id}`, {
+    const response = await fetch(`/api/products/${id}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -82,7 +79,7 @@ export const productApi = {
   },
 
   getBySlug: async (slug: string): Promise<ApiResponse<Product>> => {
-    const response = await fetch(`${getBaseUrl()}/api/products/slug/${slug}`, {
+    const response = await fetch(`/api/products/slug/${slug}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -94,7 +91,7 @@ export const productApi = {
   },
 
   create: async (payload: CreateProductDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/products`, {
+    const response = await fetch(`/api/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -104,7 +101,7 @@ export const productApi = {
   },
 
   update: async (id: number, payload: UpdateProductDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/products/${id}/update`, {
+    const response = await fetch(`/api/products/${id}/update`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -114,7 +111,7 @@ export const productApi = {
   },
 
   delete: async (id: number) => {
-    const response = await fetch(`${getBaseUrl()}/api/products/${id}/delete`, {
+    const response = await fetch(`/api/products/${id}/delete`, {
       method: "DELETE",
     });
 

@@ -15,7 +15,7 @@ const parseResponse = async <T>(response: Response) => {
 
 export const wishlistApi = {
   getList: async (): Promise<ApiResponse<WishlistItem[]>> => {
-    const response = await fetch(`${getBaseUrl()}/api/wishlist`, {
+    const response = await fetch(`/api/wishlist`, {
       method: "GET",
       credentials: "include",
       next: {
@@ -28,7 +28,7 @@ export const wishlistApi = {
   },
 
   addItem: async (payload: AddWishlistItemDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/wishlist`, {
+    const response = await fetch(`/api/wishlist`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -39,7 +39,7 @@ export const wishlistApi = {
   },
 
   removeItem: async (id: string) => {
-    const response = await fetch(`${getBaseUrl()}/api/wishlist/${id}/delete`, {
+    const response = await fetch(`/api/wishlist/${id}/delete`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -48,7 +48,7 @@ export const wishlistApi = {
   },
 
   syncWishlist: async (payload: SyncWishlistDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/wishlist/sync`, {
+    const response = await fetch(`/api/wishlist/sync`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

@@ -25,22 +25,19 @@ export const postCategoryApi = {
     query?: PostCategoryListQuery,
   ): Promise<ApiResponse<PaginatedData<PostCategory>>> => {
     const params = createSearchParams(query);
-    const response = await fetch(
-      `${getBaseUrl()}/api/post-categories?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["post-categories"],
-        },
+    const response = await fetch(`/api/post-categories?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["post-categories"],
       },
-    );
+    });
 
     return parseResponse<PaginatedData<PostCategory>>(response);
   },
 
   getById: async (id: number): Promise<ApiResponse<PostCategory>> => {
-    const response = await fetch(`${getBaseUrl()}/api/post-categories/${id}`, {
+    const response = await fetch(`/api/post-categories/${id}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -52,22 +49,19 @@ export const postCategoryApi = {
   },
 
   getBySlug: async (slug: string): Promise<ApiResponse<PostCategory>> => {
-    const response = await fetch(
-      `${getBaseUrl()}/api/post-categories/slug/${slug}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["post-categories", `post-category-${slug}`],
-        },
+    const response = await fetch(`/api/post-categories/slug/${slug}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["post-categories", `post-category-${slug}`],
       },
-    );
+    });
 
     return parseResponse<PostCategory>(response);
   },
 
   create: async (payload: CreatePostCategoryDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/post-categories`, {
+    const response = await fetch(`/api/post-categories`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -77,25 +71,19 @@ export const postCategoryApi = {
   },
 
   update: async (id: number, payload: UpdatePostCategoryDTO) => {
-    const response = await fetch(
-      `${getBaseUrl()}/api/post-categories/${id}/update`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      },
-    );
+    const response = await fetch(`/api/post-categories/${id}/update`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
     return parseResponse<PostCategory>(response);
   },
 
   delete: async (id: number) => {
-    const response = await fetch(
-      `${getBaseUrl()}/api/post-categories/${id}/delete`,
-      {
-        method: "DELETE",
-      },
-    );
+    const response = await fetch(`/api/post-categories/${id}/delete`, {
+      method: "DELETE",
+    });
 
     return parseResponse<PostCategory>(response);
   },

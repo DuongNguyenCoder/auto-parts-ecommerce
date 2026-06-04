@@ -14,7 +14,7 @@ import { cn, inputCls, inputErrorCls } from "@/lib/utils";
 import BuilderUploadImage from "@/components/common/upload-image-main";
 
 type BrandFormProps = {
-  initialData?: Partial<CreateBrandDTO>;
+  initialData?: any;
   onSubmit: (values: CreateBrandDTO | UpdateBrandDTO) => Promise<void> | void;
   submitLabel?: string;
   title?: string;

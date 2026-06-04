@@ -3,7 +3,7 @@ import { BrandProductSection } from "./brand-product-section";
 import { CartWishlistSyncProvider } from "@/features/carts/providers/cart-wishlist-sync-provider";
 
 type BrandSectionContainerProps = {
-  brands: Brand[];
+  brands: any[];
   categories: Category[];
 };
 

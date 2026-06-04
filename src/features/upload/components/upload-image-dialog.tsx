@@ -105,7 +105,8 @@ export function UploadImageDialog({
       resetState();
 
       onOpenChange?.(false);
-    } catch {
+    } catch (error) {
+      console.error(error);
       toast.error("Upload thất bại");
     }
   }, [file, upload, resetState, onSuccess, onOpenChange]);

@@ -1,9 +1,9 @@
 import { PostListSection } from "@/components/blog/post-list-section";
-import { postCategoryApi } from "@/features/api";
+import { postCategoryService } from "@/server/services/post-categories.service";
 export default async function PromotionNewsPage() {
-  const postCategoriesRes = await postCategoryApi.getAll({ take: 100 });
+  const postCategoriesRes = await postCategoryService.list({}, { take: 100 });
 
-  const postCategories = postCategoriesRes.data?.items ?? [];
+  const postCategories = postCategoriesRes?.items ?? [];
 
   if (!postCategories.length) return <div>Không có danh mục tin tức</div>;
   return (

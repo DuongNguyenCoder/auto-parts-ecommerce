@@ -24,7 +24,9 @@ type ProductFormValues = z.input<typeof productFormSchema>;
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type ProductFormProps = {
-  initialData?: Partial<CreateProductDTO>;
+  // initialData?: Partial<CreateProductDTO>;
+  initialData?: any;
+
   categories?: Category[];
   fitments?: CarModel[];
   onSubmit?: (

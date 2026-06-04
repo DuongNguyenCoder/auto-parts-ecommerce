@@ -1,25 +1,27 @@
 import type { CarModel } from "@/types";
-import { productApi } from "@/features/products/api/product.api";
 import { CarModelProductListClient } from "./car-model-product-list-client";
+import { productService } from "@/server/services/products.service";
 
 type Props = {
-  model: CarModel;
+  model: any;
 };
 
 export async function CarModelProductListServer({ model }: Props) {
-  const productsRes = await productApi.getAll({
-    carModelId: model.id,
-    take: 12,
-    skip: 0,
-  });
-
-  if (!productsRes.success || !productsRes.data) return null;
+  const productsRes = await productService.list(
+    { carModelId: model.id },
+    {
+      take: 12,
+      skip: 0,
+    },
+    {},
+  );
+  if (!productsRes.items) return null;
 
   return (
     <CarModelProductListClient
       model={model}
       initialResponse={productsRes}
-      initialItems={productsRes.data}
+      initialItems={productsRes.items}
     />
   );
 }

@@ -24,22 +24,19 @@ export const categoryApi = {
     query?: CategoryListQuery,
   ): Promise<ApiResponse<PaginatedData<Category>>> => {
     const params = createSearchParams(query);
-    const response = await fetch(
-      `${getBaseUrl()}/api/categories?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["categories"],
-        },
+    const response = await fetch(`/api/categories?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["categories"],
       },
-    );
+    });
 
     return parseResponse<PaginatedData<Category>>(response);
   },
 
   getById: async (id: number): Promise<ApiResponse<Category>> => {
-    const response = await fetch(`${getBaseUrl()}/api/categories/${id}`, {
+    const response = await fetch(`/api/categories/${id}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -51,7 +48,7 @@ export const categoryApi = {
   },
 
   create: async (payload: CreateCategoryDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/categories`, {
+    const response = await fetch(`/api/categories`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -61,25 +58,19 @@ export const categoryApi = {
   },
 
   update: async (id: number, payload: UpdateCategoryDTO) => {
-    const response = await fetch(
-      `${getBaseUrl()}/api/categories/${id}/update`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      },
-    );
+    const response = await fetch(`/api/categories/${id}/update`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
     return parseResponse<Category>(response);
   },
 
   delete: async (id: number) => {
-    const response = await fetch(
-      `${getBaseUrl()}/api/categories/${id}/delete`,
-      {
-        method: "DELETE",
-      },
-    );
+    const response = await fetch(`/api/categories/${id}/delete`, {
+      method: "DELETE",
+    });
 
     return parseResponse<Category>(response);
   },

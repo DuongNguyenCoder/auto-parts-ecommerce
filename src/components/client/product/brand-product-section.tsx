@@ -13,7 +13,7 @@ import { ClipboardX } from "lucide-react";
 
 type BrandProductSectionProps = {
   brand: Brand;
-  carModels: CarModel[];
+  carModels: Brand["models"];
   categories: Category[];
   className?: string;
 };
@@ -37,7 +37,7 @@ export function BrandProductSection({
     initialCategoryId: categories?.[0]?.id,
   });
   console.log("Check CarModel inHomePage => ", carModels);
-  if (!carModels.length) return null;
+  if (!carModels?.length) return null;
   return (
     <section className={cn("space-y-0", className)}>
       {/* Header */}
@@ -50,11 +50,13 @@ export function BrandProductSection({
           <p className="mb-2 text-[10px] font-medium uppercase tracking-widest text-muted-foreground sm:text-[11px]">
             Dòng xe
           </p>
-          <CarModelTabs
-            items={carModels}
-            value={carModelId}
-            onChange={setCarModelId}
-          />
+          {carModelId && (
+            <CarModelTabs
+              items={carModels}
+              value={carModelId}
+              onChange={setCarModelId}
+            />
+          )}
         </div>
 
         {/* Category row */}

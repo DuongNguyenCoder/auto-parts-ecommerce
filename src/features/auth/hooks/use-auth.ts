@@ -58,10 +58,7 @@ export const useAuth = () => {
 
   const registerMutation = useMutation({
     mutationFn: (input: RegisterInput) =>
-      postAuth<RegisterInput, AuthSession>(
-        `${getBaseUrl()}${AUTH_ENDPOINTS.register}`,
-        input,
-      ),
+      postAuth<RegisterInput, AuthSession>(`${AUTH_ENDPOINTS.register}`, input),
     onSuccess: (session) => {
       queryClient.setQueryData(authQueryKey, session);
     },

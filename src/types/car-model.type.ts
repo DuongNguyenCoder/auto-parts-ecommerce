@@ -8,7 +8,7 @@ export type CarModel = {
 
   imageUrl: string;
 
-  slug: string;
+  slug: string | null;
   name: string;
-  year: string | undefined;
+  year: string | null;
 };

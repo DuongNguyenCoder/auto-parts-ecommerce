@@ -3,6 +3,7 @@ import { carModelRepository } from "@/server/repositories/car-models.repository"
 import { categoryRepository } from "@/server/repositories/categories.repository";
 import { productRepository } from "@/server/repositories/products.repository";
 import { buildPagination } from "@/server/utils/pagination";
+import { serialize } from "@/server/utils/serialize";
 import type {
   CreateProductDTO,
   UpdateProductDTO,
@@ -34,7 +35,7 @@ export const productService = {
   getBySlug: async (slug: string) => {
     const product = await productRepository.findBySlug(slug);
     if (!product) throw new AppError("Product not found", 404);
-    return product;
+    return serialize(product);
   },
 
   list: async (
@@ -57,10 +58,10 @@ export const productService = {
       productRepository.count(filters),
     ]);
 
-    return {
+    return serialize({
       items,
       pagination: buildPagination(total, take, skip),
-    };
+    });
   },
 
   create: async (data: CreateProductDTO) => {

@@ -4,14 +4,18 @@ import CombinedSection from "@/components/client/home/combined-section";
 import ButtonAnimate from "@/components/ui/button-animation-custom";
 import { Separator } from "@/components/ui/separator";
 import { postApi } from "@/features/api";
+import { postService } from "@/server/services/posts.service";
+import { PaginatedData, Post, PostCategoryListQuery } from "@/types";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   // const items = useCartStore((s) => s.items);
   // console.log("STore cart zustant ====> ", 1);
-  const postsRes = await postApi.getAll({ skip: 0, take: 4 });
-  const posts = postsRes.data?.items ?? [];
+  const postsRes = await postService.list({}, { take: 4 });
+  // const postsRes =
+  const posts = postsRes.items ?? [];
+  console.log("CHECK POST FETCH FOR SERVICE => ", postsRes);
   return (
     <div className="w-full space-y-16">
       <HomeBannerSlider className="w-full" />

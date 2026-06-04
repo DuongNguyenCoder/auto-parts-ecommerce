@@ -16,7 +16,7 @@ import { useMemo } from "react";
 
 type FooterLinksProps = {
   categories: Category[];
-  brands: Brand[];
+  brands: any[];
   postcategories: PostCategory[];
   className?: string;
 };

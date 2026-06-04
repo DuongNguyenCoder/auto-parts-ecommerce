@@ -1,23 +1,21 @@
 import { ProductListingEngine } from "@/components/client/product/product-listing-engine";
 import { Breadcrumbs } from "@/components/client/breadcrumbs";
 import { buildBreadcrumbsFromPath } from "@/lib/breadcrumb";
-import { categoryApi, brandApi, productApi } from "@/features/api";
-
 import { BrandSlider } from "@/components/client/brand-carModel-category";
 import { BrandGrid } from "@/components/client/brand-carModel-category";
 import { Tag } from "lucide-react";
+import { productService } from "@/server/services/products.service";
+import { categoryService } from "@/server/services/categories.service";
+import { brandService } from "@/server/services/brands.service";
 
 export default async function ProductPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const searchParamsObj = await searchParams;
-  const [productsRes, categoriesRes, brandsRes] = await Promise.all([
-    productApi.getAll(searchParamsObj),
-    categoryApi.getAll(),
-    brandApi.getAll({ take: 100 }),
-  ]);
+  const productsRes = await productService.list({}, { take: 10 }, {});
+  const categoriesRes = await categoryService.list({}, { take: 100 });
+  const brandsRes = await brandService.list({}, { take: 100 });
 
   return (
     <div className="min-h-screen">
@@ -42,13 +40,10 @@ export default async function ProductPage({
 
           {/* Mobile: slider / Desktop: grid */}
           <div className="md:hidden">
-            <BrandSlider
-              brands={brandsRes.data?.items ?? []}
-              itemsPerView={4}
-            />
+            <BrandSlider brands={brandsRes?.items ?? []} itemsPerView={4} />
           </div>
           <div className="hidden md:block">
-            <BrandGrid brands={brandsRes.data?.items ?? []} />
+            <BrandGrid brands={brandsRes?.items ?? []} />
           </div>
         </div>
       </section>
@@ -64,8 +59,8 @@ export default async function ProductPage({
 
         <ProductListingEngine
           initialResponse={productsRes}
-          initialItems={productsRes.data}
-          categories={categoriesRes.data?.items ?? []}
+          initialItems={productsRes.items ?? []}
+          categories={categoriesRes?.items ?? []}
         />
       </section>
     </div>

@@ -3,18 +3,19 @@ import { cn } from "@/lib/utils";
 import { MainHeader } from "./main-header";
 import { NavHeader } from "./nav-header";
 import { TopHeader } from "./top-header";
-import { brandApi, categoryApi } from "@/features/api";
+import { brandService } from "@/server/services/brands.service";
+import { categoryService } from "@/server/services/categories.service";
 
 type HeaderProps = {
   className?: string;
 };
 
 export async function Header({ className }: HeaderProps) {
-  const brandsRes = await brandApi.getAll({ take: 100 });
-  const brands = brandsRes.data?.items || [];
+  const brandsRes = await brandService.list({}, { take: 100 });
+  const categoriesRes = await categoryService.list({}, { take: 100 });
 
-  const categoriesRes = await categoryApi.getAll({ take: 100 });
-  const categories = categoriesRes.data?.items || [];
+  const brands = brandsRes?.items || [];
+  const categories = categoriesRes?.items || [];
 
   return (
     <header

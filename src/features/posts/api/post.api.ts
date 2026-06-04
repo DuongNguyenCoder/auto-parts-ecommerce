@@ -16,22 +16,19 @@ export const postApi = {
     query?: PostListQuery,
   ): Promise<ApiResponse<PaginatedData<Post>>> => {
     const params = createSearchParams(query);
-    const response = await fetch(
-      `${getBaseUrl()}/api/posts?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["posts"],
-        },
+    const response = await fetch(`/api/posts?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["posts"],
       },
-    );
+    });
 
     return parseResponse<PaginatedData<Post>>(response);
   },
 
   getBySlug: async (slug: string): Promise<ApiResponse<Post>> => {
-    const response = await fetch(`${getBaseUrl()}/api/posts/${slug}`, {
+    const response = await fetch(`/api/posts/${slug}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -43,7 +40,7 @@ export const postApi = {
   },
 
   create: async (payload: CreatePostDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/posts`, {
+    const response = await fetch(`/api/posts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -53,7 +50,7 @@ export const postApi = {
   },
 
   update: async (slug: string, payload: UpdatePostDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/posts/${slug}/update`, {
+    const response = await fetch(`/api/posts/${slug}/update`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -63,7 +60,7 @@ export const postApi = {
   },
 
   delete: async (slug: string) => {
-    const response = await fetch(`${getBaseUrl()}/api/posts/${slug}/delete`, {
+    const response = await fetch(`/api/posts/${slug}/delete`, {
       method: "DELETE",
     });
 

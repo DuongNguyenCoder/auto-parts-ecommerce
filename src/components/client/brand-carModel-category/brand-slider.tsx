@@ -17,7 +17,12 @@ import {
 import BrandCard from "./brand-card";
 import type { Brand, CarModel } from "@/types";
 
-type SliderItem = Brand | CarModel;
+type SliderItem = {
+  id: number;
+  slug: string | null;
+  name: string;
+  imageUrl?: string | null;
+};
 
 interface BrandSliderProps {
   brands: SliderItem[];

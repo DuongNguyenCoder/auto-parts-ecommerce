@@ -24,22 +24,19 @@ export const carModelApi = {
     query?: CarModelListQuery,
   ): Promise<ApiResponse<PaginatedData<CarModel>>> => {
     const params = createSearchParams(query);
-    const response = await fetch(
-      `${getBaseUrl()}/api/car-models?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["car-models"],
-        },
+    const response = await fetch(`/api/car-models?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["car-models"],
       },
-    );
+    });
 
     return parseResponse<PaginatedData<CarModel>>(response);
   },
 
   getById: async (id: number): Promise<ApiResponse<CarModel>> => {
-    const response = await fetch(`${getBaseUrl()}/api/car-models/${id}`, {
+    const response = await fetch(`/api/car-models/${id}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -51,22 +48,19 @@ export const carModelApi = {
   },
 
   getBySlug: async (slug: string): Promise<ApiResponse<CarModel>> => {
-    const response = await fetch(
-      `${getBaseUrl()}/api/car-models/slug/${slug}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["car-models", `car-model-slug-${slug}`],
-        },
+    const response = await fetch(`/api/car-models/slug/${slug}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["car-models", `car-model-slug-${slug}`],
       },
-    );
+    });
 
     return parseResponse<CarModel>(response);
   },
 
   create: async (payload: CreateCarModelDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/car-models`, {
+    const response = await fetch(`/api/car-models`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -76,25 +70,19 @@ export const carModelApi = {
   },
 
   update: async (id: number, payload: UpdateCarModelDTO) => {
-    const response = await fetch(
-      `${getBaseUrl()}/api/car-models/${id}/update`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      },
-    );
+    const response = await fetch(`/api/car-models/${id}/update`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
     return parseResponse<CarModel>(response);
   },
 
   delete: async (id: number) => {
-    const response = await fetch(
-      `${getBaseUrl()}/api/car-models/${id}/delete`,
-      {
-        method: "DELETE",
-      },
-    );
+    const response = await fetch(`/api/car-models/${id}/delete`, {
+      method: "DELETE",
+    });
 
     return parseResponse<CarModel>(response);
   },

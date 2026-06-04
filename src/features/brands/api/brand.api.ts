@@ -19,22 +19,19 @@ export const brandApi = {
     query?: BrandListQuery,
   ): Promise<ApiResponse<PaginatedData<Brand>>> => {
     const params = createSearchParams(query);
-    const response = await fetch(
-      `${getBaseUrl()}/api/brands?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["brands"],
-        },
+    const response = await fetch(`/api/brands?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["brands"],
       },
-    );
+    });
 
     return parseResponse<PaginatedData<Brand>>(response);
   },
 
   getById: async (id: number): Promise<ApiResponse<Brand>> => {
-    const response = await fetch(`${getBaseUrl()}/api/brands/${id}`, {
+    const response = await fetch(`/api/brands/${id}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -46,7 +43,7 @@ export const brandApi = {
   },
 
   getBySlug: async (slug: string): Promise<ApiResponse<Brand>> => {
-    const response = await fetch(`${getBaseUrl()}/api/brands/slug/${slug}`, {
+    const response = await fetch(`/api/brands/slug/${slug}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -58,7 +55,7 @@ export const brandApi = {
   },
 
   create: async (payload: CreateBrandDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/brands`, {
+    const response = await fetch(`/api/brands`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -68,7 +65,7 @@ export const brandApi = {
   },
 
   update: async (id: number, payload: UpdateBrandDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/brands/${id}/update`, {
+    const response = await fetch(`/api/brands/${id}/update`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -78,7 +75,7 @@ export const brandApi = {
   },
 
   delete: async (id: number) => {
-    const response = await fetch(`${getBaseUrl()}/api/brands/${id}/delete`, {
+    const response = await fetch(`/api/brands/${id}/delete`, {
       method: "DELETE",
     });
 

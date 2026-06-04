@@ -38,6 +38,7 @@ const publicSelect = {
       name: true,
       price: true,
       categoryId: true,
+      imageUrl: true,
     },
   },
   createdAt: true,

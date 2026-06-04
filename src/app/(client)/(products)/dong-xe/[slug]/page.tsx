@@ -1,8 +1,10 @@
-import { carModelApi, productApi, categoryApi } from "@/features/api";
 import { Breadcrumbs } from "@/components/client/breadcrumbs";
 import { ProductListingEngine } from "@/components/client/product/product-listing-engine";
 import { Calendar, Truck } from "lucide-react";
 import Link from "next/link";
+import { carModelService } from "@/server/services/car-models.service";
+import { productService } from "@/server/services/products.service";
+import { categoryService } from "@/server/services/categories.service";
 
 export default async function CarModelPage({
   params,
@@ -10,16 +12,18 @@ export default async function CarModelPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const response = await carModelApi.getBySlug(slug);
-  const carModel = response.data;
+  const carModel = await carModelService.getBySlug(slug);
 
-  const productsRes = await productApi.getAll({
-    carModelId: carModel?.id,
-    take: 10,
-  });
+  const productsRes = await productService.list(
+    { carModelId: carModel?.id },
+    {
+      take: 10,
+    },
+    {},
+  );
 
-  const categoriesRes = await categoryApi.getAll({ take: 100 });
-  const categories = categoriesRes.data?.items || [];
+  const categoriesRes = await categoryService.list({}, { take: 100 });
+  const categories = categoriesRes?.items || [];
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-6 md:py-10">
@@ -76,7 +80,7 @@ export default async function CarModelPage({
       {/* ── Products ─────────────────────────────────────────────────── */}
       <ProductListingEngine
         initialResponse={productsRes}
-        initialItems={productsRes.data}
+        initialItems={productsRes.items}
         categories={categories}
         lockedCarModelId={carModel?.id}
       />

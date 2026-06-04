@@ -1,8 +1,12 @@
 import { cn } from "@/lib/utils";
-import type { Brand, CarModel } from "@/types";
 import Image from "next/image";
 
-type SliderItem = Brand | CarModel;
+type SliderItem = {
+  id: number;
+  slug: string | null;
+  name: string;
+  imageUrl?: string | null;
+};
 
 export default function BrandCard({ brand }: { brand: SliderItem }) {
   return (

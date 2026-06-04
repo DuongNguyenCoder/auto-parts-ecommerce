@@ -14,7 +14,15 @@ export function getEnvClient(): EnvClient {
   if (cachedEnv) {
     return cachedEnv;
   }
-  const parsed = envSchema.parse(process.env);
+
+  const parsed = envSchema.parse({
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+
+    NEXT_PUBLIC_CLOUDINARY_API_KEY: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+  });
 
   cachedEnv = {
     ...parsed,
@@ -22,6 +30,7 @@ export function getEnvClient(): EnvClient {
 
   return cachedEnv;
 }
+
 // const parsedEnv = envSchema.parse({
 //   NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
 

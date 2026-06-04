@@ -15,7 +15,7 @@ const parseResponse = async <T>(response: Response) => {
 
 export const userApi = {
   getSession: async (): Promise<ApiResponse<AuthSession>> => {
-    const response = await fetch(`${getBaseUrl()}/api/auth/me`, {
+    const response = await fetch(`/api/auth/me`, {
       method: "GET",
       credentials: "include",
       next: {
@@ -28,7 +28,7 @@ export const userApi = {
   },
 
   login: async (payload: LoginInput) => {
-    const response = await fetch(`${getBaseUrl()}/api/auth/login`, {
+    const response = await fetch(`/api/auth/login`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -39,7 +39,7 @@ export const userApi = {
   },
 
   register: async (payload: RegisterInput) => {
-    const response = await fetch(`${getBaseUrl()}/api/auth/register`, {
+    const response = await fetch(`/api/auth/register`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -50,7 +50,7 @@ export const userApi = {
   },
 
   logout: async () => {
-    const response = await fetch(`${getBaseUrl()}/api/auth/logout`, {
+    const response = await fetch(`/api/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
@@ -62,22 +62,19 @@ export const userApi = {
     query?: UserListQuery,
   ): Promise<ApiResponse<PaginatedData<User>>> => {
     const params = createSearchParams(query);
-    const response = await fetch(
-      `${getBaseUrl()}/api/users?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["users"],
-        },
+    const response = await fetch(`/api/users?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["users"],
       },
-    );
+    });
 
     return parseResponse<PaginatedData<User>>(response);
   },
 
   getById: async (id: string): Promise<ApiResponse<User>> => {
-    const response = await fetch(`${getBaseUrl()}/api/users/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -89,7 +86,7 @@ export const userApi = {
   },
 
   create: async (payload: CreateUserDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/users`, {
+    const response = await fetch(`/api/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -99,7 +96,7 @@ export const userApi = {
   },
 
   update: async (id: string, payload: UpdateUserDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/users/${id}/update`, {
+    const response = await fetch(`/api/users/${id}/update`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -109,7 +106,7 @@ export const userApi = {
   },
 
   delete: async (id: string) => {
-    const response = await fetch(`${getBaseUrl()}/api/users/${id}/delete`, {
+    const response = await fetch(`/api/users/${id}/delete`, {
       method: "DELETE",
     });
 

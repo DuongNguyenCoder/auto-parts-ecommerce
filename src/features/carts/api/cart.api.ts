@@ -16,7 +16,7 @@ const parseResponse = async <T>(response: Response) => {
 
 export const cartApi = {
   getCart: async (): Promise<ApiResponse<Cart>> => {
-    const response = await fetch(`${getBaseUrl()}/api/carts`, {
+    const response = await fetch(`/api/carts`, {
       method: "GET",
       credentials: "include",
       next: {
@@ -29,7 +29,7 @@ export const cartApi = {
   },
 
   addItem: async (payload: AddCartItemDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/carts`, {
+    const response = await fetch(`/api/carts`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ export const cartApi = {
   },
 
   updateItem: async (id: number, payload: UpdateCartItemDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/carts/items/${id}`, {
+    const response = await fetch(`/api/carts/items/${id}`, {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -51,7 +51,7 @@ export const cartApi = {
   },
 
   removeItem: async (id: number) => {
-    const response = await fetch(`${getBaseUrl()}/api/carts/items/${id}`, {
+    const response = await fetch(`/api/carts/items/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -60,7 +60,7 @@ export const cartApi = {
   },
 
   syncCart: async (payload: SyncCartDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/carts/sync`, {
+    const response = await fetch(`/api/carts/sync`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

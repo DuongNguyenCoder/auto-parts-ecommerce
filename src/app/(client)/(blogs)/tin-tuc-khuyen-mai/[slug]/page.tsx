@@ -10,8 +10,12 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 
+import { formatCurrency } from "@/lib/format-currency";
+
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/format-date";
+import { Post } from "@/types";
+import { postService } from "@/server/services/posts.service";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -20,10 +24,10 @@ type Props = {
 export default async function PostDetailPage({ params }: Props) {
   const { slug } = await params;
 
-  const response = await postApi.getBySlug(slug);
-  const post = response.data;
+  const post = await postService.getBySlug(slug);
+  // const post = response.;
 
-  if (!response.success || !post) {
+  if (!post) {
     notFound();
   }
 
@@ -160,11 +164,12 @@ export default async function PostDetailPage({ params }: Props) {
                       </h3>
 
                       <p className="font-semibold">
-                        {Intl.NumberFormat("vi-VN", {
+                        {/* {Intl.NumberFormat("vi-VN", {
                           style: "currency",
                           currency: "VND",
                           maximumFractionDigits: 0,
-                        }).format(product.price)}
+                        }).format(product.price)} */}
+                        {formatCurrency(Number(product.price))}
                       </p>
                     </div>
                   </Link>

@@ -1,8 +1,8 @@
-import { brandApi } from "@/features/api";
 import { Car, Truck } from "lucide-react";
 import { Breadcrumbs } from "@/components/client/breadcrumbs";
 import { CarModelProductListServer } from "@/components/client/product/car-model-product-list-server";
 import { BrandSlider } from "@/components/client/brand-carModel-category";
+import { brandService } from "@/server/services/brands.service";
 
 export default async function BrandPage({
   params,
@@ -10,9 +10,8 @@ export default async function BrandPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const brandRes = await brandApi.getBySlug(slug);
+  const brand = await brandService.getBySlug(slug);
 
-  const brand = brandRes.data;
   if (!brand) return <div>Brand not found</div>;
 
   return (

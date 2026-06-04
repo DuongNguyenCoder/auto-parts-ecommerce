@@ -46,6 +46,7 @@ export function useCloudinaryUpload(options?: Options) {
         const signature = await generateSignature({
           timestamp,
         });
+        console.log("BEFORE uploadToCloudinary");
 
         setProgress(100);
         return await uploadToCloudinary({

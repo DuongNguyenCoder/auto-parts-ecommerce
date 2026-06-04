@@ -13,6 +13,9 @@ import { FooterPayment } from "./footer-payment";
 import { FooterBottom } from "./footer-bottom";
 import { FooterNewsletter } from "./footer-newsletter";
 import { brandApi, categoryApi, postCategoryApi } from "@/features/api";
+import { categoryService } from "@/server/services/categories.service";
+import { brandService } from "@/server/services/brands.service";
+import { postCategoryService } from "@/server/services/post-categories.service";
 
 type FooterOption = {
   label: string;
@@ -59,14 +62,13 @@ export async function Footer({
   showNewsletter = true,
   showPayments = true,
 }: FooterProps) {
-  const categoriesRes = await categoryApi.getAll({ take: 100 });
-  const categories = categoriesRes.data?.items || [];
+  const brandsRes = await brandService.list({}, { take: 100 });
+  const categoriesRes = await categoryService.list({}, { take: 100 });
+  const postCategoriesRes = await postCategoryService.list({}, { take: 100 });
 
-  const brandsRes = await brandApi.getAll({ take: 100 });
-  const brands = brandsRes.data?.items || [];
-
-  const postCategoriesRes = await postCategoryApi.getAll({ take: 100 });
-  const postCategories = postCategoriesRes.data?.items || [];
+  const brands = brandsRes?.items || [];
+  const categories = categoriesRes?.items || [];
+  const postCategories = postCategoriesRes?.items || [];
 
   return (
     <footer

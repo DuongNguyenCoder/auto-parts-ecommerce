@@ -11,7 +11,7 @@ export function useProductsQuery(
   const queryKey = ["products", filters, locked];
 
   return useQuery({
-    queryKey,
+    queryKey: queryKey,
     queryFn: () =>
       productApi.getAll({
         ...filters,
@@ -19,6 +19,7 @@ export function useProductsQuery(
       }),
 
     // hydrate with server response when available
+    initialData,
 
     staleTime: 1000 * 60, // 1 min
   });

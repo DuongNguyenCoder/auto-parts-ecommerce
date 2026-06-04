@@ -1,7 +1,8 @@
-import { cloudinary } from "@/config/cloudinary.config";
+import { getCloudinary } from "@/config/cloudinary.config";
 import { getEnvServer } from "@/config/env.server";
 
 export async function POST(request: Request) {
+  const cloudinary = getCloudinary();
   const envServer = getEnvServer();
   const body = await request.json();
   const { paramsToSign } = body;

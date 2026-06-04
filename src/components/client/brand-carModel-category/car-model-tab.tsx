@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CarModel } from "@/types";
+import { Brand } from "@/types";
 
 type CarModelTabsProps = {
-  items: CarModel[];
+  items: Brand["models"];
   value: number;
   onChange: (id: number) => void;
 };

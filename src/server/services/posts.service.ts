@@ -5,6 +5,7 @@ import { buildPagination } from "@/server/utils/pagination";
 import { productRepository } from "@/server/repositories/products.repository";
 import type { CreatePostDTO, UpdatePostDTO } from "@/validations/posts.schema";
 import type { PostStatus } from "../../../prisma/generated/prisma/client";
+import { serialize } from "@/server/utils/serialize";
 
 const ensurePostCategoryExists = async (postCategoryId?: number) => {
   if (!postCategoryId) return;
@@ -48,7 +49,7 @@ export const postService = {
       postRepository.count(filters),
     ]);
 
-    return { items, pagination: buildPagination(total, take, skip) };
+    return serialize({ items, pagination: buildPagination(total, take, skip) });
   },
 
   create: async (authorId: string, data: CreatePostDTO) => {

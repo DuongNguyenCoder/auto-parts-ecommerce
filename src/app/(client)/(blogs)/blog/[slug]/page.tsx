@@ -1,5 +1,5 @@
 import { PostListFilter } from "@/components/blog/post-list-filter";
-import { postCategoryApi, postApi } from "@/features/api";
+import { postCategoryService } from "@/server/services/post-categories.service";
 
 export default async function BlogPostpage({
   params,
@@ -8,9 +8,7 @@ export default async function BlogPostpage({
 }) {
   const { slug } = await params;
 
-  const response = await postCategoryApi.getBySlug(slug);
-
-  const postCategory = response.data;
+  const postCategory = await postCategoryService.getBySlug(slug);
 
   if (!postCategory) return <div>Thư mục tin tức không tồn tại...</div>;
 

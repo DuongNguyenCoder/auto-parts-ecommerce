@@ -19,22 +19,19 @@ export const bannerApi = {
     query?: BannerListQuery,
   ): Promise<ApiResponse<PaginatedData<Banner>>> => {
     const params = createSearchParams(query);
-    const response = await fetch(
-      `${getBaseUrl()}/api/banners?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["banners"],
-        },
+    const response = await fetch(`/api/banners?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["banners"],
       },
-    );
+    });
 
     return parseResponse<PaginatedData<Banner>>(response);
   },
 
   getById: async (id: number): Promise<ApiResponse<Banner>> => {
-    const response = await fetch(`${getBaseUrl()}/api/banners/${id}`, {
+    const response = await fetch(`/api/banners/${id}`, {
       method: "GET",
       next: {
         revalidate: 300,
@@ -46,7 +43,7 @@ export const bannerApi = {
   },
 
   create: async (payload: CreateBannerDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/banners`, {
+    const response = await fetch(`/api/banners`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -56,7 +53,7 @@ export const bannerApi = {
   },
 
   update: async (id: number, payload: UpdateBannerDTO) => {
-    const response = await fetch(`${getBaseUrl()}/api/banners/${id}/update`, {
+    const response = await fetch(`/api/banners/${id}/update`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -66,7 +63,7 @@ export const bannerApi = {
   },
 
   delete: async (id: number) => {
-    const response = await fetch(`${getBaseUrl()}/api/banners/${id}/delete`, {
+    const response = await fetch(`/api/banners/${id}/delete`, {
       method: "DELETE",
     });
 

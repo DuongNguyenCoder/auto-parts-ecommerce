@@ -37,22 +37,19 @@ export const orderApi = {
     delete paramsObj.page;
 
     const params = createSearchParams(paramsObj);
-    const response = await fetch(
-      `${getBaseUrl()}/api/orders/admin?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-          tags: ["orders"],
-        },
+    const response = await fetch(`/api/orders/admin?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
+        tags: ["orders"],
       },
-    );
+    });
     console.log("Check order API Hook =====> ");
     return parseResponse<PaginatedData<Order>>(response);
   },
 
   getOrderById: async (id: string): Promise<ApiResponse<Order>> => {
-    const response = await fetch(`${getBaseUrl()}/api/orders/${id}`, {
+    const response = await fetch(`/api/orders/${id}`, {
       method: "GET",
       credentials: "include",
     });
@@ -61,7 +58,7 @@ export const orderApi = {
   },
 
   createOrder: async (payload: CreateOrderDTO): Promise<ApiResponse<Order>> => {
-    const response = await fetch(`${getBaseUrl()}/api/orders`, {
+    const response = await fetch(`/api/orders`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -75,7 +72,7 @@ export const orderApi = {
     id: string,
     payload: UpdateOrderDTO,
   ): Promise<ApiResponse<Order>> => {
-    const response = await fetch(`${getBaseUrl()}/api/orders/${id}`, {
+    const response = await fetch(`/api/orders/${id}`, {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

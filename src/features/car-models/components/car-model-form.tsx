@@ -24,7 +24,9 @@ const brandOptions = (brands: Brand[]) =>
   brands.map((brand) => ({ id: brand.id, label: `${brand.name}` }));
 
 type CarModelFormProps = {
-  initialData?: Partial<CreateCarModelDTO>;
+  // initialData?: Partial<CreateCarModelDTO>;
+  initialData?: any;
+
   brands?: Brand[];
   onSubmit: (
     values: CreateCarModelDTO | UpdateCarModelDTO,
