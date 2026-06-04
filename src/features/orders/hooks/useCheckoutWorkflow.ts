@@ -6,6 +6,7 @@ import { orderApi } from "@/features/orders/api/order.api";
 import { useCartStore } from "@/stores/cart/cart.store";
 import type { CartItem } from "@/stores";
 import type { CreateOrderDTO } from "@/validations/order.schema";
+import { createOrderSchema } from "@/validations/order.schema";
 import type { SyncCartDTO } from "@/validations/cart.schema";
 
 const getShippingFee = (subtotal: number) => {
@@ -68,6 +69,14 @@ export const useCheckoutWorkflow = () => {
       };
 
       try {
+        // Client-side validation before sending to server
+        const validated = createOrderSchema.safeParse(orderPayload);
+        if (!validated.success) {
+          const message =
+            validated.error?.message ??
+            "Vui lòng kiểm tra lại thông tin đơn hàng.";
+          throw new Error(String(message));
+        }
         await Promise.all([
           cartApi.syncCart(syncPayload),
           orderApi.createOrder(orderPayload),

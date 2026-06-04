@@ -36,6 +36,7 @@ import { Separator } from "@/components/ui/separator";
 import { SearchBar } from "./search-bar";
 import { useRouter } from "next/navigation";
 import { Brand, Category } from "@/types";
+import Image from "next/image";
 
 const CATEGORIES = [
   "Engine Parts",
@@ -130,14 +131,14 @@ export function MobileMenuSheet({
                 text-foreground
               "
             >
-              <div
-                className="
-                  flex size-10 items-center justify-center
-                  rounded-xl bg-primary
-                  text-primary-foreground
-                "
-              >
-                ATX
+              <div className="relative rounded-full border border-primary overflow-hidden p-1 shadow-sm">
+                <Image
+                  src="/logo-1080x1080-autotx.png"
+                  alt="Auto Thọ Xuân Logo"
+                  height={50}
+                  width={50}
+                  className="object-cover rounded-full"
+                />
               </div>
 
               <div>
@@ -183,7 +184,7 @@ export function MobileMenuSheet({
 
             {/* QUICK ACTIONS */}
             <div className="grid grid-cols-2 gap-3">
-              <Button
+              {/* <Button
                 variant="outline"
                 className="
                   h-14 rounded-2xl
@@ -192,10 +193,11 @@ export function MobileMenuSheet({
               >
                 <Heart className="size-5" />
                 <p className="hidden xs:block">Wishlist</p>
-              </Button>
+              </Button> */}
 
               <Button
                 variant="outline"
+                onClick={() => router.push("/gio-hang")}
                 className="
                   h-14 rounded-2xl
                   justify-start gap-3
@@ -310,27 +312,31 @@ export function MobileMenuSheet({
           {/* FOOTER */}
           <div className="border-t border-border p-5">
             <Button
-              variant="secondary"
+              variant="outline"
               className="
                 h-12 w-full
                 justify-start gap-3
-                rounded-xl
+                rounded-xl flex bg-button-ghost-hover text-sm
               "
             >
-              <PhoneCall className="size-5" />
-              +84 987 654 321
+              <Link href="tel:0982575404" className="flex gap-3">
+                <PhoneCall className="size-5" />
+                0982 575 404
+              </Link>
             </Button>
 
             <Button
-              variant="ghost"
+              variant="outline"
               className="
                 mt-3 h-12 w-full
                 justify-start gap-3
-                rounded-xl
+                rounded-xl flex bg-button-ghost-hover text-sm
               "
             >
-              <Headset className="size-5" />
-              Customer Support
+              <Link href="tel:0367200596" className="flex gap-3">
+                <PhoneCall className="size-5" />
+                0367 200 596
+              </Link>
             </Button>
           </div>
         </div>

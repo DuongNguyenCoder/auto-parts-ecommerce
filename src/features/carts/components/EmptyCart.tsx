@@ -17,7 +17,7 @@ export function EmptyCart() {
         Hãy khám phá các sản phẩm phụ tùng ô tô chất lượng cao của chúng tôi
       </p>
 
-      <Link href="/products">
+      <Link href="/san-pham">
         <Button size="lg">Tiếp tục mua sắm</Button>
       </Link>
     </div>

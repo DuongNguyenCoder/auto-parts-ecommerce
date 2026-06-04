@@ -30,6 +30,10 @@ export type Order = {
   orderNumber: string;
   userId: string;
   products: OrderProduct[];
+  name?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  address?: string | null;
   status: OrderStatus;
   paymentStatus: PaymentStatus;
   paymentMethod: PaymentMethod;

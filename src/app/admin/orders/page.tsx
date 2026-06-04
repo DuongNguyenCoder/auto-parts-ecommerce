@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { PaginationCustom } from "@/components/ui/pagination-custom";
+import { Input } from "@/components/ui/input";
 import { AdminOrderUpdateForm } from "@/features/orders/components/admin/AdminOrderUpdateForm";
 import { orderApi } from "@/features/orders/api/order.api";
 import type { Order, OrderListQuery } from "@/types";
@@ -24,15 +25,21 @@ export default function AdminOrdersPage() {
 
   const queryClient = useQueryClient();
 
-  const query: OrderListQuery = useMemo(() => ({ page }), [page]);
+  const [phoneQuery, setPhoneQuery] = useState("");
+  const [appliedPhone, setAppliedPhone] = useState("");
+
+  const query: OrderListQuery = useMemo(
+    () => ({ page, phone: appliedPhone, take: DEFAULT_PAGE_SIZE }),
+    [page, appliedPhone],
+  );
 
   const ordersQuery = useQuery({
     queryKey: ["orders", query],
-    queryFn: async () => await orderApi.getAllByAdmin({ skip: 0, take: 10 }),
+    queryFn: async () => await orderApi.getAllByAdmin(query),
   });
 
   const orders = ordersQuery.data?.data?.items ?? [];
-  // const totalPages = ordersQuery.data?.data?.pagination.totalPages ?? 1;
+  const totalPages = ordersQuery.data?.data?.pagination.totalPages ?? 1;
 
   console.log("Check fetch orders ===> adminL:", ordersQuery.data);
 
@@ -111,6 +118,33 @@ export default function AdminOrdersPage() {
       </section>
 
       <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+        <div className="px-6 pt-6">
+          <div className="flex items-center gap-3">
+            <Input
+              placeholder="Tìm theo số điện thoại"
+              value={phoneQuery}
+              onChange={(e) => setPhoneQuery(e.target.value)}
+            />
+            <Button
+              onClick={() => {
+                setAppliedPhone(phoneQuery.trim());
+                setPage(1);
+              }}
+            >
+              Tìm
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setPhoneQuery("");
+                setAppliedPhone("");
+                setPage(1);
+              }}
+            >
+              Xóa
+            </Button>
+          </div>
+        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-zinc-200 text-left text-sm text-zinc-700">
             <thead className="bg-zinc-50 text-zinc-900">
@@ -202,7 +236,11 @@ export default function AdminOrdersPage() {
         </div>
 
         <div className="border-t border-zinc-200 bg-zinc-50 px-6 py-4">
-          <PaginationCustom page={page} totalPages={1} onPageChange={setPage} />
+          <PaginationCustom
+            page={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
         </div>
       </section>
 

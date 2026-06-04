@@ -6907,6 +6907,7 @@ export namespace Prisma {
     id: number | null
     slug: string | null
     name: string | null
+    overview: string | null
     price: Decimal | null
     imageUrl: string | null
     categoryId: number | null
@@ -6918,6 +6919,7 @@ export namespace Prisma {
     id: number | null
     slug: string | null
     name: string | null
+    overview: string | null
     price: Decimal | null
     imageUrl: string | null
     categoryId: number | null
@@ -6929,6 +6931,7 @@ export namespace Prisma {
     id: number
     slug: number
     name: number
+    overview: number
     price: number
     imageUrl: number
     categoryId: number
@@ -6954,6 +6957,7 @@ export namespace Prisma {
     id?: true
     slug?: true
     name?: true
+    overview?: true
     price?: true
     imageUrl?: true
     categoryId?: true
@@ -6965,6 +6969,7 @@ export namespace Prisma {
     id?: true
     slug?: true
     name?: true
+    overview?: true
     price?: true
     imageUrl?: true
     categoryId?: true
@@ -6976,6 +6981,7 @@ export namespace Prisma {
     id?: true
     slug?: true
     name?: true
+    overview?: true
     price?: true
     imageUrl?: true
     categoryId?: true
@@ -7074,6 +7080,7 @@ export namespace Prisma {
     id: number
     slug: string
     name: string
+    overview: string | null
     price: Decimal
     imageUrl: string | null
     categoryId: number
@@ -7104,6 +7111,7 @@ export namespace Prisma {
     id?: boolean
     slug?: boolean
     name?: boolean
+    overview?: boolean
     price?: boolean
     imageUrl?: boolean
     categoryId?: boolean
@@ -7122,6 +7130,7 @@ export namespace Prisma {
     id?: boolean
     slug?: boolean
     name?: boolean
+    overview?: boolean
     price?: boolean
     imageUrl?: boolean
     categoryId?: boolean
@@ -7134,6 +7143,7 @@ export namespace Prisma {
     id?: boolean
     slug?: boolean
     name?: boolean
+    overview?: boolean
     price?: boolean
     imageUrl?: boolean
     categoryId?: boolean
@@ -7146,6 +7156,7 @@ export namespace Prisma {
     id?: boolean
     slug?: boolean
     name?: boolean
+    overview?: boolean
     price?: boolean
     imageUrl?: boolean
     categoryId?: boolean
@@ -7153,7 +7164,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "price" | "imageUrl" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "overview" | "price" | "imageUrl" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     fitments?: boolean | Product$fitmentsArgs<ExtArgs>
@@ -7184,6 +7195,7 @@ export namespace Prisma {
       id: number
       slug: string
       name: string
+      overview: string | null
       price: Prisma.Decimal
       imageUrl: string | null
       categoryId: number
@@ -7621,6 +7633,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Product", 'Int'>
     readonly slug: FieldRef<"Product", 'String'>
     readonly name: FieldRef<"Product", 'String'>
+    readonly overview: FieldRef<"Product", 'String'>
     readonly price: FieldRef<"Product", 'Decimal'>
     readonly imageUrl: FieldRef<"Product", 'String'>
     readonly categoryId: FieldRef<"Product", 'Int'>
@@ -14937,6 +14950,10 @@ export namespace Prisma {
     id: string | null
     orderNumber: string | null
     userId: string | null
+    name: string | null
+    phone: string | null
+    email: string | null
+    address: string | null
     status: $Enums.OrderStatus | null
     paymentStatus: $Enums.PaymentStatus | null
     paymentMethod: $Enums.PaymentMethod | null
@@ -14952,6 +14969,10 @@ export namespace Prisma {
     id: string | null
     orderNumber: string | null
     userId: string | null
+    name: string | null
+    phone: string | null
+    email: string | null
+    address: string | null
     status: $Enums.OrderStatus | null
     paymentStatus: $Enums.PaymentStatus | null
     paymentMethod: $Enums.PaymentMethod | null
@@ -14967,6 +14988,10 @@ export namespace Prisma {
     id: number
     orderNumber: number
     userId: number
+    name: number
+    phone: number
+    email: number
+    address: number
     status: number
     paymentStatus: number
     paymentMethod: number
@@ -14994,6 +15019,10 @@ export namespace Prisma {
     id?: true
     orderNumber?: true
     userId?: true
+    name?: true
+    phone?: true
+    email?: true
+    address?: true
     status?: true
     paymentStatus?: true
     paymentMethod?: true
@@ -15009,6 +15038,10 @@ export namespace Prisma {
     id?: true
     orderNumber?: true
     userId?: true
+    name?: true
+    phone?: true
+    email?: true
+    address?: true
     status?: true
     paymentStatus?: true
     paymentMethod?: true
@@ -15024,6 +15057,10 @@ export namespace Prisma {
     id?: true
     orderNumber?: true
     userId?: true
+    name?: true
+    phone?: true
+    email?: true
+    address?: true
     status?: true
     paymentStatus?: true
     paymentMethod?: true
@@ -15126,6 +15163,10 @@ export namespace Prisma {
     id: string
     orderNumber: string
     userId: string
+    name: string | null
+    phone: string | null
+    email: string | null
+    address: string | null
     status: $Enums.OrderStatus
     paymentStatus: $Enums.PaymentStatus
     paymentMethod: $Enums.PaymentMethod
@@ -15160,6 +15201,10 @@ export namespace Prisma {
     id?: boolean
     orderNumber?: boolean
     userId?: boolean
+    name?: boolean
+    phone?: boolean
+    email?: boolean
+    address?: boolean
     status?: boolean
     paymentStatus?: boolean
     paymentMethod?: boolean
@@ -15178,6 +15223,10 @@ export namespace Prisma {
     id?: boolean
     orderNumber?: boolean
     userId?: boolean
+    name?: boolean
+    phone?: boolean
+    email?: boolean
+    address?: boolean
     status?: boolean
     paymentStatus?: boolean
     paymentMethod?: boolean
@@ -15194,6 +15243,10 @@ export namespace Prisma {
     id?: boolean
     orderNumber?: boolean
     userId?: boolean
+    name?: boolean
+    phone?: boolean
+    email?: boolean
+    address?: boolean
     status?: boolean
     paymentStatus?: boolean
     paymentMethod?: boolean
@@ -15210,6 +15263,10 @@ export namespace Prisma {
     id?: boolean
     orderNumber?: boolean
     userId?: boolean
+    name?: boolean
+    phone?: boolean
+    email?: boolean
+    address?: boolean
     status?: boolean
     paymentStatus?: boolean
     paymentMethod?: boolean
@@ -15221,7 +15278,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderNumber" | "userId" | "status" | "paymentStatus" | "paymentMethod" | "shippingMethod" | "total" | "shippingFee" | "note" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderNumber" | "userId" | "name" | "phone" | "email" | "address" | "status" | "paymentStatus" | "paymentMethod" | "shippingMethod" | "total" | "shippingFee" | "note" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     products?: boolean | Order$productsArgs<ExtArgs>
@@ -15244,6 +15301,10 @@ export namespace Prisma {
       id: string
       orderNumber: string
       userId: string
+      name: string | null
+      phone: string | null
+      email: string | null
+      address: string | null
       status: $Enums.OrderStatus
       paymentStatus: $Enums.PaymentStatus
       paymentMethod: $Enums.PaymentMethod
@@ -15681,6 +15742,10 @@ export namespace Prisma {
     readonly id: FieldRef<"Order", 'String'>
     readonly orderNumber: FieldRef<"Order", 'String'>
     readonly userId: FieldRef<"Order", 'String'>
+    readonly name: FieldRef<"Order", 'String'>
+    readonly phone: FieldRef<"Order", 'String'>
+    readonly email: FieldRef<"Order", 'String'>
+    readonly address: FieldRef<"Order", 'String'>
     readonly status: FieldRef<"Order", 'OrderStatus'>
     readonly paymentStatus: FieldRef<"Order", 'PaymentStatus'>
     readonly paymentMethod: FieldRef<"Order", 'PaymentMethod'>
@@ -17294,6 +17359,7 @@ export namespace Prisma {
     id: 'id',
     slug: 'slug',
     name: 'name',
+    overview: 'overview',
     price: 'price',
     imageUrl: 'imageUrl',
     categoryId: 'categoryId',
@@ -17384,6 +17450,10 @@ export namespace Prisma {
     id: 'id',
     orderNumber: 'orderNumber',
     userId: 'userId',
+    name: 'name',
+    phone: 'phone',
+    email: 'email',
+    address: 'address',
     status: 'status',
     paymentStatus: 'paymentStatus',
     paymentMethod: 'paymentMethod',
@@ -17841,6 +17911,7 @@ export namespace Prisma {
     id?: IntFilter<"Product"> | number
     slug?: StringFilter<"Product"> | string
     name?: StringFilter<"Product"> | string
+    overview?: StringNullableFilter<"Product"> | string | null
     price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     imageUrl?: StringNullableFilter<"Product"> | string | null
     categoryId?: IntFilter<"Product"> | number
@@ -17858,6 +17929,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    overview?: SortOrderInput | SortOrder
     price?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
     categoryId?: SortOrder
@@ -17878,6 +17950,7 @@ export namespace Prisma {
     OR?: ProductWhereInput[]
     NOT?: ProductWhereInput | ProductWhereInput[]
     name?: StringFilter<"Product"> | string
+    overview?: StringNullableFilter<"Product"> | string | null
     price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     imageUrl?: StringNullableFilter<"Product"> | string | null
     categoryId?: IntFilter<"Product"> | number
@@ -17895,6 +17968,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    overview?: SortOrderInput | SortOrder
     price?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
     categoryId?: SortOrder
@@ -17914,6 +17988,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Product"> | number
     slug?: StringWithAggregatesFilter<"Product"> | string
     name?: StringWithAggregatesFilter<"Product"> | string
+    overview?: StringNullableWithAggregatesFilter<"Product"> | string | null
     price?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
     imageUrl?: StringNullableWithAggregatesFilter<"Product"> | string | null
     categoryId?: IntWithAggregatesFilter<"Product"> | number
@@ -18332,6 +18407,10 @@ export namespace Prisma {
     id?: StringFilter<"Order"> | string
     orderNumber?: StringFilter<"Order"> | string
     userId?: StringFilter<"Order"> | string
+    name?: StringNullableFilter<"Order"> | string | null
+    phone?: StringNullableFilter<"Order"> | string | null
+    email?: StringNullableFilter<"Order"> | string | null
+    address?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
@@ -18349,6 +18428,10 @@ export namespace Prisma {
     id?: SortOrder
     orderNumber?: SortOrder
     userId?: SortOrder
+    name?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
     status?: SortOrder
     paymentStatus?: SortOrder
     paymentMethod?: SortOrder
@@ -18369,6 +18452,10 @@ export namespace Prisma {
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
     userId?: StringFilter<"Order"> | string
+    name?: StringNullableFilter<"Order"> | string | null
+    phone?: StringNullableFilter<"Order"> | string | null
+    email?: StringNullableFilter<"Order"> | string | null
+    address?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
@@ -18386,6 +18473,10 @@ export namespace Prisma {
     id?: SortOrder
     orderNumber?: SortOrder
     userId?: SortOrder
+    name?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
     status?: SortOrder
     paymentStatus?: SortOrder
     paymentMethod?: SortOrder
@@ -18409,6 +18500,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Order"> | string
     orderNumber?: StringWithAggregatesFilter<"Order"> | string
     userId?: StringWithAggregatesFilter<"Order"> | string
+    name?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    email?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    address?: StringNullableWithAggregatesFilter<"Order"> | string | null
     status?: EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusWithAggregatesFilter<"Order"> | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodWithAggregatesFilter<"Order"> | $Enums.PaymentMethod
@@ -18714,6 +18809,7 @@ export namespace Prisma {
   export type ProductCreateInput = {
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -18730,6 +18826,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     categoryId: number
@@ -18745,6 +18842,7 @@ export namespace Prisma {
   export type ProductUpdateInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18761,6 +18859,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -18777,6 +18876,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     categoryId: number
@@ -18787,6 +18887,7 @@ export namespace Prisma {
   export type ProductUpdateManyMutationInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18797,6 +18898,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -19206,6 +19308,10 @@ export namespace Prisma {
   export type OrderCreateInput = {
     id?: string
     orderNumber: string
+    name?: string | null
+    phone?: string | null
+    email?: string | null
+    address?: string | null
     status?: $Enums.OrderStatus
     paymentStatus?: $Enums.PaymentStatus
     paymentMethod?: $Enums.PaymentMethod
@@ -19223,6 +19329,10 @@ export namespace Prisma {
     id?: string
     orderNumber: string
     userId: string
+    name?: string | null
+    phone?: string | null
+    email?: string | null
+    address?: string | null
     status?: $Enums.OrderStatus
     paymentStatus?: $Enums.PaymentStatus
     paymentMethod?: $Enums.PaymentMethod
@@ -19238,6 +19348,10 @@ export namespace Prisma {
   export type OrderUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -19255,6 +19369,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -19271,6 +19389,10 @@ export namespace Prisma {
     id?: string
     orderNumber: string
     userId: string
+    name?: string | null
+    phone?: string | null
+    email?: string | null
+    address?: string | null
     status?: $Enums.OrderStatus
     paymentStatus?: $Enums.PaymentStatus
     paymentMethod?: $Enums.PaymentMethod
@@ -19285,6 +19407,10 @@ export namespace Prisma {
   export type OrderUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -19300,6 +19426,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -19719,6 +19849,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    overview?: SortOrder
     price?: SortOrder
     imageUrl?: SortOrder
     categoryId?: SortOrder
@@ -19736,6 +19867,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    overview?: SortOrder
     price?: SortOrder
     imageUrl?: SortOrder
     categoryId?: SortOrder
@@ -19747,6 +19879,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    overview?: SortOrder
     price?: SortOrder
     imageUrl?: SortOrder
     categoryId?: SortOrder
@@ -20143,6 +20276,10 @@ export namespace Prisma {
     id?: SortOrder
     orderNumber?: SortOrder
     userId?: SortOrder
+    name?: SortOrder
+    phone?: SortOrder
+    email?: SortOrder
+    address?: SortOrder
     status?: SortOrder
     paymentStatus?: SortOrder
     paymentMethod?: SortOrder
@@ -20163,6 +20300,10 @@ export namespace Prisma {
     id?: SortOrder
     orderNumber?: SortOrder
     userId?: SortOrder
+    name?: SortOrder
+    phone?: SortOrder
+    email?: SortOrder
+    address?: SortOrder
     status?: SortOrder
     paymentStatus?: SortOrder
     paymentMethod?: SortOrder
@@ -20178,6 +20319,10 @@ export namespace Prisma {
     id?: SortOrder
     orderNumber?: SortOrder
     userId?: SortOrder
+    name?: SortOrder
+    phone?: SortOrder
+    email?: SortOrder
+    address?: SortOrder
     status?: SortOrder
     paymentStatus?: SortOrder
     paymentMethod?: SortOrder
@@ -21593,6 +21738,10 @@ export namespace Prisma {
   export type OrderCreateWithoutUserInput = {
     id?: string
     orderNumber: string
+    name?: string | null
+    phone?: string | null
+    email?: string | null
+    address?: string | null
     status?: $Enums.OrderStatus
     paymentStatus?: $Enums.PaymentStatus
     paymentMethod?: $Enums.PaymentMethod
@@ -21608,6 +21757,10 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutUserInput = {
     id?: string
     orderNumber: string
+    name?: string | null
+    phone?: string | null
+    email?: string | null
+    address?: string | null
     status?: $Enums.OrderStatus
     paymentStatus?: $Enums.PaymentStatus
     paymentMethod?: $Enums.PaymentMethod
@@ -21741,6 +21894,10 @@ export namespace Prisma {
     id?: StringFilter<"Order"> | string
     orderNumber?: StringFilter<"Order"> | string
     userId?: StringFilter<"Order"> | string
+    name?: StringNullableFilter<"Order"> | string | null
+    phone?: StringNullableFilter<"Order"> | string | null
+    email?: StringNullableFilter<"Order"> | string | null
+    address?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
@@ -21755,6 +21912,7 @@ export namespace Prisma {
   export type ProductCreateWithoutCategoryInput = {
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -21770,6 +21928,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -21814,6 +21973,7 @@ export namespace Prisma {
     id?: IntFilter<"Product"> | number
     slug?: StringFilter<"Product"> | string
     name?: StringFilter<"Product"> | string
+    overview?: StringNullableFilter<"Product"> | string | null
     price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     imageUrl?: StringNullableFilter<"Product"> | string | null
     categoryId?: IntFilter<"Product"> | number
@@ -21897,6 +22057,7 @@ export namespace Prisma {
   export type ProductCreateWithoutFitmentsInput = {
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -21912,6 +22073,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     categoryId: number
@@ -22346,6 +22508,7 @@ export namespace Prisma {
   export type ProductCreateWithoutPostsInput = {
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -22361,6 +22524,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     categoryId: number
@@ -22579,6 +22743,7 @@ export namespace Prisma {
   export type ProductCreateWithoutCartItemsInput = {
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -22594,6 +22759,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     categoryId: number
@@ -22649,6 +22815,7 @@ export namespace Prisma {
   export type ProductUpdateWithoutCartItemsInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22664,6 +22831,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -22707,6 +22875,7 @@ export namespace Prisma {
   export type ProductCreateWithoutWishlistItemInput = {
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -22722,6 +22891,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     categoryId: number
@@ -22787,6 +22957,7 @@ export namespace Prisma {
   export type ProductUpdateWithoutWishlistItemInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22802,6 +22973,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -22917,6 +23089,10 @@ export namespace Prisma {
   export type OrderCreateWithoutProductsInput = {
     id?: string
     orderNumber: string
+    name?: string | null
+    phone?: string | null
+    email?: string | null
+    address?: string | null
     status?: $Enums.OrderStatus
     paymentStatus?: $Enums.PaymentStatus
     paymentMethod?: $Enums.PaymentMethod
@@ -22933,6 +23109,10 @@ export namespace Prisma {
     id?: string
     orderNumber: string
     userId: string
+    name?: string | null
+    phone?: string | null
+    email?: string | null
+    address?: string | null
     status?: $Enums.OrderStatus
     paymentStatus?: $Enums.PaymentStatus
     paymentMethod?: $Enums.PaymentMethod
@@ -22952,6 +23132,7 @@ export namespace Prisma {
   export type ProductCreateWithoutOrderProductsInput = {
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -22967,6 +23148,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     categoryId: number
@@ -22997,6 +23179,10 @@ export namespace Prisma {
   export type OrderUpdateWithoutProductsInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -23013,6 +23199,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -23038,6 +23228,7 @@ export namespace Prisma {
   export type ProductUpdateWithoutOrderProductsInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23053,6 +23244,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -23095,6 +23287,10 @@ export namespace Prisma {
   export type OrderCreateManyUserInput = {
     id?: string
     orderNumber: string
+    name?: string | null
+    phone?: string | null
+    email?: string | null
+    address?: string | null
     status?: $Enums.OrderStatus
     paymentStatus?: $Enums.PaymentStatus
     paymentMethod?: $Enums.PaymentMethod
@@ -23196,6 +23392,10 @@ export namespace Prisma {
   export type OrderUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -23211,6 +23411,10 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -23226,6 +23430,10 @@ export namespace Prisma {
   export type OrderUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderNumber?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
@@ -23241,6 +23449,7 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    overview?: string | null
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     createdAt?: Date | string
@@ -23250,6 +23459,7 @@ export namespace Prisma {
   export type ProductUpdateWithoutCategoryInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23265,6 +23475,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23280,6 +23491,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23322,6 +23534,7 @@ export namespace Prisma {
   export type ProductUpdateWithoutFitmentsInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23337,6 +23550,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -23352,6 +23566,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -23585,6 +23800,7 @@ export namespace Prisma {
   export type ProductUpdateWithoutPostsInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23600,6 +23816,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -23615,6 +23832,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: IntFieldUpdateOperationsInput | number

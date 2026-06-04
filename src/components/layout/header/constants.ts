@@ -1,16 +1,17 @@
 export const HEADER_CONTACT = {
-  phone: "+84 987 654 321",
-  supportEmail: "support@autoparts.com",
+  phone1: "0982 575 404",
+  phone2: "0367 200 596",
+  supportEmail: "thoxuanautopart@gmail.com",
 };
 
 export const HEADER_TOP_LINKS = [
+  // {
+  //   label: "Track Order",
+  //   href: "/track-order",
+  // },
   {
-    label: "Track Order",
-    href: "/track-order",
-  },
-  {
-    label: "Support",
-    href: "/support",
+    label: "Hỗ trợ",
+    href: "/ho-tro",
   },
 ];
 

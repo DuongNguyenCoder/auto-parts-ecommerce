@@ -1,6 +1,7 @@
-import { envClient } from "@/config/env.config";
+import { getEnvClient } from "@/config/env.config";
 
 export const getBaseUrl = () => {
+  const envClient = getEnvClient();
   if (typeof window !== "undefined") {
     return "";
   }

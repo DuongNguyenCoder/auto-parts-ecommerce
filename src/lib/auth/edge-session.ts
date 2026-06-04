@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { envServer, getJwtAccessSecret } from "@/config/env.server";
+import { getEnvServer, getJwtAccessSecret } from "@/config/env.server";
 import type { AuthSession } from "@/types/auth";
 
 type EdgeJwtPayload = {
@@ -9,6 +9,8 @@ type EdgeJwtPayload = {
   iat: number;
   exp: number;
 };
+
+const envServer = getEnvServer();
 
 const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder();

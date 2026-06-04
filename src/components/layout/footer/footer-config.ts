@@ -18,7 +18,7 @@ export type FooterLinkSection = {
 export type FooterSocialItem = {
   label: string;
   href: string;
-  icon: LucideIcon;
+  icon: string;
 };
 
 export type FooterContactItem = {
@@ -30,8 +30,8 @@ export type FooterContactItem = {
 
 export const FOOTER_LINK_SECTIONS: FooterLinkSection[] = [
   {
-    id: "shop",
-    title: "Shop",
+    id: "category",
+    title: "Danh mục phụ tùng sản phẩm",
     links: [
       {
         label: "Brake Pads",
@@ -136,44 +136,45 @@ export const FOOTER_LINK_SECTIONS: FooterLinkSection[] = [
 
 export const FOOTER_SOCIALS: FooterSocialItem[] = [
   {
-    label: "Facebook",
-    href: "https://facebook.com",
-    icon: MessageSquare,
+    label: "Zalo",
+    href: "https://zalo.com",
+    icon: "/icon/zalo.png",
   },
   {
-    label: "Instagram",
-    href: "https://instagram.com",
-    icon: MessageSquare,
+    label: "Messenger",
+    href: "https://messenger.com",
+    icon: "/icon/messenger.png",
   },
   {
-    label: "LinkedIn",
-    href: "https://linkedin.com",
-    icon: MessageSquare,
+    label: "Youtube",
+    href: "https://youtube.com",
+    icon: "/icon/youtube.png",
   },
 ];
 
 export const FOOTER_CONTACTS: FooterContactItem[] = [
   {
-    label: "Phone",
-    value: "+84 123 456 789",
-    href: "tel:+84123456789",
+    label: "Hotline",
+    value: "0982 575 404",
+    href: "tel:0982575404",
+    icon: Phone,
+  },
+  {
+    label: "Hotline",
+    value: "0367 200 596",
+    href: "tel:0367200596",
     icon: Phone,
   },
   {
     label: "Email",
-    value: "support@autoparts.com",
-    href: "mailto:support@autoparts.com",
+    value: "thoxuanautopart@gmail.com",
+    href: "mailto:thoxuanautopart@gmail.com",
     icon: Mail,
   },
   {
-    label: "Address",
-    value: "123 Auto Street, Ho Chi Minh City",
+    label: "Địa chỉ",
+    value: "Tu Hoàng, Xuân Phương, Nam Từ Liêm, Hà Nội ",
     icon: MapPin,
-  },
-  {
-    label: "Working Hours",
-    value: "Mon - Sat: 08:00 - 18:00",
-    icon: Clock3,
   },
 ];
 

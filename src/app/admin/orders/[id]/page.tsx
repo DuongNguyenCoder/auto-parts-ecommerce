@@ -42,13 +42,16 @@ export default function AdminOrderDetailPage() {
       await updateOrderAsync(values);
       setStatusMessage({
         type: "success",
-        text: "Order updated successfully.",
+        text: "Cập nhật đơn hàng thành công.",
       });
       setIsModalOpen(false);
     } catch (err) {
       setStatusMessage({
         type: "error",
-        text: err instanceof Error ? err.message : "Failed to update order.",
+        text:
+          err instanceof Error
+            ? err.message
+            : "Cập nhật đơn hàng thất bại. Vui lòng thử lại.",
       });
     }
   };
@@ -56,7 +59,7 @@ export default function AdminOrderDetailPage() {
   if (isLoading) {
     return (
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 py-10">
-        <div className="text-center text-zinc-600">Loading order...</div>
+        <div className="text-center text-zinc-600">Đang tải đơn hàng...</div>
       </div>
     );
   }
@@ -65,13 +68,13 @@ export default function AdminOrderDetailPage() {
     return (
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 py-10">
         <div className="rounded-3xl border border-rose-200 bg-rose-50 p-6 text-rose-800">
-          <p className="font-semibold">Error loading order</p>
+          <p className="font-semibold">Lỗi khi tải đơn hàng</p>
           <p className="mt-1 text-sm">
-            {error instanceof Error ? error.message : "Order not found"}
+            {error instanceof Error ? error.message : "Không tìm thấy đơn hàng"}
           </p>
           <Link href="/admin/orders" className="mt-4 inline-block">
             <Button variant="outline" size="sm">
-              Back to Orders
+              Quay lại danh sách đơn hàng
             </Button>
           </Link>
         </div>
@@ -86,16 +89,16 @@ export default function AdminOrderDetailPage() {
         <div>
           <Link href="/admin/orders">
             <Button variant="outline" size="sm">
-              ← Back to Orders
+              ← Quay lại danh sách đơn hàng
             </Button>
           </Link>
           <h1 className="mt-4 text-3xl font-bold text-zinc-950">
-            Order Details
+            Chi tiết đơn hàng
           </h1>
-          <p className="mt-1 text-zinc-600">Order #{order.orderNumber}</p>
+          <p className="mt-1 text-zinc-600">Mã đơn: {order.orderNumber}</p>
         </div>
-        <Button onClick={openEditModal} size="lg">
-          Edit Order
+        <Button onClick={openEditModal} size="lg" className="rounded-md">
+          Cập nhật đơn hàng
         </Button>
       </div>
 
@@ -125,8 +128,8 @@ export default function AdminOrderDetailPage() {
       <Modal
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
-        title="Edit order"
-        description={`Update order ${order.orderNumber}`}
+        title="Chỉnh sửa đơn hàng"
+        description={`Cập nhật đơn ${order.orderNumber}`}
         maxWidth="lg"
         loading={isUpdating}
         preventClose={isUpdating}

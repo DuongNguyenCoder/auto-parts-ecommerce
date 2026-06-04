@@ -1,4 +1,4 @@
-import { envClient } from "@/config/env.config";
+import { getEnvClient } from "@/config/env.config";
 
 type UploadToCloudinaryParams = {
   file: File;
@@ -13,6 +13,8 @@ export async function uploadToCloudinary({
   timestamp,
   folder,
 }: UploadToCloudinaryParams) {
+  const envClient = getEnvClient();
+
   const formData = new FormData();
 
   formData.append("file", file);

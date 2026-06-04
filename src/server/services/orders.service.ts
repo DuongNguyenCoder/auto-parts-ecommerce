@@ -5,14 +5,7 @@ import type {
   CreateOrderDTO,
   UpdateOrderDTO,
 } from "@/validations/order.schema";
-import type { OrderRecord } from "@/server/repositories/orders.repository";
-import {
-  OrderListQuery,
-  OrderStatus,
-  PaymentMethod,
-  PaymentStatus,
-  ShippingMethod,
-} from "@/types";
+import { OrderListQuery } from "@/types";
 import { buildPagination } from "@/server/utils/pagination";
 
 const generateOrderNumber = () =>
@@ -57,6 +50,10 @@ export const orderService = {
     const order = await orderRepository.create({
       orderNumber: generateOrderNumber(),
       userId,
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      address: data.address,
       paymentMethod: data.paymentMethod,
       shippingMethod: data.shippingMethod,
       shippingFee: data.shippingFee,

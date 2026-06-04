@@ -15,7 +15,7 @@ export function AdminOrderDetailView({ order }: Props) {
       <div className="grid gap-4 md:grid-cols-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-            Order Number
+            Mã đơn hàng
           </p>
           <p className="mt-2 text-lg font-semibold text-zinc-900">
             {order.orderNumber}
@@ -24,7 +24,7 @@ export function AdminOrderDetailView({ order }: Props) {
 
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-            Order Status
+            Trạng thái đơn
           </p>
           <div className="mt-2">
             <OrderStatusBadge status={order.status} />
@@ -33,7 +33,7 @@ export function AdminOrderDetailView({ order }: Props) {
 
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-            Payment Status
+            Trạng thái thanh toán
           </p>
           <div className="mt-2">
             <PaymentStatusBadge status={order.paymentStatus} />
@@ -43,12 +43,12 @@ export function AdminOrderDetailView({ order }: Props) {
 
       <div className="border-t border-zinc-200 pt-6">
         <h3 className="text-sm font-semibold text-zinc-900 mb-4">
-          Order Details
+          Thông tin đơn hàng
         </h3>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-              Created At
+              Ngày tạo
             </p>
             <p className="mt-2 text-sm text-zinc-900">
               {formatDate(order.createdAt)}
@@ -57,7 +57,7 @@ export function AdminOrderDetailView({ order }: Props) {
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-              Last Updated
+              Cập nhật lần cuối
             </p>
             <p className="mt-2 text-sm text-zinc-900">
               {formatDate(order.updatedAt)}
@@ -66,14 +66,22 @@ export function AdminOrderDetailView({ order }: Props) {
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-              Payment Method
+              Phương thức thanh toán
             </p>
-            <p className="mt-2 text-sm text-zinc-900">{order.paymentMethod}</p>
+            <p className="mt-2 text-sm text-zinc-900">
+              {order.paymentMethod === "CASH_ON_DELIVERY"
+                ? "Thanh toán khi nhận hàng"
+                : order.paymentMethod === "BANK_TRANSFER"
+                  ? "Chuyển khoản"
+                  : order.paymentMethod === "CREDIT_CARD"
+                    ? "Thẻ tín dụng / thẻ ghi nợ"
+                    : "Ví điện tử"}
+            </p>
           </div>
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-              Shipping Method
+              Phương thức giao hàng
             </p>
             <p className="mt-2 text-sm text-zinc-900">
               {order.shippingMethod === "DELIVERY"
@@ -84,7 +92,7 @@ export function AdminOrderDetailView({ order }: Props) {
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-              Subtotal
+              Tổng tạm tính
             </p>
             <p className="mt-2 text-sm font-semibold text-zinc-900">
               {((order.total - order.shippingFee) / 1000).toFixed(0)}k VND
@@ -93,11 +101,46 @@ export function AdminOrderDetailView({ order }: Props) {
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
-              Shipping Fee
+              Phí vận chuyển
             </p>
             <p className="mt-2 text-sm font-semibold text-zinc-900">
               {(order.shippingFee / 1000).toFixed(0)}k VND
             </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-zinc-200 pt-6">
+        <h3 className="text-sm font-semibold text-zinc-900 mb-4">
+          Thông tin khách hàng
+        </h3>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
+              Họ và tên
+            </p>
+            <p className="mt-2 text-sm text-zinc-900">{order.name || "-"}</p>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
+              Số điện thoại
+            </p>
+            <p className="mt-2 text-sm text-zinc-900">{order.phone || "-"}</p>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
+              Email
+            </p>
+            <p className="mt-2 text-sm text-zinc-900">{order.email || "-"}</p>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
+              Địa chỉ giao hàng
+            </p>
+            <p className="mt-2 text-sm text-zinc-900">{order.address || "-"}</p>
           </div>
         </div>
       </div>

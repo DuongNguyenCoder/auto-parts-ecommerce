@@ -38,7 +38,7 @@ export function TopHeader() {
 
           {/* Hotline */}
           <Link
-            href={`tel:${HEADER_CONTACT.phone}`}
+            href={`tel:${HEADER_CONTACT.phone1}`}
             className="
               flex items-center gap-2
               transition-colors
@@ -47,13 +47,26 @@ export function TopHeader() {
           >
             <PhoneCall className="size-4 shrink-0" />
 
-            <span className="font-semibold">{HEADER_CONTACT.phone}</span>
+            <span className="font-semibold">{HEADER_CONTACT.phone1}</span>
+          </Link>
+
+          <Link
+            href={`tel:${HEADER_CONTACT.phone2}`}
+            className="
+              flex items-center gap-2
+              transition-colors
+              hover:text-primary
+            "
+          >
+            <PhoneCall className="size-4 shrink-0" />
+
+            <span className="font-semibold">{HEADER_CONTACT.phone2}</span>
           </Link>
         </div>
 
         {/* RIGHT */}
         <div className="flex items-center gap-4 text-xs md:text-sm">
-          <Link
+          {/* <Link
             href="/store-location"
             className="
               hidden md:flex
@@ -66,14 +79,14 @@ export function TopHeader() {
             <MapPinned className="size-4" />
 
             <span>Vị trí showroom</span>
-          </Link>
+          </Link> */}
 
           <Separator
             orientation="vertical"
             className="hidden h-5 bg-sidebar-foreground/20 md:block"
           />
 
-          {/* {HEADER_TOP_LINKS.map((item) => (
+          {HEADER_TOP_LINKS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -87,7 +100,7 @@ export function TopHeader() {
 
               <span>{item.label}</span>
             </Link>
-          ))} */}
+          ))}
         </div>
       </div>
     </div>

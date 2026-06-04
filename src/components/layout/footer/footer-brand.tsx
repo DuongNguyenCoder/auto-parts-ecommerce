@@ -5,6 +5,7 @@ import { ShieldCheck, Wrench } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { FOOTER_COMPANY, FOOTER_SOCIALS } from "./footer-config";
+import Image from "next/image";
 
 type FooterBrandProps = {
   className?: string;
@@ -46,12 +47,13 @@ export function FooterBrand({ className, logo }: FooterBrandProps) {
       {/* Socials */}
       <div className="space-y-3">
         <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-button-danger-foreground">
-          Follow us
+          Theo dõi chúng tôi
         </h3>
 
         <div className="flex flex-wrap items-center gap-3">
           {FOOTER_SOCIALS.map((social) => {
             const Icon = social.icon;
+            if (!Icon) return null;
 
             return (
               <Link
@@ -61,7 +63,7 @@ export function FooterBrand({ className, logo }: FooterBrandProps) {
                 rel="noopener noreferrer"
                 aria-label={social.label}
                 className={cn(
-                  "group flex h-11 w-11 items-center justify-center rounded-2xl border border-border/60 bg-background/50",
+                  "group flex items-center justify-center rounded-full overflow-hidden border border-border/60 bg-background/50",
                   "text-button-danger-foreground backdrop-blur-sm transition-all duration-300",
                   "hover:-translate-y-1 hover:border-primary/20 hover:text-primary",
                   "hover:shadow-md",
@@ -71,7 +73,14 @@ export function FooterBrand({ className, logo }: FooterBrandProps) {
                   "focus-visible:ring-offset-2",
                 )}
               >
-                <Icon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+                {/* <Icon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" /> */}
+                <Image
+                  src={Icon}
+                  alt={`${social.label} Icon`}
+                  width={50}
+                  height={50}
+                  className="object-cover"
+                />
               </Link>
             );
           })}
@@ -98,13 +107,18 @@ function DefaultLogo() {
     >
       <div
         className={cn(
-          "flex h-12 w-12 items-center justify-center rounded-2xl",
-          "bg-primary/10 text-primary ring-1 ring-primary/20",
+          " relative p-1 h-16 w-16",
           "transition-transform duration-300",
           "group-hover:scale-105",
         )}
       >
-        <Wrench className="h-6 w-6" />
+        <Image
+          src="/logo-1080x1080-autotx.png"
+          alt="Auto Thọ Xuân Logo Footer"
+          width={64}
+          height={64}
+          className="object-cover rounded-full"
+        />
       </div>
 
       <div className="flex flex-col">

@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { envServer as env, getJwtAccessSecret } from "@/config/env.server";
+import { getEnvServer, getJwtAccessSecret } from "@/config/env.server";
 
 export type AccessTokenPayload = {
   sub: string;
@@ -58,6 +58,8 @@ const sign = (header: string, payload: string) =>
   );
 
 export const signAccessToken = (payload: AccessTokenPayload) => {
+  const env = getEnvServer();
+
   const now = Math.floor(Date.now() / 1000);
   const header = base64UrlEncode(JSON.stringify({ alg: "HS256", typ: "JWT" }));
   const body = base64UrlEncode(

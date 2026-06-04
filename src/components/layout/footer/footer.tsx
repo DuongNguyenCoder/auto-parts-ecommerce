@@ -12,6 +12,7 @@ import { FooterContact } from "./footer-contact";
 import { FooterPayment } from "./footer-payment";
 import { FooterBottom } from "./footer-bottom";
 import { FooterNewsletter } from "./footer-newsletter";
+import { brandApi, categoryApi, postCategoryApi } from "@/features/api";
 
 type FooterOption = {
   label: string;
@@ -39,7 +40,7 @@ type FooterProps = {
   showPayments?: boolean;
 };
 
-export function Footer({
+export async function Footer({
   className,
 
   locale,
@@ -58,15 +59,14 @@ export function Footer({
   showNewsletter = true,
   showPayments = true,
 }: FooterProps) {
-  const paymentLogos = FOOTER_PAYMENT_METHODS.map((method) => ({
-    label: method,
-    src: `/payments/${method}.svg`,
-  }));
+  const categoriesRes = await categoryApi.getAll({ take: 100 });
+  const categories = categoriesRes.data?.items || [];
 
-  const shippingLogos = FOOTER_SHIPPING_PARTNERS.map((partner) => ({
-    label: partner,
-    src: `/shipping/${partner}.svg`,
-  }));
+  const brandsRes = await brandApi.getAll({ take: 100 });
+  const brands = brandsRes.data?.items || [];
+
+  const postCategoriesRes = await postCategoryApi.getAll({ take: 100 });
+  const postCategories = postCategoriesRes.data?.items || [];
 
   return (
     <footer
@@ -106,12 +106,16 @@ export function Footer({
 
           {/* Links */}
           <div className="min-w-0">
-            <FooterLinks sections={FOOTER_LINK_SECTIONS} />
+            <FooterLinks
+              categories={categories}
+              brands={brands}
+              postcategories={postCategories}
+            />
           </div>
 
           {/* Contact */}
           <div className="min-w-0">
-            <FooterContact />
+            <FooterContact title="Liên hệ nhanh" />
           </div>
         </section>
 

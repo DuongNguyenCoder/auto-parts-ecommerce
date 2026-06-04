@@ -5,7 +5,7 @@ import ButtonAnimate from "@/components/ui/button-animation-custom";
 import { Separator } from "@/components/ui/separator";
 import { postApi } from "@/features/api";
 
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   // const items = useCartStore((s) => s.items);

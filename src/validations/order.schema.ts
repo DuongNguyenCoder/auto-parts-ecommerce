@@ -35,7 +35,26 @@ export const createOrderSchema = z.object({
   shippingMethod: shippingMethodSchema.default("DELIVERY"),
   shippingFee: z.number().nonnegative().default(0),
   note: z.string().trim().optional(),
+  name: z.string().trim().min(1, "Vui lòng nhập họ tên người nhận"),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^0\d{9}$/, "Số điện thoại phải gồm 10 chữ số và bắt đầu bằng 0"),
+  email: z.string().trim().email("Email không hợp lệ"),
+  address: z.string().trim().min(3, "Vui lòng nhập địa chỉ giao hàng"),
 });
+
+export const checkoutOrderSchema = createOrderSchema.pick({
+  paymentMethod: true,
+  shippingMethod: true,
+  note: true,
+  name: true,
+  phone: true,
+  email: true,
+  address: true,
+});
+
+export type CheckoutOrderFormData = z.infer<typeof checkoutOrderSchema>;
 
 export const updateOrderSchema = z.object({
   status: orderStatusSchema.optional(),

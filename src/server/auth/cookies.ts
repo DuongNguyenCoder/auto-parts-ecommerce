@@ -1,7 +1,8 @@
 import type { NextRequest, NextResponse } from "next/server";
 import { parseExpiresIn } from "./jwt";
-import { envServer as env } from "@/config/env.server";
+import { getEnvServer } from "@/config/env.server";
 
+const env = getEnvServer();
 export const ACCESS_TOKEN_COOKIE = env.ACCESS_TOKEN_COOKIE;
 
 const accessTokenMaxAge = parseExpiresIn(env.JWT_ACCESS_EXPIRES_IN);

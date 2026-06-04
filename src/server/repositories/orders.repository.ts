@@ -35,6 +35,10 @@ const orderSelect = {
   id: true,
   orderNumber: true,
   userId: true,
+  name: true,
+  phone: true,
+  email: true,
+  address: true,
   status: true,
   paymentStatus: true,
   paymentMethod: true,
@@ -63,6 +67,10 @@ export const orderRepository = {
   create: (data: {
     orderNumber: string;
     userId: string;
+    name?: string | null;
+    phone?: string | null;
+    email?: string | null;
+    address?: string | null;
     paymentMethod: PaymentMethod;
     shippingMethod: ShippingMethod;
     shippingFee: number;
@@ -74,8 +82,12 @@ export const orderRepository = {
       data: {
         orderNumber: data.orderNumber,
         userId: data.userId,
-        paymentMethod: data?.paymentMethod,
-        shippingMethod: data?.shippingMethod,
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        address: data.address,
+        paymentMethod: data.paymentMethod,
+        shippingMethod: data.shippingMethod,
         shippingFee: data.shippingFee,
         total: data.total,
         note: data.note,

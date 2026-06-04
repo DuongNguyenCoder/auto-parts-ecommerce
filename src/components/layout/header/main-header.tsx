@@ -26,6 +26,7 @@ import { useCartStore } from "@/stores";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { Brand, Category } from "@/types";
+import Image from "next/image";
 
 type MainHeaderProps = {
   wishlistCount?: number;
@@ -58,7 +59,7 @@ export function MainHeader({
         <div
           className="
             grid items-center gap-4
-            lg:grid-cols-[220px_1fr_auto]
+            lg:grid-cols-[250px_1fr_auto]
           "
         >
           {/* LOGO + MOBILE MENU */}
@@ -80,19 +81,17 @@ export function MainHeader({
                   hover:opacity-90
                 "
               >
-                <div
-                  className="
-                    flex size-11 items-center
-                    justify-center rounded-2xl
-                    bg-primary text-lg
-                    font-bold text-primary-foreground
-                    shadow-sm
-                  "
-                >
-                  ATX
+                <div className="relative rounded-full border border-border shadow-md overflow-hidden p-1">
+                  <Image
+                    src="/logo-1080x1080-autotx.png"
+                    alt="Auto Thọ Xuân Logo"
+                    height={56}
+                    width={56}
+                    className="object-cover rounded-full"
+                  />
                 </div>
 
-                <div className="hidden xs:block">
+                <div className="block">
                   <h2
                     className="
                       text-base font-bold
@@ -104,15 +103,15 @@ export function MainHeader({
                     Auto Thọ Xuân
                   </h2>
 
-                  {/* <p
+                  <p
                     className="
                       hidden text-xs
                       text-muted-foreground
                       sm:block
                     "
                   >
-                    Premium Auto Components
-                  </p> */}
+                    Phụ tùng ô tô chính hãng
+                  </p>
                 </div>
               </Link>
             </div>

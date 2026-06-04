@@ -71,6 +71,7 @@ model Product {
   id         Int      @id @default(autoincrement())
   slug       String   @unique
   name       String
+  overview   String?
   price      Decimal
   imageUrl   String?
   categoryId Int
@@ -219,6 +220,11 @@ model Order {
   userId      String
   user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  name    String?
+  phone   String?
+  email   String?
+  address String?
+
   products OrderProduct[]
 
   status         OrderStatus    @default(PENDING)
@@ -234,6 +240,7 @@ model Order {
   updatedAt DateTime @updatedAt
 
   @@index([orderNumber])
+  @@index([phone])
   @@index([userId])
   @@index([status])
   @@index([paymentStatus])
