@@ -1,12 +1,5 @@
-export default async function AdminPage() {
-  return (
-    <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-6 px-6 py-10">
-      <div>
-        <h1 className="text-2xl font-semibold text-zinc-950">Admin</h1>
-        <p className="mt-2 text-sm text-zinc-600">
-          Manage products, posts, banners, and catalog data.
-        </p>
-      </div>
-    </div>
-  );
+import { AdminDashboard } from "@/features/dashboard/components/admin-dashboard";
+
+export default function AdminPage() {
+  return <AdminDashboard />;
 }

@@ -18,6 +18,7 @@ import type {
   CreateBrandDTO,
   UpdateBrandDTO,
 } from "@/validations/brands.schema";
+import Image from "next/image";
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -157,14 +158,14 @@ export function BrandsAdmin() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-zinc-950">
-              Brands administration
+              Trang quản lý các hãng xe
             </h1>
             <p className="max-w-2xl text-sm text-zinc-600">
-              Manage brands used by car models and system-wide product metadata.
+              Quản lý tất cả các hãng xe trên toàn hệ thống
             </p>
           </div>
 
-          <Button onClick={openCreateModal}>Create brand</Button>
+          <Button onClick={openCreateModal}>Thêm hãng xe mới</Button>
         </div>
 
         {statusMessage ? (
@@ -181,7 +182,7 @@ export function BrandsAdmin() {
 
         <div className="grid gap-3 md:grid-cols-[1fr_auto]">
           <Input
-            placeholder="Search brand name..."
+            placeholder="Tìm theo tên hãng..."
             value={searchName}
             onChange={(event) => {
               setSearchName(event.target.value);
@@ -197,8 +198,9 @@ export function BrandsAdmin() {
             <thead className="bg-zinc-50 text-zinc-900">
               <tr>
                 <th className="px-4 py-4 font-semibold">ID</th>
-                <th className="px-4 py-4 font-semibold">Brand</th>
-                <th className="px-4 py-4 font-semibold">Actions</th>
+                <th className="px-4 py-4 font-semibold">Logo</th>
+                <th className="px-4 py-4 font-semibold">Tên hãng</th>
+                <th className="px-4 py-4 font-semibold">Hành động</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
@@ -207,6 +209,19 @@ export function BrandsAdmin() {
                   <tr key={brand.id} className="hover:bg-zinc-50">
                     <td className="px-4 py-4 align-top text-zinc-500">
                       {brand.id}
+                    </td>
+                    <td className="px-4 py-4 align-top">
+                      {brand.imageUrl ? (
+                        <Image
+                          src={brand.imageUrl}
+                          alt={brand.name}
+                          width={50}
+                          height={50}
+                          className="rounded object-cover border"
+                        />
+                      ) : (
+                        <div className="h-10 w-10 rounded bg-zinc-100" />
+                      )}
                     </td>
                     <td className="px-4 py-4 align-top font-medium text-zinc-900">
                       {brand.name}
@@ -222,7 +237,7 @@ export function BrandsAdmin() {
                       </Button>
                       <Button
                         type="button"
-                        variant="destructive"
+                        variant="delete"
                         size="sm"
                         onClick={() => handleDelete(brand)}
                       >
@@ -234,7 +249,7 @@ export function BrandsAdmin() {
               ) : (
                 <tr>
                   <td
-                    colSpan={3}
+                    colSpan={4}
                     className="px-4 py-8 text-center text-sm text-zinc-500"
                   >
                     {brandsQuery.isLoading

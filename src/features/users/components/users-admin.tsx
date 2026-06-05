@@ -110,10 +110,11 @@ export const UsersAdmin = () => {
         <div className="space-y-3">
           <div className="space-y-1">
             <h1 className="text-xl font-semibold text-zinc-950">
-              User management
+              Trang quản lý người dùng đăng ký
             </h1>
             <p className="text-sm text-zinc-600">
-              Manage application users, roles and access from a central panel.
+              Quản lý tất cả thông tin người dùng đã đăng ký, tạo tài khoản cho
+              người dùng trên toàn hệ thống
             </p>
           </div>
 
@@ -121,7 +122,7 @@ export const UsersAdmin = () => {
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by email"
+              placeholder="Tìm kiếm theo email..."
               className="max-w-md"
             />
             <select
@@ -131,14 +132,14 @@ export const UsersAdmin = () => {
               }
               className="rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-zinc-950"
             >
-              <option value="">All roles</option>
-              <option value="USER">User</option>
+              <option value="">Lọc theo Vai trò</option>
+              <option value="USER">Người dùng</option>
               <option value="ADMIN">Admin</option>
             </select>
           </div>
         </div>
 
-        <Button onClick={openCreateModal}>Create user</Button>
+        <Button onClick={openCreateModal}>Thêm tài khoản</Button>
       </div>
 
       <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
@@ -147,9 +148,9 @@ export const UsersAdmin = () => {
             <thead className="border-b border-zinc-200 bg-zinc-50 text-zinc-900">
               <tr>
                 <th className="px-4 py-3">Email</th>
-                <th className="px-4 py-3">Role</th>
-                <th className="px-4 py-3">Created</th>
-                <th className="px-4 py-3">Actions</th>
+                <th className="px-4 py-3">Vai trò</th>
+                <th className="px-4 py-3">Ngày tạo</th>
+                <th className="px-4 py-3">Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -196,7 +197,7 @@ export const UsersAdmin = () => {
                       </Button>
                       <Button
                         type="button"
-                        variant="destructive"
+                        variant="delete"
                         size="sm"
                         onClick={() => handleDelete(user)}
                       >

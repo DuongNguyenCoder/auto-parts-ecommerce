@@ -7,6 +7,13 @@ import { Tag } from "lucide-react";
 import { productService } from "@/server/services/products.service";
 import { categoryService } from "@/server/services/categories.service";
 import { brandService } from "@/server/services/brands.service";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sản phẩm phụ tùng xe tải chính hãng giá tốt",
+  description:
+    "Chuyên cung cấp phụ tùng xe tải chính hãng cho nhiều dòng xe phổ biến tại Việt Nam. Hỗ trợ tra mã phụ tùng, tư vấn kỹ thuật và giao hàng nhanh toàn quốc.",
+};
 
 export default async function ProductPage({
   searchParams,

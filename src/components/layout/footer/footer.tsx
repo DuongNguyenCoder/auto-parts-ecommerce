@@ -90,7 +90,7 @@ export async function Footer({
         {/* Newsletter */}
         {showNewsletter && (
           <section className="py-10 md:py-14">
-            <FooterNewsletter onSubmit={onNewsletterSubmit} />
+            <FooterNewsletter />
           </section>
         )}
 

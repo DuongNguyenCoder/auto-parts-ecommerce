@@ -171,7 +171,7 @@ export const PostFormPublishGroup = ({
     gcTime: 1000 * 60 * 5, // 5 minutes
   });
 
-  const products: ProductToPost[] = productsQuery.data?.data ?? [];
+  const products: ProductToPost[] = productsQuery.data?.data?.items ?? [];
 
   useEffect(() => {
     setProductMap((prev) => ({

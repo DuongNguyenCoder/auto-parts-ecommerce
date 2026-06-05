@@ -259,3 +259,22 @@ model OrderProduct {
   @@index([orderId])
   @@index([productId])
 }
+
+enum ConsulationStatus {
+  PENDING
+  PROCESSED
+}
+
+model Consulation {
+  id         Int      @id @default(autoincrement())
+  phone      String
+  name       String
+  email      String?
+  note       String?
+  status     ConsulationStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([phone])
+}

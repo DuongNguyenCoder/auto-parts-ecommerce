@@ -19,6 +19,7 @@ import {
 import type { Brand } from "@/types";
 import FormSection, { FormField } from "@/components/forms/form-custom";
 import { cn, inputCls, inputErrorCls } from "@/lib/utils";
+import BuilderUploadImage from "@/components/common/upload-image-main";
 
 const brandOptions = (brands: Brand[]) =>
   brands.map((brand) => ({ id: brand.id, label: `${brand.name}` }));
@@ -46,6 +47,8 @@ export const CarModelForm = ({
     register,
     handleSubmit,
     control,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<CreateCarModelDTO>({
     resolver: zodResolver(createCarModelSchema),
@@ -54,8 +57,11 @@ export const CarModelForm = ({
       name: initialData?.name ?? "",
       year: initialData?.year ?? "",
       slug: initialData?.slug ?? "",
+      imageUrl: initialData?.imageUrl ?? "",
     },
   });
+
+  const imageUrl = watch("imageUrl");
 
   return (
     <form
@@ -118,6 +124,24 @@ export const CarModelForm = ({
             )}
           />
         </FormField>
+      </FormSection>
+
+      <FormSection
+        badge="Hình ảnh xe"
+        description="Hình ảnh nên có kích thước 1:1, ví dụ 500x500px để hiển thị tốt trên đa thiết bị."
+      >
+        <BuilderUploadImage
+          imageUrl={imageUrl}
+          folder="banners"
+          error={errors.imageUrl?.message}
+          onUploadSuccess={(url) => {
+            setValue("imageUrl", url, {
+              shouldValidate: true,
+              shouldDirty: true,
+              shouldTouch: true,
+            });
+          }}
+        />
       </FormSection>
 
       <Button type="submit" disabled={isSubmitting} className="w-fit">

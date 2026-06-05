@@ -117,10 +117,11 @@ export const PostCategoriesAdmin = () => {
         <div className="space-y-3">
           <div className="space-y-1">
             <h1 className="text-xl font-semibold text-zinc-950">
-              Post category management
+              Trang quản lý danh mục bài viết
             </h1>
             <p className="text-sm text-zinc-600">
-              Add, edit, or remove categories that organize blog posts.
+              Quản lý tất cả các danh mục bài viết trên toàn hệ thống bao gồm
+              thêm - sửa - xóa - cập nhật.
             </p>
           </div>
 
@@ -128,13 +129,13 @@ export const PostCategoriesAdmin = () => {
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by name"
+              placeholder="Tìm kiếm theo tên..."
               className="max-w-md"
             />
           </div>
         </div>
 
-        <Button onClick={openCreateModal}>Create category</Button>
+        <Button onClick={openCreateModal}>Thêm danh mục mới</Button>
       </div>
 
       <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
@@ -142,9 +143,9 @@ export const PostCategoriesAdmin = () => {
           <table className="min-w-full border-collapse text-left text-sm text-zinc-700">
             <thead className="border-b border-zinc-200 bg-zinc-50 text-zinc-900">
               <tr>
-                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">Tên</th>
                 <th className="px-4 py-3">Slug</th>
-                <th className="px-4 py-3">Actions</th>
+                <th className="px-4 py-3">Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -180,7 +181,7 @@ export const PostCategoriesAdmin = () => {
                       </Button>
                       <Button
                         type="button"
-                        variant="destructive"
+                        variant="delete"
                         size="sm"
                         onClick={() => handleDelete(category)}
                       >

@@ -27,6 +27,7 @@ import type {
   CreateCarModelDTO,
   UpdateCarModelDTO,
 } from "@/validations/car-models.schema";
+import Image from "next/image";
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -185,14 +186,15 @@ export function CarModelsAdmin() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-zinc-950">
-              Car models administration
+              Trang quản lý các dòng xe
             </h1>
             <p className="max-w-2xl text-sm text-zinc-600">
-              Manage vehicle models used for fitments and product compatibility.
+              Quản lý danh sách các dòng xe theo hãng, năm sản xuất,... trên
+              toàn hệ thống
             </p>
           </div>
 
-          <Button onClick={openCreateModal}>Create car model</Button>
+          <Button onClick={openCreateModal}>Thêm dòng xe</Button>
         </div>
 
         {statusMessage ? (
@@ -209,7 +211,7 @@ export function CarModelsAdmin() {
 
         <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_220px]">
           <Input
-            placeholder="Search model name..."
+            placeholder="Tìm theo tên dòng xe..."
             value={searchName}
             onChange={(event) => {
               setSearchName(event.target.value);
@@ -225,10 +227,10 @@ export function CarModelsAdmin() {
             }}
           >
             <SelectTrigger>
-              <SelectValue placeholder="All brands" />
+              <SelectValue placeholder="Tất cả các hãng" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">All brands</SelectItem>
+              <SelectItem value="none">Tất cả các hãng</SelectItem>
               {brands.map((brand) => (
                 <SelectItem key={brand.id} value={String(brand.id)}>
                   {brand.name}
@@ -245,10 +247,11 @@ export function CarModelsAdmin() {
             <thead className="bg-zinc-50 text-zinc-900">
               <tr>
                 <th className="px-4 py-4 font-semibold">ID</th>
-                <th className="px-4 py-4 font-semibold">Brand</th>
-                <th className="px-4 py-4 font-semibold">Model</th>
-                <th className="px-4 py-4 font-semibold">Year</th>
-                <th className="px-4 py-4 font-semibold">Actions</th>
+                <th className="px-4 py-4 font-semibold">Logo</th>
+                <th className="px-4 py-4 font-semibold">Hãng</th>
+                <th className="px-4 py-4 font-semibold">Tên dòng xe</th>
+                <th className="px-4 py-4 font-semibold">Năm sản xuất</th>
+                <th className="px-4 py-4 font-semibold">Hành động</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
@@ -257,6 +260,19 @@ export function CarModelsAdmin() {
                   <tr key={carModel.id} className="hover:bg-zinc-50">
                     <td className="px-4 py-4 align-top text-zinc-500">
                       {carModel.id}
+                    </td>
+                    <td className="px-4 py-4 align-top">
+                      {carModel.imageUrl ? (
+                        <Image
+                          src={carModel.imageUrl}
+                          alt={carModel.name}
+                          width={50}
+                          height={50}
+                          className="rounded object-cover border"
+                        />
+                      ) : (
+                        <div className="h-10 w-10 rounded bg-zinc-100" />
+                      )}
                     </td>
                     <td className="px-4 py-4 align-top text-zinc-900">
                       {carModel.brand?.name ?? "-"}
@@ -278,7 +294,7 @@ export function CarModelsAdmin() {
                       </Button>
                       <Button
                         type="button"
-                        variant="destructive"
+                        variant="delete"
                         size="sm"
                         onClick={() => handleDelete(carModel)}
                       >
@@ -290,7 +306,7 @@ export function CarModelsAdmin() {
               ) : (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="px-4 py-8 text-center text-sm text-zinc-500"
                   >
                     {carModelsQuery.isLoading

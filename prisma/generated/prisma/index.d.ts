@@ -78,6 +78,11 @@ export type Order = $Result.DefaultSelection<Prisma.$OrderPayload>
  * 
  */
 export type OrderProduct = $Result.DefaultSelection<Prisma.$OrderProductPayload>
+/**
+ * Model Consulation
+ * 
+ */
+export type Consulation = $Result.DefaultSelection<Prisma.$ConsulationPayload>
 
 /**
  * Enums
@@ -138,6 +143,14 @@ export const ShippingMethod: {
 
 export type ShippingMethod = (typeof ShippingMethod)[keyof typeof ShippingMethod]
 
+
+export const ConsulationStatus: {
+  PENDING: 'PENDING',
+  PROCESSED: 'PROCESSED'
+};
+
+export type ConsulationStatus = (typeof ConsulationStatus)[keyof typeof ConsulationStatus]
+
 }
 
 export type Role = $Enums.Role
@@ -163,6 +176,10 @@ export const PaymentMethod: typeof $Enums.PaymentMethod
 export type ShippingMethod = $Enums.ShippingMethod
 
 export const ShippingMethod: typeof $Enums.ShippingMethod
+
+export type ConsulationStatus = $Enums.ConsulationStatus
+
+export const ConsulationStatus: typeof $Enums.ConsulationStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -414,6 +431,16 @@ export class PrismaClient<
     * ```
     */
   get orderProduct(): Prisma.OrderProductDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.consulation`: Exposes CRUD operations for the **Consulation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Consulations
+    * const consulations = await prisma.consulation.findMany()
+    * ```
+    */
+  get consulation(): Prisma.ConsulationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -860,7 +887,8 @@ export namespace Prisma {
     CartItem: 'CartItem',
     WishlistItem: 'WishlistItem',
     Order: 'Order',
-    OrderProduct: 'OrderProduct'
+    OrderProduct: 'OrderProduct',
+    Consulation: 'Consulation'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -876,7 +904,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "brand" | "carModel" | "product" | "banner" | "postCategory" | "post" | "cart" | "cartItem" | "wishlistItem" | "order" | "orderProduct"
+      modelProps: "user" | "category" | "brand" | "carModel" | "product" | "banner" | "postCategory" | "post" | "cart" | "cartItem" | "wishlistItem" | "order" | "orderProduct" | "consulation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1842,6 +1870,80 @@ export namespace Prisma {
           }
         }
       }
+      Consulation: {
+        payload: Prisma.$ConsulationPayload<ExtArgs>
+        fields: Prisma.ConsulationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ConsulationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ConsulationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>
+          }
+          findFirst: {
+            args: Prisma.ConsulationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ConsulationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>
+          }
+          findMany: {
+            args: Prisma.ConsulationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>[]
+          }
+          create: {
+            args: Prisma.ConsulationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>
+          }
+          createMany: {
+            args: Prisma.ConsulationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ConsulationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>[]
+          }
+          delete: {
+            args: Prisma.ConsulationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>
+          }
+          update: {
+            args: Prisma.ConsulationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>
+          }
+          deleteMany: {
+            args: Prisma.ConsulationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ConsulationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ConsulationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>[]
+          }
+          upsert: {
+            args: Prisma.ConsulationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsulationPayload>
+          }
+          aggregate: {
+            args: Prisma.ConsulationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateConsulation>
+          }
+          groupBy: {
+            args: Prisma.ConsulationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ConsulationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ConsulationCountArgs<ExtArgs>
+            result: $Utils.Optional<ConsulationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1963,6 +2065,7 @@ export namespace Prisma {
     wishlistItem?: WishlistItemOmit
     order?: OrderOmit
     orderProduct?: OrderProductOmit
+    consulation?: ConsulationOmit
   }
 
   /* Types for Logging */
@@ -17299,6 +17402,1079 @@ export namespace Prisma {
 
 
   /**
+   * Model Consulation
+   */
+
+  export type AggregateConsulation = {
+    _count: ConsulationCountAggregateOutputType | null
+    _avg: ConsulationAvgAggregateOutputType | null
+    _sum: ConsulationSumAggregateOutputType | null
+    _min: ConsulationMinAggregateOutputType | null
+    _max: ConsulationMaxAggregateOutputType | null
+  }
+
+  export type ConsulationAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ConsulationSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ConsulationMinAggregateOutputType = {
+    id: number | null
+    phone: string | null
+    name: string | null
+    email: string | null
+    note: string | null
+    status: $Enums.ConsulationStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ConsulationMaxAggregateOutputType = {
+    id: number | null
+    phone: string | null
+    name: string | null
+    email: string | null
+    note: string | null
+    status: $Enums.ConsulationStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ConsulationCountAggregateOutputType = {
+    id: number
+    phone: number
+    name: number
+    email: number
+    note: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ConsulationAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type ConsulationSumAggregateInputType = {
+    id?: true
+  }
+
+  export type ConsulationMinAggregateInputType = {
+    id?: true
+    phone?: true
+    name?: true
+    email?: true
+    note?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ConsulationMaxAggregateInputType = {
+    id?: true
+    phone?: true
+    name?: true
+    email?: true
+    note?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ConsulationCountAggregateInputType = {
+    id?: true
+    phone?: true
+    name?: true
+    email?: true
+    note?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ConsulationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Consulation to aggregate.
+     */
+    where?: ConsulationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Consulations to fetch.
+     */
+    orderBy?: ConsulationOrderByWithRelationInput | ConsulationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ConsulationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Consulations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Consulations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Consulations
+    **/
+    _count?: true | ConsulationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ConsulationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ConsulationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ConsulationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ConsulationMaxAggregateInputType
+  }
+
+  export type GetConsulationAggregateType<T extends ConsulationAggregateArgs> = {
+        [P in keyof T & keyof AggregateConsulation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateConsulation[P]>
+      : GetScalarType<T[P], AggregateConsulation[P]>
+  }
+
+
+
+
+  export type ConsulationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConsulationWhereInput
+    orderBy?: ConsulationOrderByWithAggregationInput | ConsulationOrderByWithAggregationInput[]
+    by: ConsulationScalarFieldEnum[] | ConsulationScalarFieldEnum
+    having?: ConsulationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ConsulationCountAggregateInputType | true
+    _avg?: ConsulationAvgAggregateInputType
+    _sum?: ConsulationSumAggregateInputType
+    _min?: ConsulationMinAggregateInputType
+    _max?: ConsulationMaxAggregateInputType
+  }
+
+  export type ConsulationGroupByOutputType = {
+    id: number
+    phone: string
+    name: string
+    email: string | null
+    note: string | null
+    status: $Enums.ConsulationStatus
+    createdAt: Date
+    updatedAt: Date
+    _count: ConsulationCountAggregateOutputType | null
+    _avg: ConsulationAvgAggregateOutputType | null
+    _sum: ConsulationSumAggregateOutputType | null
+    _min: ConsulationMinAggregateOutputType | null
+    _max: ConsulationMaxAggregateOutputType | null
+  }
+
+  type GetConsulationGroupByPayload<T extends ConsulationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ConsulationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ConsulationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ConsulationGroupByOutputType[P]>
+            : GetScalarType<T[P], ConsulationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ConsulationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    phone?: boolean
+    name?: boolean
+    email?: boolean
+    note?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["consulation"]>
+
+  export type ConsulationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    phone?: boolean
+    name?: boolean
+    email?: boolean
+    note?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["consulation"]>
+
+  export type ConsulationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    phone?: boolean
+    name?: boolean
+    email?: boolean
+    note?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["consulation"]>
+
+  export type ConsulationSelectScalar = {
+    id?: boolean
+    phone?: boolean
+    name?: boolean
+    email?: boolean
+    note?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ConsulationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "name" | "email" | "note" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["consulation"]>
+
+  export type $ConsulationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Consulation"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      phone: string
+      name: string
+      email: string | null
+      note: string | null
+      status: $Enums.ConsulationStatus
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["consulation"]>
+    composites: {}
+  }
+
+  type ConsulationGetPayload<S extends boolean | null | undefined | ConsulationDefaultArgs> = $Result.GetResult<Prisma.$ConsulationPayload, S>
+
+  type ConsulationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ConsulationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ConsulationCountAggregateInputType | true
+    }
+
+  export interface ConsulationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Consulation'], meta: { name: 'Consulation' } }
+    /**
+     * Find zero or one Consulation that matches the filter.
+     * @param {ConsulationFindUniqueArgs} args - Arguments to find a Consulation
+     * @example
+     * // Get one Consulation
+     * const consulation = await prisma.consulation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ConsulationFindUniqueArgs>(args: SelectSubset<T, ConsulationFindUniqueArgs<ExtArgs>>): Prisma__ConsulationClient<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Consulation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ConsulationFindUniqueOrThrowArgs} args - Arguments to find a Consulation
+     * @example
+     * // Get one Consulation
+     * const consulation = await prisma.consulation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ConsulationFindUniqueOrThrowArgs>(args: SelectSubset<T, ConsulationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ConsulationClient<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Consulation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsulationFindFirstArgs} args - Arguments to find a Consulation
+     * @example
+     * // Get one Consulation
+     * const consulation = await prisma.consulation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ConsulationFindFirstArgs>(args?: SelectSubset<T, ConsulationFindFirstArgs<ExtArgs>>): Prisma__ConsulationClient<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Consulation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsulationFindFirstOrThrowArgs} args - Arguments to find a Consulation
+     * @example
+     * // Get one Consulation
+     * const consulation = await prisma.consulation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ConsulationFindFirstOrThrowArgs>(args?: SelectSubset<T, ConsulationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ConsulationClient<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Consulations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsulationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Consulations
+     * const consulations = await prisma.consulation.findMany()
+     * 
+     * // Get first 10 Consulations
+     * const consulations = await prisma.consulation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const consulationWithIdOnly = await prisma.consulation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ConsulationFindManyArgs>(args?: SelectSubset<T, ConsulationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Consulation.
+     * @param {ConsulationCreateArgs} args - Arguments to create a Consulation.
+     * @example
+     * // Create one Consulation
+     * const Consulation = await prisma.consulation.create({
+     *   data: {
+     *     // ... data to create a Consulation
+     *   }
+     * })
+     * 
+     */
+    create<T extends ConsulationCreateArgs>(args: SelectSubset<T, ConsulationCreateArgs<ExtArgs>>): Prisma__ConsulationClient<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Consulations.
+     * @param {ConsulationCreateManyArgs} args - Arguments to create many Consulations.
+     * @example
+     * // Create many Consulations
+     * const consulation = await prisma.consulation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ConsulationCreateManyArgs>(args?: SelectSubset<T, ConsulationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Consulations and returns the data saved in the database.
+     * @param {ConsulationCreateManyAndReturnArgs} args - Arguments to create many Consulations.
+     * @example
+     * // Create many Consulations
+     * const consulation = await prisma.consulation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Consulations and only return the `id`
+     * const consulationWithIdOnly = await prisma.consulation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ConsulationCreateManyAndReturnArgs>(args?: SelectSubset<T, ConsulationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Consulation.
+     * @param {ConsulationDeleteArgs} args - Arguments to delete one Consulation.
+     * @example
+     * // Delete one Consulation
+     * const Consulation = await prisma.consulation.delete({
+     *   where: {
+     *     // ... filter to delete one Consulation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ConsulationDeleteArgs>(args: SelectSubset<T, ConsulationDeleteArgs<ExtArgs>>): Prisma__ConsulationClient<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Consulation.
+     * @param {ConsulationUpdateArgs} args - Arguments to update one Consulation.
+     * @example
+     * // Update one Consulation
+     * const consulation = await prisma.consulation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ConsulationUpdateArgs>(args: SelectSubset<T, ConsulationUpdateArgs<ExtArgs>>): Prisma__ConsulationClient<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Consulations.
+     * @param {ConsulationDeleteManyArgs} args - Arguments to filter Consulations to delete.
+     * @example
+     * // Delete a few Consulations
+     * const { count } = await prisma.consulation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ConsulationDeleteManyArgs>(args?: SelectSubset<T, ConsulationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Consulations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsulationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Consulations
+     * const consulation = await prisma.consulation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ConsulationUpdateManyArgs>(args: SelectSubset<T, ConsulationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Consulations and returns the data updated in the database.
+     * @param {ConsulationUpdateManyAndReturnArgs} args - Arguments to update many Consulations.
+     * @example
+     * // Update many Consulations
+     * const consulation = await prisma.consulation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Consulations and only return the `id`
+     * const consulationWithIdOnly = await prisma.consulation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ConsulationUpdateManyAndReturnArgs>(args: SelectSubset<T, ConsulationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Consulation.
+     * @param {ConsulationUpsertArgs} args - Arguments to update or create a Consulation.
+     * @example
+     * // Update or create a Consulation
+     * const consulation = await prisma.consulation.upsert({
+     *   create: {
+     *     // ... data to create a Consulation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Consulation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ConsulationUpsertArgs>(args: SelectSubset<T, ConsulationUpsertArgs<ExtArgs>>): Prisma__ConsulationClient<$Result.GetResult<Prisma.$ConsulationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Consulations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsulationCountArgs} args - Arguments to filter Consulations to count.
+     * @example
+     * // Count the number of Consulations
+     * const count = await prisma.consulation.count({
+     *   where: {
+     *     // ... the filter for the Consulations we want to count
+     *   }
+     * })
+    **/
+    count<T extends ConsulationCountArgs>(
+      args?: Subset<T, ConsulationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ConsulationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Consulation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsulationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ConsulationAggregateArgs>(args: Subset<T, ConsulationAggregateArgs>): Prisma.PrismaPromise<GetConsulationAggregateType<T>>
+
+    /**
+     * Group by Consulation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsulationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ConsulationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ConsulationGroupByArgs['orderBy'] }
+        : { orderBy?: ConsulationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ConsulationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConsulationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Consulation model
+   */
+  readonly fields: ConsulationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Consulation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ConsulationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Consulation model
+   */
+  interface ConsulationFieldRefs {
+    readonly id: FieldRef<"Consulation", 'Int'>
+    readonly phone: FieldRef<"Consulation", 'String'>
+    readonly name: FieldRef<"Consulation", 'String'>
+    readonly email: FieldRef<"Consulation", 'String'>
+    readonly note: FieldRef<"Consulation", 'String'>
+    readonly status: FieldRef<"Consulation", 'ConsulationStatus'>
+    readonly createdAt: FieldRef<"Consulation", 'DateTime'>
+    readonly updatedAt: FieldRef<"Consulation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Consulation findUnique
+   */
+  export type ConsulationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * Filter, which Consulation to fetch.
+     */
+    where: ConsulationWhereUniqueInput
+  }
+
+  /**
+   * Consulation findUniqueOrThrow
+   */
+  export type ConsulationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * Filter, which Consulation to fetch.
+     */
+    where: ConsulationWhereUniqueInput
+  }
+
+  /**
+   * Consulation findFirst
+   */
+  export type ConsulationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * Filter, which Consulation to fetch.
+     */
+    where?: ConsulationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Consulations to fetch.
+     */
+    orderBy?: ConsulationOrderByWithRelationInput | ConsulationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Consulations.
+     */
+    cursor?: ConsulationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Consulations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Consulations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Consulations.
+     */
+    distinct?: ConsulationScalarFieldEnum | ConsulationScalarFieldEnum[]
+  }
+
+  /**
+   * Consulation findFirstOrThrow
+   */
+  export type ConsulationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * Filter, which Consulation to fetch.
+     */
+    where?: ConsulationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Consulations to fetch.
+     */
+    orderBy?: ConsulationOrderByWithRelationInput | ConsulationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Consulations.
+     */
+    cursor?: ConsulationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Consulations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Consulations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Consulations.
+     */
+    distinct?: ConsulationScalarFieldEnum | ConsulationScalarFieldEnum[]
+  }
+
+  /**
+   * Consulation findMany
+   */
+  export type ConsulationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * Filter, which Consulations to fetch.
+     */
+    where?: ConsulationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Consulations to fetch.
+     */
+    orderBy?: ConsulationOrderByWithRelationInput | ConsulationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Consulations.
+     */
+    cursor?: ConsulationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Consulations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Consulations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Consulations.
+     */
+    distinct?: ConsulationScalarFieldEnum | ConsulationScalarFieldEnum[]
+  }
+
+  /**
+   * Consulation create
+   */
+  export type ConsulationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Consulation.
+     */
+    data: XOR<ConsulationCreateInput, ConsulationUncheckedCreateInput>
+  }
+
+  /**
+   * Consulation createMany
+   */
+  export type ConsulationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Consulations.
+     */
+    data: ConsulationCreateManyInput | ConsulationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Consulation createManyAndReturn
+   */
+  export type ConsulationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Consulations.
+     */
+    data: ConsulationCreateManyInput | ConsulationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Consulation update
+   */
+  export type ConsulationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Consulation.
+     */
+    data: XOR<ConsulationUpdateInput, ConsulationUncheckedUpdateInput>
+    /**
+     * Choose, which Consulation to update.
+     */
+    where: ConsulationWhereUniqueInput
+  }
+
+  /**
+   * Consulation updateMany
+   */
+  export type ConsulationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Consulations.
+     */
+    data: XOR<ConsulationUpdateManyMutationInput, ConsulationUncheckedUpdateManyInput>
+    /**
+     * Filter which Consulations to update
+     */
+    where?: ConsulationWhereInput
+    /**
+     * Limit how many Consulations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Consulation updateManyAndReturn
+   */
+  export type ConsulationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * The data used to update Consulations.
+     */
+    data: XOR<ConsulationUpdateManyMutationInput, ConsulationUncheckedUpdateManyInput>
+    /**
+     * Filter which Consulations to update
+     */
+    where?: ConsulationWhereInput
+    /**
+     * Limit how many Consulations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Consulation upsert
+   */
+  export type ConsulationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Consulation to update in case it exists.
+     */
+    where: ConsulationWhereUniqueInput
+    /**
+     * In case the Consulation found by the `where` argument doesn't exist, create a new Consulation with this data.
+     */
+    create: XOR<ConsulationCreateInput, ConsulationUncheckedCreateInput>
+    /**
+     * In case the Consulation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ConsulationUpdateInput, ConsulationUncheckedUpdateInput>
+  }
+
+  /**
+   * Consulation delete
+   */
+  export type ConsulationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+    /**
+     * Filter which Consulation to delete.
+     */
+    where: ConsulationWhereUniqueInput
+  }
+
+  /**
+   * Consulation deleteMany
+   */
+  export type ConsulationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Consulations to delete
+     */
+    where?: ConsulationWhereInput
+    /**
+     * Limit how many Consulations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Consulation without action
+   */
+  export type ConsulationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consulation
+     */
+    select?: ConsulationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Consulation
+     */
+    omit?: ConsulationOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -17478,6 +18654,20 @@ export namespace Prisma {
   export type OrderProductScalarFieldEnum = (typeof OrderProductScalarFieldEnum)[keyof typeof OrderProductScalarFieldEnum]
 
 
+  export const ConsulationScalarFieldEnum: {
+    id: 'id',
+    phone: 'phone',
+    name: 'name',
+    email: 'email',
+    note: 'note',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ConsulationScalarFieldEnum = (typeof ConsulationScalarFieldEnum)[keyof typeof ConsulationScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -17651,6 +18841,20 @@ export namespace Prisma {
    * Reference to a field of type 'ShippingMethod[]'
    */
   export type ListEnumShippingMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShippingMethod[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ConsulationStatus'
+   */
+  export type EnumConsulationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConsulationStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ConsulationStatus[]'
+   */
+  export type ListEnumConsulationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConsulationStatus[]'>
     
 
 
@@ -18571,6 +19775,75 @@ export namespace Prisma {
     quantity?: IntWithAggregatesFilter<"OrderProduct"> | number
   }
 
+  export type ConsulationWhereInput = {
+    AND?: ConsulationWhereInput | ConsulationWhereInput[]
+    OR?: ConsulationWhereInput[]
+    NOT?: ConsulationWhereInput | ConsulationWhereInput[]
+    id?: IntFilter<"Consulation"> | number
+    phone?: StringFilter<"Consulation"> | string
+    name?: StringFilter<"Consulation"> | string
+    email?: StringNullableFilter<"Consulation"> | string | null
+    note?: StringNullableFilter<"Consulation"> | string | null
+    status?: EnumConsulationStatusFilter<"Consulation"> | $Enums.ConsulationStatus
+    createdAt?: DateTimeFilter<"Consulation"> | Date | string
+    updatedAt?: DateTimeFilter<"Consulation"> | Date | string
+  }
+
+  export type ConsulationOrderByWithRelationInput = {
+    id?: SortOrder
+    phone?: SortOrder
+    name?: SortOrder
+    email?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsulationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ConsulationWhereInput | ConsulationWhereInput[]
+    OR?: ConsulationWhereInput[]
+    NOT?: ConsulationWhereInput | ConsulationWhereInput[]
+    phone?: StringFilter<"Consulation"> | string
+    name?: StringFilter<"Consulation"> | string
+    email?: StringNullableFilter<"Consulation"> | string | null
+    note?: StringNullableFilter<"Consulation"> | string | null
+    status?: EnumConsulationStatusFilter<"Consulation"> | $Enums.ConsulationStatus
+    createdAt?: DateTimeFilter<"Consulation"> | Date | string
+    updatedAt?: DateTimeFilter<"Consulation"> | Date | string
+  }, "id">
+
+  export type ConsulationOrderByWithAggregationInput = {
+    id?: SortOrder
+    phone?: SortOrder
+    name?: SortOrder
+    email?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ConsulationCountOrderByAggregateInput
+    _avg?: ConsulationAvgOrderByAggregateInput
+    _max?: ConsulationMaxOrderByAggregateInput
+    _min?: ConsulationMinOrderByAggregateInput
+    _sum?: ConsulationSumOrderByAggregateInput
+  }
+
+  export type ConsulationScalarWhereWithAggregatesInput = {
+    AND?: ConsulationScalarWhereWithAggregatesInput | ConsulationScalarWhereWithAggregatesInput[]
+    OR?: ConsulationScalarWhereWithAggregatesInput[]
+    NOT?: ConsulationScalarWhereWithAggregatesInput | ConsulationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Consulation"> | number
+    phone?: StringWithAggregatesFilter<"Consulation"> | string
+    name?: StringWithAggregatesFilter<"Consulation"> | string
+    email?: StringNullableWithAggregatesFilter<"Consulation"> | string | null
+    note?: StringNullableWithAggregatesFilter<"Consulation"> | string | null
+    status?: EnumConsulationStatusWithAggregatesFilter<"Consulation"> | $Enums.ConsulationStatus
+    createdAt?: DateTimeWithAggregatesFilter<"Consulation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Consulation"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -19483,6 +20756,80 @@ export namespace Prisma {
     orderId?: StringFieldUpdateOperationsInput | string
     productId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ConsulationCreateInput = {
+    phone: string
+    name: string
+    email?: string | null
+    note?: string | null
+    status?: $Enums.ConsulationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConsulationUncheckedCreateInput = {
+    id?: number
+    phone: string
+    name: string
+    email?: string | null
+    note?: string | null
+    status?: $Enums.ConsulationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConsulationUpdateInput = {
+    phone?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumConsulationStatusFieldUpdateOperationsInput | $Enums.ConsulationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsulationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    phone?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumConsulationStatusFieldUpdateOperationsInput | $Enums.ConsulationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsulationCreateManyInput = {
+    id?: number
+    phone: string
+    name: string
+    email?: string | null
+    note?: string | null
+    status?: $Enums.ConsulationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConsulationUpdateManyMutationInput = {
+    phone?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumConsulationStatusFieldUpdateOperationsInput | $Enums.ConsulationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsulationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    phone?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumConsulationStatusFieldUpdateOperationsInput | $Enums.ConsulationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -20422,6 +21769,64 @@ export namespace Prisma {
     quantity?: SortOrder
   }
 
+  export type EnumConsulationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ConsulationStatus | EnumConsulationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ConsulationStatus[] | ListEnumConsulationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ConsulationStatus[] | ListEnumConsulationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumConsulationStatusFilter<$PrismaModel> | $Enums.ConsulationStatus
+  }
+
+  export type ConsulationCountOrderByAggregateInput = {
+    id?: SortOrder
+    phone?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    note?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsulationAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ConsulationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    phone?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    note?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsulationMinOrderByAggregateInput = {
+    id?: SortOrder
+    phone?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    note?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsulationSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EnumConsulationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ConsulationStatus | EnumConsulationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ConsulationStatus[] | ListEnumConsulationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ConsulationStatus[] | ListEnumConsulationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumConsulationStatusWithAggregatesFilter<$PrismaModel> | $Enums.ConsulationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumConsulationStatusFilter<$PrismaModel>
+    _max?: NestedEnumConsulationStatusFilter<$PrismaModel>
+  }
+
   export type PostCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -21316,6 +22721,10 @@ export namespace Prisma {
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutOrderProductsInput, ProductUpdateWithoutOrderProductsInput>, ProductUncheckedUpdateWithoutOrderProductsInput>
   }
 
+  export type EnumConsulationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ConsulationStatus
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -21644,6 +23053,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumShippingMethodFilter<$PrismaModel>
     _max?: NestedEnumShippingMethodFilter<$PrismaModel>
+  }
+
+  export type NestedEnumConsulationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ConsulationStatus | EnumConsulationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ConsulationStatus[] | ListEnumConsulationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ConsulationStatus[] | ListEnumConsulationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumConsulationStatusFilter<$PrismaModel> | $Enums.ConsulationStatus
+  }
+
+  export type NestedEnumConsulationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ConsulationStatus | EnumConsulationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ConsulationStatus[] | ListEnumConsulationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ConsulationStatus[] | ListEnumConsulationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumConsulationStatusWithAggregatesFilter<$PrismaModel> | $Enums.ConsulationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumConsulationStatusFilter<$PrismaModel>
+    _max?: NestedEnumConsulationStatusFilter<$PrismaModel>
   }
 
   export type PostCreateWithoutAuthorInput = {

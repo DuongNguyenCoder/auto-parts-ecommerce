@@ -35,6 +35,7 @@ export const HomeBannerSlider = memo(function HomeBannerSlider({
         const response = await bannerApi.getAll({
           skip: 0,
           take: 10,
+          isActive: true,
         });
         console.log("response banner => ", response);
 
@@ -42,9 +43,7 @@ export const HomeBannerSlider = memo(function HomeBannerSlider({
           return;
         }
 
-        const activeBanners = response?.data?.items.filter(
-          (banner) => banner.isActive,
-        );
+        const activeBanners = response?.data?.items;
         // .sort((a, b) => a.sortOrder - b.sortOrder);
 
         if (!isMounted) {

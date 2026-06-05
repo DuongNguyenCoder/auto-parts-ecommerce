@@ -79,10 +79,11 @@ export const PostsAdmin = () => {
         <div className="space-y-3">
           <div className="space-y-1">
             <h1 className="text-xl font-semibold text-zinc-950">
-              Post management
+              Trang quản lý bài viết
             </h1>
             <p className="text-sm text-zinc-600">
-              Manage blog posts, update status, and assign categories.
+              Quản lý tất cả các bài viết từ title, nội dung, meta SEO, đường
+              dẫn,... trên toàn hệ thống.
             </p>
           </div>
 
@@ -90,7 +91,7 @@ export const PostsAdmin = () => {
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by title"
+              placeholder="Tìm kiếm theo title..."
               className="max-w-md"
             />
             <select
@@ -98,10 +99,10 @@ export const PostsAdmin = () => {
               onChange={(event) => setStatusFilter(event.target.value as any)}
               className="rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-zinc-950"
             >
-              <option value="">All statuses</option>
-              <option value="DRAFT">Draft</option>
-              <option value="PUBLISHED">Published</option>
-              <option value="ARCHIVED">Archived</option>
+              <option value="">Trạng thái</option>
+              <option value="DRAFT">Nháp</option>
+              <option value="PUBLISHED">Đã xuất bản</option>
+              <option value="ARCHIVED">Lưu trữ</option>
             </select>
             <select
               value={selectedCategoryId ?? ""}
@@ -112,7 +113,7 @@ export const PostsAdmin = () => {
               }
               className="rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-zinc-950"
             >
-              <option value="">All categories</option>
+              <option value="">Tất cả danh mục bài viết</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -122,7 +123,7 @@ export const PostsAdmin = () => {
           </div>
         </div>
 
-        <Button onClick={handleOpenCreate}>Create post</Button>
+        <Button onClick={handleOpenCreate}>Thêm bài viết mới</Button>
       </div>
 
       <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
@@ -130,12 +131,12 @@ export const PostsAdmin = () => {
           <table className="min-w-full border-collapse text-left text-sm text-zinc-700">
             <thead className="border-b border-zinc-200 bg-zinc-50 text-zinc-900">
               <tr>
-                <th className="px-4 py-3">Post</th>
-                <th className="px-4 py-3">Category</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3">Author</th>
-                <th className="px-4 py-3">Published</th>
-                <th className="px-4 py-3">Actions</th>
+                <th className="px-4 py-3">Bài viết</th>
+                <th className="px-4 py-3">Danh mục</th>
+                <th className="px-4 py-3">Trạng thái</th>
+                <th className="px-4 py-3">Tác giả</th>
+                <th className="px-4 py-3">Ngày xuất bản</th>
+                <th className="px-4 py-3">Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -205,7 +206,7 @@ export const PostsAdmin = () => {
                       </Button>
                       <Button
                         size="sm"
-                        variant="destructive"
+                        variant="delete"
                         onClick={() => handleDelete(post)}
                       >
                         Delete

@@ -42,28 +42,28 @@ export const productApi = {
       },
     });
 
-    const parsed = await parseResponse<any>(response);
+    return parseResponse<PaginatedData<Product>>(response);
 
     // server returns data: { items, pagination }
-    const items = parsed.data?.items ?? [];
-    const p = parsed.data?.pagination ?? {};
+    // const items = parsed.data?.items ?? [];
+    // const p = parsed.data?.pagination ?? {};
 
     // transform pagination key `totalPages` -> `totalpage` per requested shape
-    const transformed = {
-      success: parsed.success,
-      message: parsed.message,
-      data: items,
-      pagination: {
-        page: p.page ?? Math.floor((skip || 0) / (take || 10)) + 1,
-        totalpage: p.totalPages ?? 1,
-        totalPages: p.totalPages ?? 1,
-        total: p.total ?? 0,
-        take: p.take ?? take,
-        skip: p.skip ?? skip,
-      },
-    };
+    // const transformed = {
+    //   success: parsed.success,
+    //   message: parsed.message,
+    //   data: items,
+    //   pagination: {
+    //     page: p.page ?? Math.floor((skip || 0) / (take || 10)) + 1,
+    //     totalpage: p.totalPages ?? 1,
+    //     totalPages: p.totalPages ?? 1,
+    //     total: p.total ?? 0,
+    //     take: p.take ?? take,
+    //     skip: p.skip ?? skip,
+    //   },
+    // };
 
-    return transformed;
+    // return transformed;
   },
 
   getById: async (id: number): Promise<ApiResponse<Product>> => {

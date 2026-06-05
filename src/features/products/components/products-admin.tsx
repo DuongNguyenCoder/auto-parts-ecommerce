@@ -23,6 +23,7 @@ import type {
   CreateProductDTO,
   UpdateProductDTO,
 } from "@/validations/products.schema";
+import { formatCurrency } from "@/lib/format-currency";
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -131,8 +132,8 @@ export function ProductsAdmin() {
     },
   });
 
-  const products = productsQuery.data?.data ?? [];
-  const pagination = productsQuery.data?.pagination;
+  const products = productsQuery.data?.data?.items ?? [];
+  const pagination = productsQuery.data?.data?.pagination;
 
   const categories = categoriesQuery.data?.data?.items ?? [];
   const fitments = fitmentsQuery.data?.data?.items ?? [];
@@ -183,15 +184,15 @@ export function ProductsAdmin() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-zinc-950">
-              Products administration
+              Trang quản lý sản phẩm
             </h1>
             <p className="max-w-2xl text-sm text-zinc-600">
-              Manage all products, upload images, assign categories and
-              fitments.
+              Quản lý tất cả sản phẩm bao gồm tên, giá, phương tiện tương thích,
+              phân loại,... trên toàn hệ thống.
             </p>
           </div>
 
-          <Button onClick={openCreateModal}>Create product</Button>
+          <Button onClick={openCreateModal}>Thêm sản phẩm mới</Button>
         </div>
 
         {statusMessage ? (
@@ -208,7 +209,7 @@ export function ProductsAdmin() {
 
         <div className="grid gap-3 md:grid-cols-[1fr_auto]">
           <Input
-            placeholder="Search product name..."
+            placeholder="Tìm theo tên sản phẩm..."
             value={searchName}
             onChange={(event) => {
               setSearchName(event.target.value);
@@ -224,10 +225,10 @@ export function ProductsAdmin() {
             }}
           >
             <SelectTrigger>
-              <SelectValue placeholder="All categories" />
+              <SelectValue placeholder="Tất cả danh mục phụ tùng" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">All categories</SelectItem>
+              <SelectItem value="none">Tất cả</SelectItem>
               {categories?.map((category: (typeof categories)[0]) => (
                 <SelectItem key={category.id} value={String(category.id)}>
                   {category.name}
@@ -243,12 +244,12 @@ export function ProductsAdmin() {
           <table className="min-w-full divide-y divide-zinc-200 text-left text-sm text-zinc-700">
             <thead className="bg-zinc-50 text-zinc-900">
               <tr>
-                <th className="px-4 py-4 font-semibold">Product</th>
-                <th className="px-4 py-4 font-semibold">Category</th>
-                <th className="px-4 py-4 font-semibold">Price</th>
-                <th className="px-4 py-4 font-semibold">Fitments</th>
-                <th className="px-4 py-4 font-semibold">Updated</th>
-                <th className="px-4 py-4 font-semibold">Actions</th>
+                <th className="px-4 py-4 font-semibold">Sản phẩm</th>
+                <th className="px-4 py-4 font-semibold">Loại phụ tùng</th>
+                <th className="px-4 py-4 font-semibold">Giá</th>
+                <th className="px-4 py-4 font-semibold">Tương thích</th>
+                <th className="px-4 py-4 font-semibold">Cập nhật</th>
+                <th className="px-4 py-4 font-semibold">Hành động</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
@@ -285,10 +286,7 @@ export function ProductsAdmin() {
                       {product.category?.name}
                     </td>
                     <td className="px-4 py-4 align-top text-zinc-700">
-                      {new Intl.NumberFormat("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      }).format(product.price)}
+                      {formatCurrency(product.price)}
                     </td>
                     <td className="px-4 py-4 align-top text-zinc-700">
                       {product.fitments.length}
@@ -308,7 +306,7 @@ export function ProductsAdmin() {
                         </Button>
                         <Button
                           type="button"
-                          variant="destructive"
+                          variant="delete"
                           className="bg-red-400/90 hover:bg-red-500/90"
                           size="sm"
                           onClick={() => handleDelete(product)}

@@ -10,6 +10,7 @@ import {
   Users,
   RectangleEllipsis,
   ShoppingBag,
+  MailQuestionMark,
 } from "lucide-react";
 
 export type AdminNavItem = {
@@ -63,6 +64,11 @@ export const ADMIN_NAVIGATION: AdminNavItem[] = [
     title: "Đơn đặt hàng",
     href: "/admin/orders",
     icon: ShoppingBag,
+  },
+  {
+    title: "Đơn tư vấn",
+    href: "/admin/consultations",
+    icon: MailQuestionMark,
   },
   {
     title: "Người dùng",

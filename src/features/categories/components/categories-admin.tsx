@@ -161,14 +161,14 @@ export function CategoriesAdmin() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-zinc-950">
-              Categories administration
+              Trang quản lý các danh mục
             </h1>
             <p className="max-w-2xl text-sm text-zinc-600">
-              Manage product categories and URL slugs.
+              Quản lý tất cả các danh mục phân loại sản phẩm trên toàn hệ thống
             </p>
           </div>
 
-          <Button onClick={openCreateModal}>Create category</Button>
+          <Button onClick={openCreateModal}>Thêm danh mục sản phẩm mới</Button>
         </div>
 
         {statusMessage ? (
@@ -185,7 +185,7 @@ export function CategoriesAdmin() {
 
         <div className="grid gap-3 md:grid-cols-[1fr_auto]">
           <Input
-            placeholder="Search category name..."
+            placeholder="Tìm theo tên loại phụ tùng..."
             value={searchName}
             onChange={(event) => {
               setSearchName(event.target.value);
@@ -201,9 +201,9 @@ export function CategoriesAdmin() {
             <thead className="bg-zinc-50 text-zinc-900">
               <tr>
                 <th className="px-4 py-4 font-semibold">ID</th>
-                <th className="px-4 py-4 font-semibold">Name</th>
+                <th className="px-4 py-4 font-semibold">Loại phụ tùng</th>
                 <th className="px-4 py-4 font-semibold">Slug</th>
-                <th className="px-4 py-4 font-semibold">Actions</th>
+                <th className="px-4 py-4 font-semibold">Hành động</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
@@ -230,7 +230,7 @@ export function CategoriesAdmin() {
                       </Button>
                       <Button
                         type="button"
-                        variant="destructive"
+                        variant="delete"
                         size="sm"
                         onClick={() => handleDelete(category)}
                       >

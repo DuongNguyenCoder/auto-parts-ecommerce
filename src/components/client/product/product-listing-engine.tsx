@@ -61,9 +61,10 @@ export function ProductListingEngine({
 
   const query = useProductsQuery(filters, locked, initialQueryData);
 
-  const items = query?.data?.data ?? initialResponseData ?? initialItems ?? [];
+  const items =
+    query?.data?.data?.items ?? initialResponseData ?? initialItems ?? [];
 
-  const pagination = query.data?.pagination ??
+  const pagination = query.data?.data?.pagination ??
     initialResponse?.pagination ?? {
       page: 1,
       totalPages: 1,
@@ -74,7 +75,7 @@ export function ProductListingEngine({
   const currentPage = filters.page ?? pagination.page ?? 1;
 
   console.log(" pagination.totalpage ==> ", pagination.totalpage);
-  console.log(" pagination.currentPage ==> ", pagination);
+  console.log(" pagination.currentPage ==> ", query);
   return (
     <div className="flex flex-col gap-4">
       <ProductFilterBar

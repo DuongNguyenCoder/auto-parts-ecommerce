@@ -115,10 +115,11 @@ export const BannersAdmin = () => {
         <div className="space-y-3">
           <div className="space-y-1">
             <h1 className="text-xl font-semibold text-zinc-950">
-              Banner management
+              Trang quản lý banners
             </h1>
             <p className="text-sm text-zinc-600">
-              Create, update, and remove banners used on the storefront.
+              Thêm mới, cập nhật, xóa, quản lý tất cả banners trên toàn hệ
+              thống.
             </p>
           </div>
 
@@ -126,20 +127,21 @@ export const BannersAdmin = () => {
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by title"
+              placeholder="Tìm kiếm theo tên..."
               className="max-w-md"
             />
             <label className="inline-flex items-center gap-2 text-sm text-zinc-800">
               <Checkbox
                 checked={onlyActive}
+                className="rounded-xl"
                 onCheckedChange={(checked) => setOnlyActive(Boolean(checked))}
               />
-              Only active
+              Hiển thị các banners trạng thái Active
             </label>
           </div>
         </div>
 
-        <Button onClick={handleOpenCreate}>Create banner</Button>
+        <Button onClick={handleOpenCreate}>Thêm banner mới</Button>
       </div>
 
       <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
@@ -149,10 +151,10 @@ export const BannersAdmin = () => {
               <tr>
                 <th className="px-4 py-3">Banner</th>
 
-                <th className="px-4 py-3">Link</th>
-                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Link redirect</th>
+                <th className="px-4 py-3">Trạng thái</th>
                 <th className="px-4 py-3">Ngày tạo</th>
-                <th className="px-4 py-3">Actions</th>
+                <th className="px-4 py-3">Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -221,7 +223,7 @@ export const BannersAdmin = () => {
                       </Button>
                       <Button
                         size="sm"
-                        variant="destructive"
+                        variant="delete"
                         onClick={() => handleDelete(banner.id)}
                       >
                         Delete

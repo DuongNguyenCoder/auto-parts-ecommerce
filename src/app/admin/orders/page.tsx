@@ -10,6 +10,7 @@ import { AdminOrderUpdateForm } from "@/features/orders/components/admin/AdminOr
 import { orderApi } from "@/features/orders/api/order.api";
 import type { Order, OrderListQuery } from "@/types";
 import type { UpdateOrderDTO } from "@/validations/order.schema";
+import { Eye } from "lucide-react";
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -96,29 +97,15 @@ export default function AdminOrdersPage() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-zinc-950">
-              Orders administration
+              Trang quản lý đơn hàng
             </h1>
             <p className="max-w-2xl text-sm text-zinc-600">
-              Manage and track customer orders.
+              Quản lý tất cả đơn hàng trên toàn hệ thống theo thời gian thực.
             </p>
           </div>
         </div>
 
-        {statusMessage ? (
-          <div
-            className={`rounded-2xl border px-4 py-3 text-sm font-medium ${
-              statusMessage.type === "success"
-                ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-                : "border-rose-200 bg-rose-50 text-rose-800"
-            }`}
-          >
-            {statusMessage.text}
-          </div>
-        ) : null}
-      </section>
-
-      <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
-        <div className="px-6 pt-6">
+        <div className="px-6">
           <div className="flex items-center gap-3">
             <Input
               placeholder="Tìm theo số điện thoại"
@@ -145,16 +132,35 @@ export default function AdminOrdersPage() {
             </Button>
           </div>
         </div>
+
+        {statusMessage ? (
+          <div
+            className={`rounded-2xl border px-4 py-3 text-sm font-medium ${
+              statusMessage.type === "success"
+                ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+                : "border-rose-200 bg-rose-50 text-rose-800"
+            }`}
+          >
+            {statusMessage.text}
+          </div>
+        ) : null}
+      </section>
+
+      <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-zinc-200 text-left text-sm text-zinc-700">
             <thead className="bg-zinc-50 text-zinc-900">
               <tr>
-                <th className="px-4 py-4 font-semibold">Order Number</th>
-                <th className="px-4 py-4 font-semibold">Date</th>
-                <th className="px-4 py-4 font-semibold">Status</th>
-                <th className="px-4 py-4 font-semibold">Payment</th>
-                <th className="px-4 py-4 font-semibold text-right">Total</th>
-                <th className="px-4 py-4 font-semibold">Actions</th>
+                <th className="px-4 py-4 font-semibold">Mã đơn hàng</th>
+                <th className="px-4 py-4 font-semibold">Ngày đặt</th>
+                <th className="px-4 py-4 font-semibold">Trạng thái</th>
+                <th className="px-4 py-4 font-semibold">
+                  Trạng thái thanh toán
+                </th>
+                <th className="px-4 py-4 font-semibold text-right">
+                  Tổng tiền
+                </th>
+                <th className="px-4 py-4 font-semibold">Hành động</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
@@ -209,11 +215,16 @@ export default function AdminOrdersPage() {
                         size="sm"
                         onClick={() => openEditModal(order)}
                       >
-                        Edit
+                        Cập nhật
                       </Button>
                       <a href={`/admin/orders/${order.id}`}>
-                        <Button type="button" variant="outline" size="sm">
-                          View
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="bg-sky-300/50 hover:bg-sky-300/80"
+                        >
+                          <Eye size={15} /> Xem
                         </Button>
                       </a>
                     </td>

@@ -5,6 +5,7 @@ export const createCarModelSchema = z.object({
   name: z.string().trim().min(1).max(100),
   slug: z.string().trim().min(1).max(100),
   year: z.string().trim().max(50).optional(),
+  imageUrl: z.string().optional(),
 });
 
 export const updateCarModelSchema = createCarModelSchema.partial();

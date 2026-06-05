@@ -15,35 +15,35 @@ type Props = {
 
 const SORT_OPTIONS = [
   {
-    label: "Default",
+    label: "Mặc định",
     value: {
       sortBy: undefined,
       orderBy: undefined,
     },
   },
   {
-    label: "Price: Low to High",
+    label: "Giá: Thấp → cao",
     value: {
       sortBy: "price",
       orderBy: "asc",
     },
   },
   {
-    label: "Price: High to Low",
+    label: "Giá: Cao → thấp",
     value: {
       sortBy: "price",
       orderBy: "desc",
     },
   },
   {
-    label: "Name: A → Z",
+    label: "Tên: A → Z",
     value: {
       sortBy: "name",
       orderBy: "asc",
     },
   },
   {
-    label: "Name: Z → A",
+    label: "Tên: Z → A",
     value: {
       sortBy: "name",
       orderBy: "desc",
@@ -71,7 +71,7 @@ export function ProductFilterBar({ filters, categories, onChange }: Props) {
         {/* Search */}
         <div className="relative flex-1 min-w-[180px]">
           <SearchIcon
-            size={16}
+            size={20}
             className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"
           />
           {/* <svg
@@ -101,7 +101,7 @@ export function ProductFilterBar({ filters, categories, onChange }: Props) {
             }}
             placeholder="Tìm sản phẩm..."
             className="
-              w-full h-8 pl-8 pr-3 text-sm
+              w-full h-10 pl-8 pr-3 text-sm
               rounded-md border border-gray-200 bg-white
               placeholder:text-gray-400 text-gray-800
               focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400

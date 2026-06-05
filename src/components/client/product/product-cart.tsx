@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/format-currency";
 
 import type { Product } from "@/types";
+import { useCartStore } from "@/stores";
 
 type Props = {
   product: Product;
@@ -17,6 +18,25 @@ type Props = {
 };
 
 export function ProductCard({ product, onAddToCart, className }: Props) {
+  const addItem = useCartStore((s) => s.addItem);
+
+  const handleAddToCart = () => {
+    addItem({
+      productId: product.id,
+      skuId: undefined,
+      slug: product.slug,
+      name: product.name,
+      image: product.imageUrl ?? "",
+      price: product.price,
+      quantity: 1,
+      stock: 9999,
+      brand: {
+        id: Number(product.categoryId),
+        name: product.category?.name ?? "",
+      },
+    });
+  };
+
   return (
     <article
       className={cn(
@@ -77,7 +97,7 @@ export function ProductCard({ product, onAddToCart, className }: Props) {
           </button> */}
           <button
             type="button"
-            onClick={() => onAddToCart?.(product)}
+            onClick={handleAddToCart}
             className="flex min-w-0 h-10 col-span-3 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
             <ShoppingCart className="h-4 w-4 shrink-0" />

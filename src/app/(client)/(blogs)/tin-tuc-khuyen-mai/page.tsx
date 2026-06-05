@@ -1,5 +1,13 @@
 import { PostListSection } from "@/components/blog/post-list-section";
 import { postCategoryService } from "@/server/services/post-categories.service";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tin tức và sự kiên khuyến mãi",
+  description:
+    "Chuyên cung cấp phụ tùng xe tải chính hãng cho nhiều dòng xe phổ biến tại Việt Nam. Hỗ trợ tra mã phụ tùng, tư vấn kỹ thuật và giao hàng nhanh toàn quốc.",
+};
+
 export default async function PromotionNewsPage() {
   const postCategoriesRes = await postCategoryService.list({}, { take: 100 });
 

@@ -49,7 +49,9 @@ export function useBrandProducts({
       take: 12,
     });
 
-    const items = res.data ?? [];
+    console.log("CHECKKKK RESSSSSSSSS => ", res);
+
+    const items = res.data?.items ?? [];
 
     cacheRef.current.set(key, items);
 

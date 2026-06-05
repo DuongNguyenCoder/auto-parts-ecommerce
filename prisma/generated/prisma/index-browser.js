@@ -247,6 +247,17 @@ exports.Prisma.OrderProductScalarFieldEnum = {
   quantity: 'quantity'
 };
 
+exports.Prisma.ConsulationScalarFieldEnum = {
+  id: 'id',
+  phone: 'phone',
+  name: 'name',
+  email: 'email',
+  note: 'note',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -299,6 +310,11 @@ exports.ShippingMethod = exports.$Enums.ShippingMethod = {
   PICKUP: 'PICKUP'
 };
 
+exports.ConsulationStatus = exports.$Enums.ConsulationStatus = {
+  PENDING: 'PENDING',
+  PROCESSED: 'PROCESSED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Category: 'Category',
@@ -312,7 +328,8 @@ exports.Prisma.ModelName = {
   CartItem: 'CartItem',
   WishlistItem: 'WishlistItem',
   Order: 'Order',
-  OrderProduct: 'OrderProduct'
+  OrderProduct: 'OrderProduct',
+  Consulation: 'Consulation'
 };
 
 /**

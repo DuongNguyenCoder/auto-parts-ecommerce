@@ -7,7 +7,7 @@ import { cartApi } from "@/features/carts/api/cart.api";
 import { CartItem, Product } from "@/types";
 import { SyncCartDTO, SyncCartItemDTO } from "@/validations/cart.schema";
 
-const SYNC_DELAY = 60000;
+const SYNC_DELAY = 120000; //2p
 
 export function useCartSyncV2() {
   const items = useCartStore((s) => s.items);

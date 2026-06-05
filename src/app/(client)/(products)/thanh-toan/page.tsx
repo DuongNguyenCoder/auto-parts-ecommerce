@@ -16,6 +16,8 @@ import { CheckoutStepIndicator } from "@/features/orders/components/checkout/Che
 import { useCheckoutWorkflow } from "@/features/orders/hooks/useCheckoutWorkflow";
 import { checkoutOrderSchema } from "@/validations/order.schema";
 import { toast } from "sonner";
+import { CircleAlert } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const shippingOptions = [
   {
@@ -50,6 +52,8 @@ export default function CheckOutPage() {
     subtotal: number;
     shippingFee: number;
   } | null>(null);
+
+  const router = useRouter();
 
   const methods = useForm<z.input<typeof checkoutOrderSchema>>({
     resolver: zodResolver(checkoutOrderSchema),
@@ -143,6 +147,11 @@ export default function CheckOutPage() {
     setOrderPreview({ items, subtotal, shippingFee });
     const validatedValues = checkoutOrderSchema.parse(values);
     await handleConfirmOrder(validatedValues);
+
+    toast.success(
+      "Đặt hàng thành công. Xin chân thành cảm ơn quý khách hàng !",
+    );
+    router.push("/");
   };
 
   const hasStepOneErrors = Boolean(
@@ -457,7 +466,14 @@ export default function CheckOutPage() {
                 </Button>
               </div>
 
-              {error && <p className="text-sm text-red-600">{error}</p>}
+              {error && (
+                <p className="text-sm text-red-600 flex gap-2">
+                  <CircleAlert size={20} className="animate-pulse" />
+                  {error === "Unauthorized"
+                    ? "Vui lòng đăng nhập để hoàn thành đơn hàng"
+                    : error}
+                </p>
+              )}
               {success && (
                 <p className="text-sm text-emerald-700">
                   Đơn hàng của bạn đã được gửi thành công. Giỏ hàng đã được làm

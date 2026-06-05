@@ -4,18 +4,25 @@ import CombinedSection from "@/components/client/home/combined-section";
 import ButtonAnimate from "@/components/ui/button-animation-custom";
 import { Separator } from "@/components/ui/separator";
 import { postApi } from "@/features/api";
+import { bannerService } from "@/server/services/banners.service";
 import { postService } from "@/server/services/posts.service";
 import { PaginatedData, Post, PostCategoryListQuery } from "@/types";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Auto Thọ Xuân",
+  description:
+    "Chuyên cung cấp phụ tùng xe tải chính hãng cho nhiều dòng xe phổ biến tại Việt Nam. Hỗ trợ tra mã phụ tùng, tư vấn kỹ thuật và giao hàng nhanh toàn quốc.",
+};
 
 export default async function HomePage() {
   // const items = useCartStore((s) => s.items);
   // console.log("STore cart zustant ====> ", 1);
   const postsRes = await postService.list({}, { take: 4 });
-  // const postsRes =
+
   const posts = postsRes.items ?? [];
-  console.log("CHECK POST FETCH FOR SERVICE => ", postsRes);
   return (
     <div className="w-full space-y-16">
       <HomeBannerSlider className="w-full" />

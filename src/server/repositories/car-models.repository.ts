@@ -22,6 +22,7 @@ const publicSelect = {
   slug: true,
   name: true,
   year: true,
+  imageUrl: true,
 } as const;
 
 export type CarModelRecord = Awaited<
