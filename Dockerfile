@@ -67,6 +67,7 @@ COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/.bin ./node_modules/.bin
 
 USER nextjs
 
