@@ -1,3 +1,4 @@
+import FloatingSidebar from "@/components/common/floating-sidebar";
 import ScrollToTop from "@/components/common/ScrollToTop";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -9,6 +10,7 @@ export default function ClientLayout({
 }>) {
   return (
     <>
+      <FloatingSidebar />
       <ScrollToTop />
       <Header />
 

@@ -137,18 +137,18 @@ export const FOOTER_LINK_SECTIONS: FooterLinkSection[] = [
 export const FOOTER_SOCIALS: FooterSocialItem[] = [
   {
     label: "Zalo",
-    href: "https://zalo.com",
+    href: "https://zalo.me/0982575404",
     icon: "/icon/zalo.png",
   },
   {
     label: "Messenger",
-    href: "https://messenger.com",
+    href: "https://www.facebook.com/messages/t/1186874014505680",
     icon: "/icon/messenger.png",
   },
   {
-    label: "Youtube",
-    href: "https://youtube.com",
-    icon: "/icon/youtube.png",
+    label: "Faccbook",
+    href: "https://www.facebook.com/profile.php?id=61591526999516",
+    icon: "/icon/facebook.png",
   },
 ];
 
