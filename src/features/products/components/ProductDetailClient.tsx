@@ -113,8 +113,8 @@ export default function ProductDetailClient({ product, related = [] }: Props) {
           <div className="mt-8">
             <h3 className="text-lg font-semibold">Mô tả</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Mô tả chi tiết sản phẩm sẽ được hiển thị tại đây. Nếu bạn cần thêm
-              trường mô tả trong DB, hãy thêm vào select trong repository.
+              {product.overview ??
+                "Mô tả chi tiết sản phẩm sẽ được hiển thị tại đây. Nếu bạn cần thêm trường mô tả trong DB, hãy thêm vào select trong repository."}
             </p>
           </div>
         </div>

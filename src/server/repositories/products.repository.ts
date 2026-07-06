@@ -10,6 +10,7 @@ const publicSelect = {
   id: true,
   slug: true,
   name: true,
+  overview: true,
   imageUrl: true,
   price: true,
   categoryId: true,
@@ -35,6 +36,7 @@ const publicSelect = {
 type ProductWriteData = {
   slug: string;
   name: string;
+  overview?: string;
   imageUrl: string;
   price: number;
   categoryId: number;

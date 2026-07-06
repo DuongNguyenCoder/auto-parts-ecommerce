@@ -76,6 +76,7 @@ export const ProductForm = ({
     defaultValues: {
       slug: initialData?.slug ?? "",
       name: initialData?.name ?? "",
+      overview: initialData?.overview ?? "",
       imageUrl: initialData?.imageUrl ?? "",
       price: initialData?.price ? Number(initialData.price) : undefined,
       categoryId: initialData?.categoryId ?? undefined,
@@ -121,6 +122,7 @@ export const ProductForm = ({
     const payload: CreateProductDTO = {
       slug: values.slug,
       name: values.name,
+      overview: values.overview,
       imageUrl: values.imageUrl,
       price: Number(values.price),
       categoryId: values.categoryId,
@@ -198,6 +200,19 @@ export const ProductForm = ({
               {...register("slug")}
               placeholder="nuoc-mat-dong-co"
               className={cn(inputCls, errors.slug && inputErrorCls)}
+            />
+          </FormField>
+
+          <FormField label="Tổng quan" error={errors.overview?.message}>
+            <textarea
+              {...register("overview")}
+              rows={4}
+              placeholder="Mô tả ngắn gọn về sản phẩm"
+              className={cn(
+                inputCls,
+                "min-h-[110px] resize-none py-3",
+                errors.overview && inputErrorCls,
+              )}
             />
           </FormField>
         </FormSection>

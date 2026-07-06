@@ -26,6 +26,7 @@ export const productSelect = Prisma.validator<Prisma.ProductDefaultArgs>()({
     id: true,
     slug: true,
     name: true,
+    overview: true,
     imageUrl: true,
     price: true,
     categoryId: true,
