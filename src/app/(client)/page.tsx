@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { postService } from "@/server/services/posts.service";
 import { Metadata } from "next";
 
-export const revalidate = 600;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Auto Thọ Xuân",
