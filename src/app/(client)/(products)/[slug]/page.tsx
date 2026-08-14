@@ -1,6 +1,7 @@
 import { productService } from "@/server/services/products.service";
 import ProductDetailClient from "@/features/products/components/ProductDetailClient";
-import { productApi } from "@/features/products/api/product.api";
+
+export const revalidate = 600;
 
 export default async function ProductDetailPage({
   params,
@@ -18,8 +19,6 @@ export default async function ProductDetailPage({
   );
 
   if (!product) return <div>Product not found</div>;
-
-  // Fetch a few related products in the same category to show as recommendations
 
   return (
     <ProductDetailClient product={product} related={related.items ?? []} />

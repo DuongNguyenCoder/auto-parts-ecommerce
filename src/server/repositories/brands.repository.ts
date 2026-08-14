@@ -10,6 +10,7 @@ const publicSelect = {
       id: true,
       name: true,
       year: true,
+      imageUrl: true,
       slug: true,
     },
   },

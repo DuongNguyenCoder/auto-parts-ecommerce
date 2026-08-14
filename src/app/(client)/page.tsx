@@ -3,13 +3,10 @@ import { HomeBannerSlider } from "@/components/client/home/banner";
 import CombinedSection from "@/components/client/home/combined-section";
 import ButtonAnimate from "@/components/ui/button-animation-custom";
 import { Separator } from "@/components/ui/separator";
-import { postApi } from "@/features/api";
-import { bannerService } from "@/server/services/banners.service";
 import { postService } from "@/server/services/posts.service";
-import { PaginatedData, Post, PostCategoryListQuery } from "@/types";
 import { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: "Auto Thọ Xuân",

@@ -11,6 +11,7 @@ export default async function BrandPage({
 }) {
   const { slug } = await params;
   const brand = await brandService.getBySlug(slug);
+  console.log("brands => ", brand);
 
   if (!brand) return <div>Brand not found</div>;
 

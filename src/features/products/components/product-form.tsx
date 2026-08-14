@@ -414,6 +414,7 @@ export const ProductForm = ({
                 );
               }}
               // getLabel={(f) => `${f?.brand?.name ?? ""} ${f.name}`}
+              placeholder="Chọn dòng xe"
               label=""
               hint=""
             />
@@ -464,7 +465,7 @@ export const ProductForm = ({
                 disabled={isSubmitting}
                 className={cn(
                   "relative h-11 overflow-hidden rounded-2xl px-8",
-                  "bg-gradient-to-r from-sky-500 to-blue-600",
+                  "bg-linear-to-r from-sky-500 to-blue-600",
                   "text-[13.5px] font-semibold text-white",
                   "shadow-[0_4px_16px_rgba(37,99,235,0.3)]",
                   "transition-all duration-200 hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(37,99,235,0.4)]",

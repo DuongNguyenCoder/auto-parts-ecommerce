@@ -1,22 +1,9 @@
 "use client";
 
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  ScrollArea,
-  Badge,
-} from "@/components/ui";
-
-import { Input } from "@/components/ui/input";
-import { Search, X, Check, Loader2 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { cn, inputCls, inputErrorCls } from "@/lib/utils";
+import { X } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { cn, inputCls } from "@/lib/utils";
+import { Badge } from "@/components/ui";
 import { Entity, EntityPickerProps } from "@/components/shared/picker/type";
 
 export function EntityPickerField<T extends Entity>({
@@ -43,40 +30,60 @@ export function EntityPickerField<T extends Entity>({
   }, [value]);
 
   const selectedItems = useMemo(() => {
-    return value.map((id) => ({
-      id,
-      name: String(id), // fallback safe
-    })) as T[];
-  }, [value]);
+    return (value as any[]).map((id) => {
+      const normalized = normalizeId(id as unknown as T["id"]);
+      const found = options.find((o) => normalizeId(o.id) === normalized);
+      return (
+        (found as T) ??
+        ({ id: id as unknown as T["id"], name: String(id) } as T)
+      );
+    });
+  }, [value, options]);
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  // Fetch all options once on mount (used for select list)
   useEffect(() => {
-    if (!keyword) {
-      setOptions([]);
-      return;
-    }
+    let mounted = true;
 
-    const timeout = setTimeout(async () => {
-      setLoading(true);
-      const res = await fetcher(keyword);
-      setOptions(res);
-      setLoading(false);
-    }, 300);
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await fetcher("");
+        if (!mounted) return;
+        setOptions(res ?? []);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
 
-    return () => clearTimeout(timeout);
-  }, [keyword, fetcher]);
+    return () => {
+      mounted = false;
+    };
+  }, [fetcher]);
+
+  // close on outside click
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      if (!open) return;
+      if (!wrapperRef.current) return;
+      if (!(e.target instanceof Node)) return;
+      if (!wrapperRef.current.contains(e.target)) setOpen(false);
+    };
+
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, [open]);
 
   const toggle = (item: T) => {
     const id = normalizeId(item.id);
-
     const exists = selectedIds.includes(id);
 
     if (exists) {
-      onChange(selectedIds.filter((x) => normalizeId(x) !== id));
+      onChange(selectedIds.filter((x) => x !== id));
     } else {
-      onChange([...selectedIds, normalizeId(item.id)]);
+      onChange([...selectedIds, id]);
     }
-    setOpen(false);
-    setKeyword("");
   };
 
   const remove = (id: T["id"]) => {
@@ -125,83 +132,73 @@ export function EntityPickerField<T extends Entity>({
         </div>
       )}
 
-      {/* search */}
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-
-            <Input
-              value={keyword}
-              placeholder={placeholder}
-              className={cn(inputCls, "pl-9")}
-              onChange={(e) => {
-                setKeyword(e.target.value);
-                setOpen(true);
-              }}
-            />
-
-            {loading && (
-              <Loader2 className="absolute right-3 top-1/2 size-4 -translate-y-1/2 animate-spin" />
+      {/* dropdown multi-select */}
+      <div className="relative" ref={wrapperRef}>
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setOpen((s) => !s)}
+          className={cn(
+            inputCls,
+            "flex items-center justify-between cursor-pointer",
+          )}
+        >
+          <div className="min-w-0">
+            {selectedItems.length > 0 ? (
+              <div className="flex gap-2 flex-wrap">
+                {selectedItems.map((s) => (
+                  <span key={String(s.id)} className="max-w-[200px] truncate">
+                    {getLabel?.(s) ?? s.name}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <span className="text-slate-400">{placeholder}</span>
             )}
           </div>
-        </PopoverTrigger>
 
-        <PopoverContent
-          align="start"
-          className="w-[var(--radix-popover-trigger-width)] p-0"
-        >
-          <Command shouldFilter={false}>
-            <CommandList>
-              <ScrollArea className="max-h-72">
-                {!loading && !options.length && (
-                  <CommandEmpty>No results</CommandEmpty>
-                )}
+          <div className="ml-2 text-slate-400">▾</div>
+        </div>
 
-                <CommandGroup>
-                  {options.map((item) => {
-                    const active = selectedIds.includes(normalizeId(item.id));
+        {open && (
+          <div className="mt-1 w-full rounded-md border bg-white shadow-sm">
+            <div className="max-h-56 overflow-auto">
+              {loading ? (
+                <div className="p-3 text-sm text-slate-500">Loading...</div>
+              ) : options.length === 0 ? (
+                <div className="p-3 text-sm text-slate-500">No results</div>
+              ) : (
+                options.map((item) => {
+                  const id = normalizeId(item.id);
+                  const checked = selectedIds.includes(id);
+                  return (
+                    <label
+                      key={String(item.id)}
+                      className="flex items-center gap-3 p-2 hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggle(item)}
+                        className="h-4 w-4"
+                      />
 
-                    if (renderOption) {
-                      return (
-                        <CommandItem
-                          key={item.id}
-                          onSelect={() => toggle(item)}
-                          className="cursor-pointer"
-                        >
-                          {renderOption(item, { selected: active })}
-                        </CommandItem>
-                      );
-                    }
-
-                    return (
-                      <CommandItem
-                        key={item.id}
-                        onSelect={() => toggle(item)}
-                        className="cursor-pointer"
-                      >
-                        <div className="flex w-full items-center justify-between">
-                          <div className="min-w-0">
-                            <p className="truncate font-medium">
-                              {getLabel?.(item) ?? item.name}
-                            </p>
-
-                            <p className="text-xs text-muted-foreground">
-                              ID: {item.id}
-                            </p>
-                          </div>
-
-                          {active && <Check className="size-4" />}
+                      <div className="min-w-0">
+                        <div className="truncate font-medium">
+                          {getLabel?.(item) ?? item.name}
                         </div>
-                      </CommandItem>
-                    );
-                  })}
-                </CommandGroup>
-              </ScrollArea>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
+                        <div className="text-xs text-muted-foreground">
+                          ID: {String(item.id)}
+                        </div>
+                      </div>
+                    </label>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
